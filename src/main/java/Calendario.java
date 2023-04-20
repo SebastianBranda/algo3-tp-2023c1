@@ -1,15 +1,19 @@
-import java.util.Dictionary;
+import java.util.HashMap;
 
 public class Calendario {
-    protected Dictionary diccionarioTareas;
-    protected Dictionary getDiccionarioEventos;
+    private HashMap<String,Tarea> mapaTareas = new HashMap<>();
+    private HashMap<String,Evento> mapaEventos = new HashMap<>();
+    public Calendario(HashMap<String,Tarea> mapaTareas, HashMap<String,Evento> mapaEventos){
+        this.mapaTareas = mapaTareas;
+        this.mapaEventos = mapaEventos;
+    };
 
-    //public agregarTarea(){};
-    //public agregarEvento(){};
-    //public modificarTarea(){};
-    //public modificarEvento(){};
-    //public eliminarTarea(){};
-    //public eliminarEvento(){};
+    //public Tarea agregarTarea(){};
+    //public Evento agregarEvento(){};
+    //public Tarea modificarTarea(){};
+    //public Evento modificarEvento(){};
+    //public Tarea eliminarTarea(){};
+    //public Evento eliminarEvento(){};
     //public obtenerActividadesDelDia(){};
     //public obtenerActividadesDeLaSemana(){};
     //public obtenerActividadesDelMes(){};
