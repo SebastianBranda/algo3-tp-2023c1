@@ -1,11 +1,14 @@
 import java.time.LocalDateTime;
-import java.util.ArrayList;
+import java.util.Dictionary;
 
 abstract class Actividad {
     protected String titulo;
     protected String descripcion;
     private LocalDateTime fechaHora;
-    protected ArrayList alarmas;
+    protected Dictionary diccionarioAlarmas;
     protected Boolean esActividadDelDia;
+
+    protected Boolean esRepetible;
+
 
 }

@@ -1,8 +1,8 @@
 public class Tarea extends Actividad{
 
-    private boolean estaCompletada;
+    private Boolean estaCompletada;
 
-    public boolean marcarComoCompleta() {
+    public Boolean marcarComoCompleta() {
         return this.estaCompletada = true;
     }
 }
