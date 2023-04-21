@@ -1,16 +1,36 @@
 import java.time.LocalDateTime;
-import java.util.HashMap;
 
 public class Evento extends Actividad {
-    protected Frecuencia frecuencia;
-    protected Boolean esRepetible;
-    @Override
-    protected void modificar(){};
-    public Evento(){
-        super();
+    private LocalDateTime fechaHoraFin;
+    private Frecuencia frecuencia;
+    private Boolean esRepetible;
+
+    public Evento(String titulo,
+                  String descripcion,
+                  LocalDateTime fechaHora,
+                  LocalDateTime fechaHoraFin,
+                  Boolean esActividadDelDia,
+                  Frecuencia frecuencia,
+                  Boolean esRepetible){
+        this.setTitulo(titulo);
+        this.setDescripcion(descripcion);
+        this.setFechaHora(fechaHora);
+        this.setEsActividadDelDia(esActividadDelDia);
+        this.frecuencia = frecuencia;
+        this.esRepetible = esRepetible;
     }
-    public Evento(String titulo, String descripcion, LocalDateTime fechaHora, LocalDateTime fechaHoraFin, HashMap<String, Alarma> alarmas, Boolean esActividadDelDia, Boolean esRepetible, Frecuencia frecuencia){
-        super(titulo, descripcion, fechaHora, fechaHoraFin, alarmas, esActividadDelDia);
+
+    void modificar(String titulo,
+                   String descripcion,
+                   LocalDateTime fechaHora,
+                   LocalDateTime fechaHoraFin,
+                   Boolean esActividadDelDia,
+                   Frecuencia frecuencia,
+                   Boolean esRepetible){
+        this.setTitulo(titulo);
+        this.setDescripcion(descripcion);
+        this.setFechaHora(fechaHora);
+        this.setEsActividadDelDia(esActividadDelDia);
         this.frecuencia = frecuencia;
         this.esRepetible = esRepetible;
     }
