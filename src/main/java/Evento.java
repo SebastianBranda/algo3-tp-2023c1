@@ -15,23 +15,36 @@ public class Evento extends Actividad {
         this.setTitulo(titulo);
         this.setDescripcion(descripcion);
         this.setFechaHora(fechaHora);
+        this.fechaHoraFin = fechaHoraFin;
         this.setEsActividadDelDia(esActividadDelDia);
         this.frecuencia = frecuencia;
         this.esRepetible = esRepetible;
     }
 
-    void modificar(String titulo,
-                   String descripcion,
-                   LocalDateTime fechaHora,
-                   LocalDateTime fechaHoraFin,
-                   Boolean esActividadDelDia,
-                   Frecuencia frecuencia,
-                   Boolean esRepetible){
+    public void modificar(String titulo,
+                          String descripcion,
+                          LocalDateTime fechaHora,
+                          LocalDateTime fechaHoraFin,
+                          Boolean esActividadDelDia,
+                          Frecuencia frecuencia,
+                          Boolean esRepetible){
         this.setTitulo(titulo);
         this.setDescripcion(descripcion);
         this.setFechaHora(fechaHora);
+        this.fechaHoraFin = fechaHoraFin;
         this.setEsActividadDelDia(esActividadDelDia);
         this.frecuencia = frecuencia;
         this.esRepetible = esRepetible;
+    }
+    public void modificar(String titulo,
+                          String descripcion,
+                          LocalDateTime fechaHora,
+                          LocalDateTime fechaHoraFin,
+                          Boolean esActividadDelDia){
+        this.setTitulo(titulo);
+        this.setDescripcion(descripcion);
+        this.setFechaHora(fechaHora);
+        this.fechaHoraFin = fechaHoraFin;
+        this.setEsActividadDelDia(esActividadDelDia);
     }
 }
