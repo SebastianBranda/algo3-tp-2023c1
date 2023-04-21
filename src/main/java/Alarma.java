@@ -1,6 +1,12 @@
 import java.time.LocalDateTime;
 
-public class Alarma {
+public abstract class Alarma {
     protected LocalDateTime horarioAlarma;
-    protected Notificacion notificacion;
+    public void setHorarioAlarma(LocalDateTime d){
+        this.horarioAlarma = d;
+    }
+    public LocalDateTime getHorarioAlarma(){
+        return this.horarioAlarma;
+    }
+    public abstract void notificar();
 }
