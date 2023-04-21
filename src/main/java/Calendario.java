@@ -1,17 +1,28 @@
-import java.time.LocalDateTime;
-import java.util.HashMap;
+import java.util.ArrayList;
+import java.util.List;
 
 public class Calendario {
-    private HashMap<String,Tarea> tareas = new HashMap<>();
-    private HashMap<String,Evento> eventos = new HashMap<>();
-    public Calendario(HashMap<String,Tarea> tareas, HashMap<String,Evento> eventos){
-        this.tareas = tareas;
-        this.eventos = eventos;
+    private List<Actividad> actividades;
+    public Calendario(){
+        this.actividades = new ArrayList<>();
     }
-    public Tarea agregarTarea(String titulo, String descripcion, LocalDateTime fechaHora, LocalDateTime fechaHoraFin, HashMap<String, Alarma> alarmas, Boolean esActividadDelDia, Boolean estaCompletada){
-     return tareas.put(titulo, new Tarea(titulo, descripcion, fechaHora, fechaHoraFin, alarmas, esActividadDelDia, estaCompletada));}
-    public Evento agregarEvento(String titulo, String descripcion, LocalDateTime fechaHora, LocalDateTime fechaHoraFin, HashMap<String, Alarma> alarmas, Boolean esActividadDelDia, Boolean esRepetible, Frecuencia frecuencia){
-        return eventos.put(titulo, new Evento(titulo, descripcion, fechaHora, fechaHoraFin, alarmas, esActividadDelDia, esRepetible, frecuencia));}
+    public void agregarActividad(Actividad actividad){
+        this.actividades.add(actividad);
+    }
+
+    public void modificarActividad(Actividad vieja, Actividad nueva){
+            if(this.actividades.contains(vieja)){
+                int index = this.actividades.indexOf(vieja);
+                this.actividades.set(index, nueva);
+            }else{
+                this.agregarActividad(nueva);
+            }
+    }
+
+    public void eliminarActividad(Actividad actividad){
+        this.actividades.remove(actividad);
+    }
+
     //public Tarea modificarTarea(){};
     //public Evento modificarEvento(){};
     //public Tarea eliminarTarea(){};
