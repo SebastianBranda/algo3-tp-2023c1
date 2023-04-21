@@ -1,12 +1,10 @@
-import java.time.Duration;
-
 public class FrecuenciaMensual extends Frecuencia{
-
     public FrecuenciaMensual(){
-        super();
+        this.duracion = 0;
+        this.esDuracionInfinita = false;
     }
-    public FrecuenciaMensual(Duration duracionFrecuencia){
-        super(duracionFrecuencia);
+    public FrecuenciaMensual(int duracion, boolean esDuracionInfinita){
+        this.duracion = duracion;
+        this.esDuracionInfinita = esDuracionInfinita;
     }
-
 }
