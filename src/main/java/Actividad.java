@@ -5,7 +5,7 @@ abstract class Actividad {
     private String titulo;
     private String descripcion;
     private LocalDateTime fechaHora;
-    private ArrayList<Alarma> alarmas = new ArrayList<>();
+    ArrayList<Alarma> alarmas = new ArrayList<>();
     private Boolean esActividadDelDia;
 
     protected void setTitulo(String titulo){
@@ -29,8 +29,16 @@ abstract class Actividad {
     protected void setEsActividadDelDia(boolean b){
         this.esActividadDelDia = b;
     }
+    protected boolean getEsActividadDelDia(){
+        return this.esActividadDelDia;
+    }
     protected void agregarAlarma(Alarma a){
         this.alarmas.add(a);
+    }
+    protected void agregarAlarmaDiferida(Alarma a, long minutosAntes){
+        LocalDateTime horario = a.getHorarioAlarma().minusMinutes(minutosAntes);
+        a.setHorarioAlarma(horario);
+        this.agregarAlarma(a);
     }
     public void modificarAlarma(Alarma vieja, Alarma nueva){
         if(this.alarmas.contains(vieja)){
@@ -43,6 +51,5 @@ abstract class Actividad {
     public void eliminarAlarma(Alarma a){
         this.alarmas.remove(a);
     }
-    abstract void modificar();
 
 }
