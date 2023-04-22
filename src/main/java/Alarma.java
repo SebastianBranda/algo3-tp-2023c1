@@ -1,7 +1,9 @@
 import java.time.LocalDateTime;
+enum TipoAlarma{ EMAIL, SONIDO, VISUAL}
 
 public abstract class Alarma {
     protected LocalDateTime horarioAlarma;
+    protected TipoAlarma tipoAlarma;
     public void setHorarioAlarma(LocalDateTime d){
         this.horarioAlarma = d;
     }
