@@ -36,4 +36,13 @@ public class FrecuenciaSemanal extends Frecuencia{
             diasRepeticion.add(d);
         }
     }
+
+    @Override
+    public ArrayList<Integer> reglaDeRepeticion() {
+        ArrayList<Integer> regla = new ArrayList<>();
+        for(var d: this.diasRepeticion){
+            regla.add(d.getValue());
+        }
+        return regla;
+    }
 }

@@ -1,5 +1,6 @@
 import java.time.LocalDateTime;
 import java.time.temporal.ChronoUnit;
+import java.util.ArrayList;
 
 public class FrecuenciaAnual extends Frecuencia{
     public FrecuenciaAnual(LocalDateTime fecha){
@@ -21,5 +22,10 @@ public class FrecuenciaAnual extends Frecuencia{
         this.fechaInicial = fechaInicial;
         this.cantidadRepeticiones = cantReps;
         this.esDuracionInfinita = false;
+    }
+
+    @Override
+    public ArrayList<Integer> reglaDeRepeticion() {
+        return null;
     }
 }

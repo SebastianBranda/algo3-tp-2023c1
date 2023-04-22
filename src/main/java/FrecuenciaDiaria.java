@@ -1,5 +1,6 @@
 import java.time.LocalDateTime;
 import java.time.temporal.ChronoUnit;
+import java.util.ArrayList;
 
 public class FrecuenciaDiaria extends Frecuencia{
     private int intervaloDias;
@@ -8,7 +9,7 @@ public class FrecuenciaDiaria extends Frecuencia{
         this.fechaInicial = fecha;
         this.cantidadRepeticiones = 0;
         this.esDuracionInfinita = false;
-        this.intervaloDias = 0;
+        this.intervaloDias = 1;
     }
     public FrecuenciaDiaria(LocalDateTime fechaInicial, boolean esDuracionInfinita, int intervaloDias){
         this.fechaInicial = fechaInicial;
@@ -27,5 +28,10 @@ public class FrecuenciaDiaria extends Frecuencia{
         this.cantidadRepeticiones = cantidadRepeticiones;
         this.esDuracionInfinita = false;
         this.intervaloDias = intervaloDias;
+    }
+
+    @Override
+    public ArrayList<Integer> reglaDeRepeticion() {
+        return new ArrayList<>(this.intervaloDias);
     }
 }
