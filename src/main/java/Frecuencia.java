@@ -1,4 +1,7 @@
+import java.time.LocalDateTime;
+
 abstract class Frecuencia {
-    protected int duracion;
+    protected LocalDateTime fechaInicial;
+    protected int cantidadRepeticiones;
     protected boolean esDuracionInfinita;
 }
