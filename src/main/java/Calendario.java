@@ -96,11 +96,26 @@ public class Calendario {
         LocalDateTime inicio = LocalDateTime.of(fecha.getYear(), fecha.getMonth(), 1, 0, 0);
         LocalDateTime fin = LocalDateTime.of(fecha.getYear(), fecha.getMonth(), ultimoDiaDelMes, 23, 59);
         for(var evento: eventos){
-            actividadesDelMes.addAll(evento.eventosRepetidosEntreFechas(inicio, fin));
+            if(evento.eventosRepetidosEntreFechas(inicio, fin) != null) {
+                actividadesDelMes.addAll(evento.eventosRepetidosEntreFechas(inicio, fin));
+            }
         }
         for(var tarea: tareas){
-            actividadesDelMes.addAll(tarea.obtenerTareaEntreFechas(inicio, fin));
+            if(tarea.obtenerTareaEntreFechas(inicio, fin) != null) {
+                actividadesDelMes.addAll(tarea.obtenerTareaEntreFechas(inicio, fin));
+            }
         }
         return actividadesDelMes;
+    }
+
+    public ArrayList<Actividad> obtenerTodasActividades(){
+        ArrayList<Actividad> actividades = new ArrayList<>();
+        for(var e: this.eventos){
+            actividades.add(e);
+        }
+        for(var a: this.tareas){
+            actividades.add(a);
+        }
+        return actividades;
     }
 }

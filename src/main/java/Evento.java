@@ -117,12 +117,15 @@ public class Evento extends Actividad {
             aux = aux.plusDays(diferenciaDias);
         }
         int cantReps = this.frecuencia.getCantidadRepeticiones();
-        while(aux.isBefore(fin) && aux.isBefore(this.fechaHoraFin) && cantReps > 0){
+        if(this.frecuencia.getEsDuracionInfinita()){
+            cantReps = Integer.MAX_VALUE;
+        }
+        while(aux.isBefore(fin) && cantReps > 0){
             int diferenciaDias;
             for(var diaDeRepeticion: this.frecuencia.reglaDeRepeticion()){
                 diferenciaDias = aux.getDayOfWeek().getValue() - diaDeRepeticion;
                 LocalDateTime fechaNuevoEventoRep = aux.plusDays(diferenciaDias);
-                if(fechaNuevoEventoRep.isBefore(fin) && fechaNuevoEventoRep.isBefore(this.fechaHoraFin) && cantReps > 0){
+                if(fechaNuevoEventoRep.isBefore(fin) && cantReps > 0){
                     eRep.add(new EventoRepetido(this, fechaNuevoEventoRep, fechaNuevoEventoRep.plusMinutes(duracionMinutos)));
                     cantReps--;
                 }

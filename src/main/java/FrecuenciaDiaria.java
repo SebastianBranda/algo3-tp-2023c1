@@ -32,6 +32,8 @@ public class FrecuenciaDiaria extends Frecuencia{
 
     @Override
     public ArrayList<Integer> reglaDeRepeticion() {
-        return new ArrayList<>(this.intervaloDias);
+        ArrayList<Integer> reglaRep = new ArrayList<>();
+        reglaRep.add(this.intervaloDias);
+        return reglaRep;
     }
 }
