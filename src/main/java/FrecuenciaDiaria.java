@@ -19,13 +19,13 @@ public class FrecuenciaDiaria extends Frecuencia{
     public FrecuenciaDiaria(LocalDateTime fechaInicial, LocalDateTime fechaFinal,int intervaloDias){
         this.fechaInicial = fechaInicial;
         long cantDias = fechaInicial.until(fechaFinal, ChronoUnit.DAYS);
-        this.cantidadRepeticiones = (int) (cantDias % intervaloDias);
+        this.cantidadRepeticiones = (int) (cantDias / intervaloDias);
         this.esDuracionInfinita = false;
         this.intervaloDias = intervaloDias;
     }
     public FrecuenciaDiaria(LocalDateTime fechaInicial, int cantidadRepeticiones, int intervaloDias){
         this.fechaInicial = fechaInicial;
-        this.cantidadRepeticiones = cantidadRepeticiones;
+        this.cantidadRepeticiones = cantidadRepeticiones-1;
         this.esDuracionInfinita = false;
         this.intervaloDias = intervaloDias;
     }

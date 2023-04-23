@@ -12,4 +12,7 @@ abstract class Frecuencia {
     public boolean getEsDuracionInfinita(){
         return this.esDuracionInfinita;
     }
+    public LocalDateTime getFechaInicial(){
+        return this.fechaInicial;
+    }
 }
