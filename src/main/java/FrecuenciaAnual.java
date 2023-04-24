@@ -15,7 +15,7 @@ public class FrecuenciaAnual extends Frecuencia{
     }
     public FrecuenciaAnual(LocalDateTime fechaInicial, LocalDateTime fechaFinal) {
         this.fechaInicial = fechaInicial;
-        this.cantidadRepeticiones = (int) fechaInicial.until(fechaInicial, ChronoUnit.YEARS);
+        this.cantidadRepeticiones = (int) fechaInicial.until(fechaFinal, ChronoUnit.YEARS);
         this.esDuracionInfinita = false;
     }
     public FrecuenciaAnual(LocalDateTime fechaInicial, int cantReps){

@@ -5,7 +5,7 @@ import java.util.ArrayList;
 public class FrecuenciaMensual extends Frecuencia{
     public FrecuenciaMensual(LocalDateTime fecha){
         this.fechaInicial = fecha;
-        this.cantidadRepeticiones = 0;
+        this.cantidadRepeticiones = 1;
         this.esDuracionInfinita = false;
     }
     public FrecuenciaMensual(LocalDateTime fechaInicial, boolean esDuracionInfinita){
@@ -15,7 +15,7 @@ public class FrecuenciaMensual extends Frecuencia{
     }
     public FrecuenciaMensual(LocalDateTime fechaInicial, LocalDateTime fechaFinal) {
         this.fechaInicial = fechaInicial;
-        this.cantidadRepeticiones = (int) fechaInicial.until(fechaInicial, ChronoUnit.MONTHS);
+        this.cantidadRepeticiones = (int) fechaInicial.until(fechaFinal, ChronoUnit.MONTHS);
         this.esDuracionInfinita = false;
     }
     public FrecuenciaMensual(LocalDateTime fechaInicial, int cantReps){

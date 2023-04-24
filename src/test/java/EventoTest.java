@@ -77,4 +77,101 @@ public class EventoTest {
 
         Assert.assertEquals(2, evRepetidos.size());
     }
+    @Test
+    public void testEventoConRepeticionesSemanalesHastaCantidadDeterminada() {
+        // Se repite todos los dias martes y jueves desde 2023/03/01 hasta cumplir 20 repeticiones
+        int cantidadRepeticiones = 20;
+        LocalDateTime fecha = LocalDateTime.of(2023, 03, 01, 01, 01);
+        DayOfWeek[] dias = new DayOfWeek[]{DayOfWeek.TUESDAY, DayOfWeek.THURSDAY};
+        FrecuenciaSemanal freqSem = new FrecuenciaSemanal(fecha, cantidadRepeticiones, dias);
+        Evento e = new Evento("t","d",fecha, fecha.plusMinutes(20), false, freqSem, TipoFrecuencia.SEMANAL, true);
+
+        LocalDateTime inicio2023 = LocalDateTime.of(2023, 01, 01, 01, 01);
+        LocalDateTime fin2023 = LocalDateTime.of(2023, 12, 31, 23, 59);
+        ArrayList<EventoRepetido> evRepetidos = e.eventosRepetidosEntreFechas(inicio2023, fin2023);
+
+        Assert.assertEquals(cantidadRepeticiones, evRepetidos.size());
+    }
+    @Test
+    public void testEventoConRepeticionesMensualesInfinitas() {
+        // Se repite todos los meses desde 1990/01/01
+        LocalDateTime fecha = LocalDateTime.of(1990, 01, 01, 01, 01);
+        FrecuenciaMensual freq = new FrecuenciaMensual(fecha, true);
+        Evento e = new Evento("t","d",fecha, fecha.plusMinutes(20), false, freq, TipoFrecuencia.MENSUAL, true);
+
+        LocalDateTime inicio2023 = LocalDateTime.of(2023, 01, 01, 01, 01);
+        LocalDateTime fin2023 = LocalDateTime.of(2023, 12, 31, 23, 59);
+        ArrayList<EventoRepetido> evRepetidos = e.eventosRepetidosEntreFechas(inicio2023, fin2023);
+
+        Assert.assertEquals(12, evRepetidos.size());
+    }
+    @Test
+    public void testEventoConRepeticionesMensualesHastaFechaDeterminada() {
+        // Se repite todos los meses desde 1990/01/01 hasta 2023/05/02. En el año 2023 se esperan ver 5 repeticiones
+        LocalDateTime fecha = LocalDateTime.of(1990, 01, 01, 01, 01);
+        LocalDateTime fechaFin = LocalDateTime.of(2023, 05, 02, 01, 01);
+        FrecuenciaMensual freq = new FrecuenciaMensual(fecha, fechaFin);
+        Evento e = new Evento("t","d",fecha, fecha.plusMinutes(20), false, freq, TipoFrecuencia.MENSUAL, true);
+
+        LocalDateTime inicio2023 = LocalDateTime.of(2023, 01, 01, 01, 01);
+        LocalDateTime fin2023 = LocalDateTime.of(2023, 12, 31, 23, 59);
+        ArrayList<EventoRepetido> evRepetidos = e.eventosRepetidosEntreFechas(inicio2023, fin2023);
+
+        Assert.assertEquals(5, evRepetidos.size());
+    }
+    @Test
+    public void testEventoConRepeticionesMensualesHastaCantidadDeterminada() {
+        // Se repite todos los meses desde 2023/01/01, durante 6 repeticiones
+        int cantReps = 6;
+        LocalDateTime fecha = LocalDateTime.of(2023, 01, 01, 01, 01);
+        FrecuenciaMensual freq = new FrecuenciaMensual(fecha, cantReps);
+        Evento e = new Evento("t","d",fecha, fecha.plusMinutes(20), false, freq, TipoFrecuencia.MENSUAL, true);
+
+        LocalDateTime inicio2023 = LocalDateTime.of(2023, 01, 01, 01, 01);
+        LocalDateTime fin2023 = LocalDateTime.of(2023, 12, 31, 23, 59);
+        ArrayList<EventoRepetido> evRepetidos = e.eventosRepetidosEntreFechas(inicio2023, fin2023);
+
+        Assert.assertEquals(cantReps, evRepetidos.size());
+    }
+    @Test
+    public void testEventoConRepeticionAnualInfinita() {
+        // Se repite todos los años el 18 de diciembre
+        LocalDateTime fecha = LocalDateTime.of(2022, 12, 18, 01, 01);
+        FrecuenciaAnual freq = new FrecuenciaAnual(fecha, true);
+        Evento e = new Evento("t","d",fecha, fecha.plusMinutes(20), false, freq, TipoFrecuencia.ANUAL, true);
+
+        LocalDateTime inicio2022 = LocalDateTime.of(2023, 01, 01, 01, 01);
+        LocalDateTime fin2026 = LocalDateTime.of(2026, 12, 31, 23, 59);
+        ArrayList<EventoRepetido> evRepetidos = e.eventosRepetidosEntreFechas(inicio2022, fin2026);
+
+        Assert.assertEquals(4, evRepetidos.size());
+    }
+    @Test
+    public void testEventoConRepeticionAnualHastaFechaDeterminada() {
+        // Se repite desde 2023/12/18 hasta 2026/07/19
+        LocalDateTime fecha = LocalDateTime.of(2022, 12, 18, 01, 01);
+        LocalDateTime fechaFin = LocalDateTime.of(2026, 07, 19, 01, 01);
+        FrecuenciaAnual freq = new FrecuenciaAnual(fecha, fechaFin);
+        Evento e = new Evento("t","d",fecha, fecha.plusMinutes(20), false, freq, TipoFrecuencia.ANUAL, true);
+
+        LocalDateTime inicio2022 = LocalDateTime.of(2023, 01, 01, 01, 01);
+        LocalDateTime fin2050 = LocalDateTime.of(2050, 12, 31, 23, 59);
+        ArrayList<EventoRepetido> evRepetidos = e.eventosRepetidosEntreFechas(inicio2022, fin2050);
+
+        Assert.assertEquals(3, evRepetidos.size());
+    }
+    @Test
+    public void testEventoConRepeticionAnualHastaCantidadRepeticiones() {
+        // Se repite desde 2023/12/18 durante 4 repeticiones
+        int cantReps = 4;
+        LocalDateTime fecha = LocalDateTime.of(2022, 12, 18, 01, 01);
+        FrecuenciaAnual freq = new FrecuenciaAnual(fecha, cantReps);
+        Evento e = new Evento("t","d",fecha, fecha.plusMinutes(20), false, freq, TipoFrecuencia.ANUAL, true);
+
+        LocalDateTime inicio2022 = LocalDateTime.of(2023, 01, 01, 01, 01);
+        LocalDateTime fin2050 = LocalDateTime.of(2050, 12, 31, 23, 59);
+        ArrayList<EventoRepetido> evRepetidos = e.eventosRepetidosEntreFechas(inicio2022, fin2050);
+
+        Assert.assertEquals(cantReps, evRepetidos.size());
+    }
 }

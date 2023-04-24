@@ -150,17 +150,20 @@ public class Evento extends Actividad {
     private ArrayList<EventoRepetido> repeticionesEntreFechasCasoMensual(LocalDateTime inicio, LocalDateTime fin){
         long duracionMinutos = this.getFechaHora().until(this.fechaHoraFin, ChronoUnit.MINUTES);
         ArrayList<EventoRepetido> eRep = new ArrayList<>();
-        eRep.add(new EventoRepetido(this, this.getFechaHora(), this.getFechaHora().plusMinutes(duracionMinutos)));
-        LocalDateTime aux = this.getFechaHora().plusMonths(1);
+        LocalDateTime aux = this.getFechaHora();
+        int cantReps = this.frecuencia.getCantidadRepeticiones();
+        if(this.getFechaHora().isBefore(inicio)){
+            aux = inicio;
+            cantReps = this.frecuencia.getCantidadRepeticiones() - (int) this.getFechaHora().until(inicio, ChronoUnit.MONTHS) + 1;
+        }
         if(this.frecuencia.getEsDuracionInfinita()){
             while(aux.isBefore(fin)){
-                eRep.add(new EventoRepetido(this, this.getFechaHora(), this.getFechaHora().plusMinutes(duracionMinutos)));
+                eRep.add(new EventoRepetido(this, aux, aux.plusMinutes(duracionMinutos)));
                 aux = aux.plusMonths(1);
             }
         }else{
-            int cantReps = this.frecuencia.getCantidadRepeticiones();
             while(aux.isBefore(fin) && cantReps > 0){
-                eRep.add(new EventoRepetido(this, this.getFechaHora(), this.getFechaHora().plusMinutes(duracionMinutos)));
+                eRep.add(new EventoRepetido(this, aux, aux.plusMinutes(duracionMinutos)));
                 aux = aux.plusMonths(1);
                 cantReps--;
             }
@@ -170,17 +173,20 @@ public class Evento extends Actividad {
     private ArrayList<EventoRepetido> repeticionesEntreFechasCasoAnual(LocalDateTime inicio, LocalDateTime fin){
         long duracionMinutos = this.getFechaHora().until(this.fechaHoraFin, ChronoUnit.MINUTES);
         ArrayList<EventoRepetido> eRep = new ArrayList<>();
-        eRep.add(new EventoRepetido(this, this.getFechaHora(), this.getFechaHora().plusMinutes(duracionMinutos)));
-        LocalDateTime aux = this.getFechaHora().plusYears(1);
+        LocalDateTime aux = this.getFechaHora();
+        int cantReps = this.frecuencia.getCantidadRepeticiones();
+        if(this.getFechaHora().isBefore(inicio)){
+            aux = inicio;
+            cantReps = this.frecuencia.getCantidadRepeticiones() - (int) this.getFechaHora().until(inicio, ChronoUnit.YEARS);
+        }
         if(this.frecuencia.getEsDuracionInfinita()){
             while(aux.isBefore(fin)){
-                eRep.add(new EventoRepetido(this, this.getFechaHora(), this.getFechaHora().plusMinutes(duracionMinutos)));
+                eRep.add(new EventoRepetido(this, aux, aux.plusMinutes(duracionMinutos)));
                 aux = aux.plusYears(1);
             }
         }else{
-            int cantReps = this.frecuencia.getCantidadRepeticiones();
             while(aux.isBefore(fin) && cantReps > 0){
-                eRep.add(new EventoRepetido(this, this.getFechaHora(), this.getFechaHora().plusMinutes(duracionMinutos)));
+                eRep.add(new EventoRepetido(this, aux, aux.plusMinutes(duracionMinutos)));
                 aux = aux.plusYears(1);
                 cantReps--;
             }
