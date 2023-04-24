@@ -1,19 +1,33 @@
 import java.time.LocalDateTime;
-import java.util.HashMap;
+import java.util.ArrayList;
 
 public class Tarea extends Actividad{
-
     private Boolean estaCompletada;
-    @Override
-    protected void modificar(){};
-    public Tarea(){
-        super();
-    }
-    public Tarea(String titulo, String descripcion, LocalDateTime fechaHora, LocalDateTime fechaHoraFin, HashMap<String, Alarma> alarmas, Boolean esActividadDelDia, Boolean estaCompletada){
-        super(titulo, descripcion, fechaHora, fechaHoraFin, alarmas, esActividadDelDia);
+
+    public Tarea(String titulo, String descripcion, LocalDateTime fechaHora, Boolean esActividadDelDia, Boolean estaCompletada){
+        this.setTitulo(titulo);
+        this.setDescripcion(descripcion);
+        this.setFechaHora(fechaHora);
+        this.setEsActividadDelDia(esActividadDelDia);
         this.estaCompletada = estaCompletada;
     }
-    public Boolean marcarComoCompleta() {
-        return this.estaCompletada = true;
+    public void setEstaCompletada(Boolean b) {
+        this.estaCompletada = b;
+    }
+
+    public void modificar(String titulo, String descripcion, LocalDateTime fechaHora, Boolean esActividadDelDia, Boolean estaCompletada){
+        this.setTitulo(titulo);
+        this.setDescripcion(descripcion);
+        this.setFechaHora(fechaHora);
+        this.setEsActividadDelDia(esActividadDelDia);
+        this.estaCompletada = estaCompletada;
+    }
+
+    public ArrayList<Tarea> obtenerTareaEntreFechas(LocalDateTime inicio, LocalDateTime fin) {
+        ArrayList<Tarea> tarea = new ArrayList<>();
+        if(this.getFechaHora().isAfter(inicio) && this.getFechaHora().isBefore(fin)){
+            tarea.add(this);
+        }
+        return tarea;
     }
 }

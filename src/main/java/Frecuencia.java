@@ -1,12 +1,18 @@
-import java.time.Duration;
+import java.time.LocalDateTime;
+import java.util.ArrayList;
 
 abstract class Frecuencia {
-    protected Duration duracionFrecuencia;
-
-    public Frecuencia(){}
-
-    public Frecuencia(Duration duracionFrecuencia){
-        this.duracionFrecuencia = duracionFrecuencia;
+    protected LocalDateTime fechaInicial;
+    protected int cantidadRepeticiones;
+    protected boolean esDuracionInfinita;
+    public abstract ArrayList<Integer> reglaDeRepeticion();
+    public int getCantidadRepeticiones(){
+        return this.cantidadRepeticiones;
     }
-
+    public boolean getEsDuracionInfinita(){
+        return this.esDuracionInfinita;
+    }
+    public LocalDateTime getFechaInicial(){
+        return this.fechaInicial;
+    }
 }

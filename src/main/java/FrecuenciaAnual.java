@@ -1,12 +1,31 @@
-import java.time.Duration;
+import java.time.LocalDateTime;
+import java.time.temporal.ChronoUnit;
+import java.util.ArrayList;
 
 public class FrecuenciaAnual extends Frecuencia{
-
-    public FrecuenciaAnual(){
-        super();
+    public FrecuenciaAnual(LocalDateTime fecha){
+        this.fechaInicial = fecha;
+        this.cantidadRepeticiones = 0;
+        this.esDuracionInfinita = false;
+    }
+    public FrecuenciaAnual(LocalDateTime fechaInicial, boolean esDuracionInfinita){
+        this.fechaInicial = fechaInicial;
+        this.cantidadRepeticiones = 0;
+        this.esDuracionInfinita = esDuracionInfinita;
+    }
+    public FrecuenciaAnual(LocalDateTime fechaInicial, LocalDateTime fechaFinal) {
+        this.fechaInicial = fechaInicial;
+        this.cantidadRepeticiones = (int) fechaInicial.until(fechaFinal, ChronoUnit.YEARS);
+        this.esDuracionInfinita = false;
+    }
+    public FrecuenciaAnual(LocalDateTime fechaInicial, int cantReps){
+        this.fechaInicial = fechaInicial;
+        this.cantidadRepeticiones = cantReps;
+        this.esDuracionInfinita = false;
     }
 
-    public FrecuenciaAnual(Duration duracionFrecuencia){
-        super(duracionFrecuencia);
+    @Override
+    public ArrayList<Integer> reglaDeRepeticion() {
+        return null;
     }
 }
