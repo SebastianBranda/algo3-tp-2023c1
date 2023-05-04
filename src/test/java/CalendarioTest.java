@@ -45,7 +45,7 @@ public class CalendarioTest {
 
         cal.modificarEvento(ev, evNuevo);
 
-        Assert.assertEquals("Test Evento Nuevo", cal.obtenerTodasActividades().get(0).getTitulo());
+        Assert.assertEquals("Test Evento Nuevo", cal.obtenerTodasActividades().get(0).titulo);
     }
     @Test
     public void tareaEsReemplazada() {
@@ -57,7 +57,7 @@ public class CalendarioTest {
 
         cal.modificarTarea(tarea, tareaNueva);
 
-        Assert.assertEquals("La tarea fue reemplazada", cal.obtenerTodasActividades().get(0).getDescripcion());
+        Assert.assertEquals("La tarea fue reemplazada", cal.obtenerTodasActividades().get(0).descripcion);
     }
     @Test
     public void testEliminarEvento() {

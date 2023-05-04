@@ -2,36 +2,12 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 
 abstract class Actividad {
-    private String titulo;
-    private String descripcion;
-    private LocalDateTime fechaHora;
-    ArrayList<Alarma> alarmas = new ArrayList<>();
-    private Boolean esActividadDelDia;
+    protected String titulo;
+    protected String descripcion;
+    protected LocalDateTime fechaHora;
+    protected ArrayList<Alarma> alarmas;
+    protected Boolean esActividadDelDia;
 
-    protected void setTitulo(String titulo){
-        this.titulo = titulo;
-    }
-    protected String getTitulo(){
-        return this.titulo;
-    }
-    protected void setDescripcion(String desc){
-        this.descripcion = desc;
-    }
-    protected String getDescripcion(){
-        return this.descripcion;
-    }
-    protected void setFechaHora(LocalDateTime fechaYHora){
-        this.fechaHora = fechaYHora;
-    }
-    protected LocalDateTime getFechaHora(){
-        return this.fechaHora;
-    }
-    protected void setEsActividadDelDia(boolean b){
-        this.esActividadDelDia = b;
-    }
-    protected boolean getEsActividadDelDia(){
-        return this.esActividadDelDia;
-    }
     protected void agregarAlarma(Alarma a){
         this.alarmas.add(a);
     }

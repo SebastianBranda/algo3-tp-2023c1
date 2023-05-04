@@ -1,20 +1,22 @@
 import java.time.LocalDateTime;
 import java.time.temporal.ChronoUnit;
+import java.util.ArrayList;
 
 public class EventoRepetido extends Actividad{
     private LocalDateTime fechaHoraFin;
     private Evento eventoOriginal;
 
     public EventoRepetido(Evento original, LocalDateTime fechaHora, LocalDateTime fechaHoraFin){
-        this.setTitulo(original.getTitulo());
-        this.setDescripcion(original.getTitulo());
-        this.setFechaHora(fechaHora);
+        this.alarmas = new ArrayList<Alarma>();
+        this.titulo = original.titulo;
+        this.descripcion = original.descripcion;
+        this.fechaHora = fechaHora;
         this.fechaHoraFin = fechaHoraFin;
-        this.setEsActividadDelDia(original.getEsActividadDelDia());
+        this.esActividadDelDia = original.esActividadDelDia;
         this.eventoOriginal = original;
         // TODO: añadir alarmas del evento original, con las fechas modificadas a las del evento repetido para que posea sus propias alarmas
         for(var alarmaOriginal: this.eventoOriginal.alarmas){
-            long minutosDiferencia = alarmaOriginal.getHorarioAlarma().until(this.eventoOriginal.getFechaHora(), ChronoUnit.MINUTES);
+            long minutosDiferencia = alarmaOriginal.getHorarioAlarma().until(this.eventoOriginal.fechaHora, ChronoUnit.MINUTES);
             switch (alarmaOriginal.tipoAlarma){
                 case EMAIL:
                     this.agregarAlarmaDiferida(new AlarmaEmail(fechaHora, TipoAlarma.EMAIL), minutosDiferencia);
