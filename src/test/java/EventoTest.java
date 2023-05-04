@@ -8,12 +8,13 @@ import java.util.ArrayList;
 public class EventoTest {
     @Test
     public void listaDeAlarmasVacia(){
+        LocalDateTime fecha = LocalDateTime.of(2023, 05, 01, 01, 01);
         Evento e = new Evento("t",
                 "d",
-                LocalDateTime.now(),
+                fecha,
                 LocalDateTime.of(2050, 01, 01, 01, 01),
                 true,
-                new FrecuenciaAnual(LocalDateTime.now()),
+                new FrecuenciaAnual(fecha),
                 TipoFrecuencia.ANUAL,
                 false
                 );
@@ -22,16 +23,17 @@ public class EventoTest {
 
     @Test
     public void nuevaAlarmaAgregaAListaDeAlarmas(){
+        LocalDateTime fecha = LocalDateTime.of(2023, 05, 01, 01, 01);
         Evento e = new Evento("t",
                 "d",
-                LocalDateTime.now(),
+                fecha,
                 LocalDateTime.of(2050, 01, 01, 01, 01),
                 true,
-                new FrecuenciaAnual(LocalDateTime.now()),
+                new FrecuenciaAnual(fecha),
                 TipoFrecuencia.ANUAL,
                 false
         );
-        Alarma alarma= new AlarmaEmail(LocalDateTime.now(), TipoAlarma.EMAIL);
+        Alarma alarma= new AlarmaEmail(fecha, TipoAlarma.EMAIL);
         e.agregarAlarma(alarma);
         Assert.assertEquals(1, e.alarmas.size());
     }
@@ -140,9 +142,9 @@ public class EventoTest {
         FrecuenciaAnual freq = new FrecuenciaAnual(fecha, true);
         Evento e = new Evento("t","d",fecha, fecha.plusMinutes(20), false, freq, TipoFrecuencia.ANUAL, true);
 
-        LocalDateTime inicio2022 = LocalDateTime.of(2023, 01, 01, 01, 01);
+        LocalDateTime inicio2023 = LocalDateTime.of(2023, 01, 01, 01, 01);
         LocalDateTime fin2026 = LocalDateTime.of(2026, 12, 31, 23, 59);
-        ArrayList<EventoRepetido> evRepetidos = e.eventosRepetidosEntreFechas(inicio2022, fin2026);
+        ArrayList<EventoRepetido> evRepetidos = e.eventosRepetidosEntreFechas(inicio2023, fin2026);
 
         Assert.assertEquals(4, evRepetidos.size());
     }
@@ -154,9 +156,9 @@ public class EventoTest {
         FrecuenciaAnual freq = new FrecuenciaAnual(fecha, fechaFin);
         Evento e = new Evento("t","d",fecha, fecha.plusMinutes(20), false, freq, TipoFrecuencia.ANUAL, true);
 
-        LocalDateTime inicio2022 = LocalDateTime.of(2023, 01, 01, 01, 01);
+        LocalDateTime inicio2023 = LocalDateTime.of(2023, 01, 01, 01, 01);
         LocalDateTime fin2050 = LocalDateTime.of(2050, 12, 31, 23, 59);
-        ArrayList<EventoRepetido> evRepetidos = e.eventosRepetidosEntreFechas(inicio2022, fin2050);
+        ArrayList<EventoRepetido> evRepetidos = e.eventosRepetidosEntreFechas(inicio2023, fin2050);
 
         Assert.assertEquals(3, evRepetidos.size());
     }
@@ -164,13 +166,13 @@ public class EventoTest {
     public void testEventoConRepeticionAnualHastaCantidadRepeticiones() {
         // Se repite desde 2023/12/18 durante 4 repeticiones
         int cantReps = 4;
-        LocalDateTime fecha = LocalDateTime.of(2022, 12, 18, 01, 01);
+        LocalDateTime fecha = LocalDateTime.of(2023, 12, 18, 01, 01);
         FrecuenciaAnual freq = new FrecuenciaAnual(fecha, cantReps);
         Evento e = new Evento("t","d",fecha, fecha.plusMinutes(20), false, freq, TipoFrecuencia.ANUAL, true);
 
-        LocalDateTime inicio2022 = LocalDateTime.of(2023, 01, 01, 01, 01);
+        LocalDateTime inicio2023 = LocalDateTime.of(2023, 01, 01, 01, 01);
         LocalDateTime fin2050 = LocalDateTime.of(2050, 12, 31, 23, 59);
-        ArrayList<EventoRepetido> evRepetidos = e.eventosRepetidosEntreFechas(inicio2022, fin2050);
+        ArrayList<EventoRepetido> evRepetidos = e.eventosRepetidosEntreFechas(inicio2023, fin2050);
 
         Assert.assertEquals(cantReps, evRepetidos.size());
     }
