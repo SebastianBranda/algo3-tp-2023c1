@@ -12,8 +12,7 @@ abstract class Actividad {
         this.alarmas.add(a);
     }
     protected void agregarAlarmaDiferida(Alarma a, long minutosAntes){
-        LocalDateTime horario = a.getHorarioAlarma().minusMinutes(minutosAntes);
-        a.setHorarioAlarma(horario);
+        a.setHorarioAlarmaDiferida(minutosAntes);
         this.agregarAlarma(a);
     }
     public void modificarAlarma(Alarma vieja, Alarma nueva){

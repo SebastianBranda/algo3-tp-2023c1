@@ -7,6 +7,9 @@ public abstract class Alarma {
     public void setHorarioAlarma(LocalDateTime d){
         this.horarioAlarma = d;
     }
+    public void setHorarioAlarmaDiferida(long minutosAntes){
+        this.horarioAlarma = this.horarioAlarma.minusMinutes(minutosAntes);
+    }
     public LocalDateTime getHorarioAlarma(){
         return this.horarioAlarma;
     }
