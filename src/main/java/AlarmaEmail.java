@@ -1,9 +1,9 @@
 import java.time.LocalDateTime;
 
 public class AlarmaEmail extends Alarma{
-    public AlarmaEmail(LocalDateTime horario, TipoAlarma tipo){
+    public AlarmaEmail(LocalDateTime horario){
         this.horarioAlarma = horario;
-        this.tipoAlarma = tipo;
+        this.tipoAlarma = TipoAlarma.EMAIL;
     }
     @Override
     public void notificar() {

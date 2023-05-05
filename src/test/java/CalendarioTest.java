@@ -93,7 +93,7 @@ public class CalendarioTest {
         Calendario cal = new Calendario();
         LocalDateTime fecha = LocalDateTime.of(2023, 05, 01, 01, 01);
         Tarea tarea = new Tarea("Test Tarea", "Esto es una tarea", fecha, false, false);
-        AlarmaEmail a = new AlarmaEmail(fecha, TipoAlarma.EMAIL);
+        AlarmaEmail a = new AlarmaEmail(fecha);
 
         tarea.agregarAlarma(a);
         cal.agregarTarea(tarea);
@@ -106,9 +106,9 @@ public class CalendarioTest {
         Calendario cal = new Calendario();
         LocalDateTime fecha = LocalDateTime.of(2023, 05, 01, 01, 01);
         Tarea tarea = new Tarea("Test Tarea", "Esto es una tarea", fecha, false, false);
-        AlarmaEmail a = new AlarmaEmail(fecha, TipoAlarma.EMAIL);
-        AlarmaSonido b = new AlarmaSonido(fecha, TipoAlarma.SONIDO);
-        AlarmaVisual c = new AlarmaVisual(fecha, TipoAlarma.VISUAL);
+        AlarmaEmail a = new AlarmaEmail(fecha);
+        AlarmaSonido b = new AlarmaSonido(fecha);
+        AlarmaVisual c = new AlarmaVisual(fecha);
 
         tarea.agregarAlarma(a);
         tarea.agregarAlarma(b);

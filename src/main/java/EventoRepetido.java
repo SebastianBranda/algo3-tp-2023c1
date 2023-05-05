@@ -19,13 +19,13 @@ public class EventoRepetido extends Actividad{
             long minutosDiferencia = alarmaOriginal.getHorarioAlarma().until(this.eventoOriginal.fechaHora, ChronoUnit.MINUTES);
             switch (alarmaOriginal.tipoAlarma){
                 case EMAIL:
-                    this.agregarAlarmaDiferida(new AlarmaEmail(fechaHora, TipoAlarma.EMAIL), minutosDiferencia);
+                    this.agregarAlarmaDiferida(new AlarmaEmail(fechaHora), minutosDiferencia);
                     break;
                 case SONIDO:
-                    this.agregarAlarmaDiferida(new AlarmaSonido(fechaHora, TipoAlarma.SONIDO), minutosDiferencia);
+                    this.agregarAlarmaDiferida(new AlarmaSonido(fechaHora), minutosDiferencia);
                     break;
                 case VISUAL:
-                    this.agregarAlarmaDiferida(new AlarmaVisual(fechaHora, TipoAlarma.VISUAL), minutosDiferencia);
+                    this.agregarAlarmaDiferida(new AlarmaVisual(fechaHora), minutosDiferencia);
                     break;
             }
         }

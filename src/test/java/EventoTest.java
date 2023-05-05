@@ -33,7 +33,7 @@ public class EventoTest {
                 TipoFrecuencia.ANUAL,
                 false
         );
-        Alarma alarma= new AlarmaEmail(fecha, TipoAlarma.EMAIL);
+        Alarma alarma= new AlarmaEmail(fecha);
         e.agregarAlarma(alarma);
         Assert.assertEquals(1, e.alarmas.size());
     }
