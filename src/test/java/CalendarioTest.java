@@ -118,6 +118,29 @@ public class CalendarioTest {
 
         Assert.assertEquals(3, listaAlarmas.size());
     }
+
+    @Test
+    public void testProximasAlarmasEntreVariasAlarmas() {
+        // se tiene un evento con 1 alarma y una tarea con alarmas con distinto horario
+        // una de ellas coincide con la alarma del evento y resultan las 2 mas proximas
+        Calendario cal = new Calendario();
+        LocalDateTime fechaMasProxima = LocalDateTime.of(2023, 05, 01, 01, 01);
+        LocalDateTime fecha = LocalDateTime.of(2023, 05, 02, 02, 02);
+        FrecuenciaDiaria freq = new FrecuenciaDiaria(fecha);
+        Evento ev = new Evento("Test Evento", "Un evento", fechaMasProxima, fecha.plusMinutes(30), false, freq, TipoFrecuencia.DIARIA, false);
+        Tarea tarea = new Tarea("Test Tarea", "Esto es una tarea", fecha, false, false);
+
+        ev.agregarAlarma(new AlarmaEmail(fechaMasProxima));
+        tarea.agregarAlarma(new AlarmaEmail(fecha));
+        tarea.agregarAlarma(new AlarmaSonido(fecha));
+        tarea.agregarAlarma(new AlarmaVisual(fechaMasProxima));
+        cal.agregarEvento(ev);
+        cal.agregarTarea(tarea);
+        ArrayList<Alarma> listaAlarmas = cal.proximasAlarmas(fechaMasProxima);
+
+        Assert.assertEquals(2, listaAlarmas.size());
+    }
+
     @Test
     public void sinActividadesNoHayActividadesDelDia() {
         Calendario cal = new Calendario();

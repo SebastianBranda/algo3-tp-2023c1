@@ -46,20 +46,26 @@ public class Calendario {
         for(var actividad: this.eventos){
             for(var alarma: actividad.alarmas){
                 long tiempoParaAlarma = time.until(alarma.getHorarioAlarma(), ChronoUnit.MINUTES);
-                if( tiempoParaAlarma >= 0 && tiempoParaAlarma < tiempoMinimo ){
-                    alarmas.add(alarma);
-                }
+                tiempoMinimo = agregarAlarmaAListaDeAlarmasSiEsMasProxima(alarma, alarmas, tiempoParaAlarma, tiempoMinimo);
             }
         }
         for(var actividad: this.tareas){
             for(var alarma: actividad.alarmas){
                 long tiempoParaAlarma = time.until(alarma.getHorarioAlarma(), ChronoUnit.MINUTES);
-                if( tiempoParaAlarma >= 0 && tiempoParaAlarma < tiempoMinimo ){
-                    alarmas.add(alarma);
-                }
+                tiempoMinimo = agregarAlarmaAListaDeAlarmasSiEsMasProxima(alarma, alarmas, tiempoParaAlarma, tiempoMinimo);
             }
         }
         return alarmas;
+    }
+    private long agregarAlarmaAListaDeAlarmasSiEsMasProxima(Alarma alarma, ArrayList<Alarma> lista, long tiempoParaAlarma, long tiempoMinimo){
+        if( tiempoParaAlarma >= 0 && tiempoParaAlarma <= tiempoMinimo ){
+            if(tiempoParaAlarma < tiempoMinimo){
+                lista.clear();
+            }
+            lista.add(alarma);
+            return tiempoParaAlarma;
+        }
+        return tiempoMinimo;
     }
 
     public ArrayList<Actividad> obtenerActividadesDelDia(LocalDateTime fecha){
