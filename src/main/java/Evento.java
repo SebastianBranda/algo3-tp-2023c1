@@ -68,33 +68,34 @@ public class Evento extends Actividad {
         }
         return null;
     }
+    private void agregarEventoRepetidoAListaSiEstaEntreFechas(Evento eventoOriginal, ArrayList<EventoRepetido> lista, LocalDateTime fechaPosibleRepeticion, LocalDateTime inicio, LocalDateTime fin, long duracionEventoOriginal){
+        if( (fechaPosibleRepeticion.isAfter(inicio) || fechaPosibleRepeticion.isEqual(inicio)) && fechaPosibleRepeticion.isBefore(fin)){
+            lista.add(new EventoRepetido(eventoOriginal, fechaPosibleRepeticion, fechaPosibleRepeticion.plusMinutes(duracionEventoOriginal)));
+        }
+    }
     private ArrayList<EventoRepetido> repeticionesEntreFechasCasoDiario(LocalDateTime inicio, LocalDateTime fin){
         long duracionMinutosDelEvento = this.fechaHora.until(this.fechaHoraFin, ChronoUnit.MINUTES);
         int reglaRepeticionDias = this.frecuencia.reglaDeRepeticion().get(0);
         ArrayList<EventoRepetido> eRep = new ArrayList<>();
-        eRep.add(new EventoRepetido(this, this.fechaHora, this.fechaHora.plusMinutes(duracionMinutosDelEvento)));
-        LocalDateTime aux;
+        agregarEventoRepetidoAListaSiEstaEntreFechas(this, eRep, this.fechaHora, inicio, fin, duracionMinutosDelEvento);
+        LocalDateTime fechaRepeticion;
         if(this.frecuencia.getEsDuracionInfinita()){
-                aux = this.fechaHora.minusDays(reglaRepeticionDias);
-                while(aux.isAfter(inicio)){
-                    if(aux.isBefore(fin)){
-                        eRep.add(new EventoRepetido(this, aux, aux.plusMinutes(duracionMinutosDelEvento)));
-                    }
-                    aux = aux.minusDays(reglaRepeticionDias);
-                }
-                aux = this.fechaHora.plusDays(reglaRepeticionDias);
-                while(aux.isBefore(fin)){
-                    if(aux.isAfter(inicio)){
-                        eRep.add(new EventoRepetido(this, aux, aux.plusMinutes(duracionMinutosDelEvento)));
-                    }
-                    aux = aux.plusDays(reglaRepeticionDias);
-                }
+            fechaRepeticion = this.fechaHora.minusDays(reglaRepeticionDias);
+            while(fechaRepeticion.isAfter(inicio)){
+                agregarEventoRepetidoAListaSiEstaEntreFechas(this, eRep, fechaRepeticion, inicio, fin, duracionMinutosDelEvento);
+                fechaRepeticion = fechaRepeticion.minusDays(reglaRepeticionDias);
+            }
+            fechaRepeticion = this.fechaHora.plusDays(reglaRepeticionDias);
+            while(fechaRepeticion.isBefore(fin)){
+                agregarEventoRepetidoAListaSiEstaEntreFechas(this, eRep, fechaRepeticion, inicio, fin, duracionMinutosDelEvento);
+                fechaRepeticion = fechaRepeticion.plusDays(reglaRepeticionDias);
+            }
         }else{
-            aux = this.fechaHora.plusDays(reglaRepeticionDias);
+            fechaRepeticion = this.fechaHora.plusDays(reglaRepeticionDias);
             int cantReps = this.frecuencia.getCantidadRepeticiones();
-            while(aux.isBefore(fin) && cantReps >0){
-                eRep.add(new EventoRepetido(this, aux, aux.plusMinutes(duracionMinutosDelEvento)));
-                aux = aux.plusDays(reglaRepeticionDias);
+            while(fechaRepeticion.isBefore(fin) && cantReps >0){
+                agregarEventoRepetidoAListaSiEstaEntreFechas(this, eRep, fechaRepeticion, inicio, fin, duracionMinutosDelEvento);
+                fechaRepeticion = fechaRepeticion.plusDays(reglaRepeticionDias);
                 cantReps--;
             }
         }
@@ -103,94 +104,68 @@ public class Evento extends Actividad {
     private ArrayList<EventoRepetido> repeticionesEntreFechasCasoSemanal(LocalDateTime inicio, LocalDateTime fin){
         long duracionMinutos = this.fechaHora.until(this.fechaHoraFin, ChronoUnit.MINUTES);
         ArrayList<EventoRepetido> eRep = new ArrayList<>();
-        LocalDateTime aux;
+        LocalDateTime fechaPosibleRepeticion = this.fechaHora;
         int cantReps = this.frecuencia.getCantidadRepeticiones();
-        if(this.fechaHora.isAfter(inicio)){
-            if(this.frecuencia.getEsDuracionInfinita()){
-                aux = inicio;
-            }else{
-                aux = this.fechaHora;
-            }
-        }else{
-            //  hallar el primer dia en el cual debe haber repeticion
-            aux = inicio;
-            int diaInicio = aux.getDayOfWeek().getValue();
-            int diferenciaDias = -1;
-            for(var diaDeRepeticion: this.frecuencia.reglaDeRepeticion()){
-                if(diaDeRepeticion >= diaInicio){
-                    diferenciaDias = diaDeRepeticion - diaInicio;
-                    break;
-                }
-            }
-            if(diferenciaDias<0){
-                diferenciaDias =  7 - diaInicio + this.frecuencia.reglaDeRepeticion().get(0);
-            }
-            aux = aux.plusDays(diferenciaDias);
-            // TODO: remover cantida de repeticiones del evento, que no forman parte del intervalo de inicio a fin
+        if(this.fechaHora.isBefore(inicio)){
             long cantDiasNoIncluidos = this.frecuencia.getFechaInicial().until(inicio, ChronoUnit.DAYS);
             int cantRepsNoIncluidas = ((int) (cantDiasNoIncluidos/7)) * this.frecuencia.reglaDeRepeticion().size();
             cantReps = cantReps - cantRepsNoIncluidas;
         }
         if(this.frecuencia.getEsDuracionInfinita()){
+            fechaPosibleRepeticion = inicio;
             cantReps = Integer.MAX_VALUE;
         }
         int diferenciaDias;
-        while(aux.isBefore(fin) && cantReps > 0){
+        while(fechaPosibleRepeticion.isBefore(fin) && cantReps > 0){
             for(var diaDeRepeticion: this.frecuencia.reglaDeRepeticion()){
-                diferenciaDias = diaDeRepeticion - aux.getDayOfWeek().getValue();
-                LocalDateTime fechaNuevoEventoRep = aux.plusDays(diferenciaDias);
-                if(fechaNuevoEventoRep.isAfter(inicio) && fechaNuevoEventoRep.isBefore(fin) && cantReps > 0){
-                    eRep.add(new EventoRepetido(this, fechaNuevoEventoRep, fechaNuevoEventoRep.plusMinutes(duracionMinutos)));
+                diferenciaDias = diaDeRepeticion - fechaPosibleRepeticion.getDayOfWeek().getValue();
+                fechaPosibleRepeticion = fechaPosibleRepeticion.plusDays(diferenciaDias);
+                if(fechaPosibleRepeticion.isAfter(inicio) && fechaPosibleRepeticion.isBefore(fin) && cantReps > 0) {
+                    agregarEventoRepetidoAListaSiEstaEntreFechas(this, eRep, fechaPosibleRepeticion, inicio, fin, duracionMinutos);
                     cantReps--;
                 }
             }
-            aux = aux.plusDays(7);
+            fechaPosibleRepeticion = fechaPosibleRepeticion.plusDays(7);
         }
         return eRep;
     }
     private ArrayList<EventoRepetido> repeticionesEntreFechasCasoMensual(LocalDateTime inicio, LocalDateTime fin){
         long duracionMinutos = this.fechaHora.until(this.fechaHoraFin, ChronoUnit.MINUTES);
         ArrayList<EventoRepetido> eRep = new ArrayList<>();
-        LocalDateTime aux = this.fechaHora;
+        LocalDateTime fechaPosibleRepeticion = this.fechaHora;
         int cantReps = this.frecuencia.getCantidadRepeticiones();
         if(this.fechaHora.isBefore(inicio)){
-            aux = inicio;
+            fechaPosibleRepeticion = inicio;
             cantReps = this.frecuencia.getCantidadRepeticiones() - (int) this.fechaHora.until(inicio, ChronoUnit.MONTHS) + 1;
         }
         if(this.frecuencia.getEsDuracionInfinita()){
-            while(aux.isBefore(fin)){
-                eRep.add(new EventoRepetido(this, aux, aux.plusMinutes(duracionMinutos)));
-                aux = aux.plusMonths(1);
-            }
-        }else{
-            while(aux.isBefore(fin) && cantReps > 0){
-                eRep.add(new EventoRepetido(this, aux, aux.plusMinutes(duracionMinutos)));
-                aux = aux.plusMonths(1);
-                cantReps--;
-            }
+            fechaPosibleRepeticion = inicio;
+            cantReps = Integer.MAX_VALUE;
+        }
+        while(fechaPosibleRepeticion.isBefore(fin) && cantReps > 0){
+            agregarEventoRepetidoAListaSiEstaEntreFechas(this, eRep, fechaPosibleRepeticion, inicio, fin, duracionMinutos);
+            cantReps--;
+            fechaPosibleRepeticion = fechaPosibleRepeticion.plusMonths(1);
         }
         return eRep;
     }
     private ArrayList<EventoRepetido> repeticionesEntreFechasCasoAnual(LocalDateTime inicio, LocalDateTime fin){
         long duracionMinutos = this.fechaHora.until(this.fechaHoraFin, ChronoUnit.MINUTES);
         ArrayList<EventoRepetido> eRep = new ArrayList<>();
-        LocalDateTime aux = this.fechaHora;
+        LocalDateTime fechaPosibleRepeticion = this.fechaHora;
         int cantReps = this.frecuencia.getCantidadRepeticiones();
         if(this.fechaHora.isBefore(inicio)){
-            aux = inicio;
+            fechaPosibleRepeticion = inicio;
             cantReps = this.frecuencia.getCantidadRepeticiones() - (int) this.fechaHora.until(inicio, ChronoUnit.YEARS);
         }
         if(this.frecuencia.getEsDuracionInfinita()){
-            while(aux.isBefore(fin)){
-                eRep.add(new EventoRepetido(this, aux, aux.plusMinutes(duracionMinutos)));
-                aux = aux.plusYears(1);
-            }
-        }else{
-            while(aux.isBefore(fin) && cantReps > 0){
-                eRep.add(new EventoRepetido(this, aux, aux.plusMinutes(duracionMinutos)));
-                aux = aux.plusYears(1);
-                cantReps--;
-            }
+            fechaPosibleRepeticion = inicio;
+            cantReps = Integer.MAX_VALUE;
+        }
+        while(fechaPosibleRepeticion.isBefore(fin) && cantReps > 0){
+            agregarEventoRepetidoAListaSiEstaEntreFechas(this, eRep,fechaPosibleRepeticion, inicio, fin, duracionMinutos);
+            cantReps--;
+            fechaPosibleRepeticion = fechaPosibleRepeticion.plusYears(1);
         }
         return eRep;
     }
