@@ -1,6 +1,5 @@
 import org.junit.Assert;
 import org.junit.Test;
-
 import java.time.DayOfWeek;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -232,5 +231,44 @@ public class CalendarioTest {
         ArrayList<Actividad> acts = cal.obtenerActividadesDelMes(fechaInicio);
 
         Assert.assertEquals(cantidadReps, acts.size());
+    }
+    @Test
+    public void testModificarEventoModificaEventosRepetidos() {
+        Calendario calendario = new Calendario();
+        LocalDateTime fechaInicio = LocalDateTime.of(2023, 05, 11, 11, 00);
+        LocalDateTime fechaFin = LocalDateTime.of(2023, 05, 11, 12, 00);
+        FrecuenciaDiaria frecuenciaDiaria = new FrecuenciaDiaria(fechaInicio, 3, 2);
+        FrecuenciaDiaria frecuenciaModificada =new FrecuenciaDiaria(fechaInicio, 2, 3);
+        Evento evento = new Evento("Evento", "Descripcion original", fechaInicio, fechaFin, false, frecuenciaDiaria, TipoFrecuencia.DIARIA, true);
+
+        calendario.agregarEvento(evento);
+        evento.modificar("cambio evento", "cambio descripcion", fechaInicio.plusDays(1), fechaFin.plusDays(1), true, frecuenciaModificada, false );
+        ArrayList<Actividad> listaDeEventosRepetidos = calendario.obtenerActividadesDelMes(fechaInicio);
+
+        for(var eventoRepetido: listaDeEventosRepetidos){
+            Assert.assertEquals("cambio descripcion", eventoRepetido.descripcion);
+        }
+    }
+    @Test
+    public void testEliminarEventoEliminaEventosRepetidos() {
+        // se crean 1 evento con dos repeticiones y 1 evento con tres repeticiones, se elimina el de 3 repeticiones, se esperan 2 eventos repetidos
+        Calendario calendario = new Calendario();
+
+        LocalDateTime fechaInicio1 = LocalDateTime.of(2023, 05, 01, 01, 00);
+        LocalDateTime fechaFin1 = LocalDateTime.of(2023, 05, 01, 02, 30);
+        FrecuenciaDiaria frecuenciaDiaria1 = new FrecuenciaDiaria(fechaInicio1, 2, 1);
+        Evento evento1 = new Evento("evento", "desc", fechaInicio1, fechaFin1, true, frecuenciaDiaria1, TipoFrecuencia.DIARIA, true);
+        calendario.agregarEvento(evento1);
+
+        LocalDateTime fechaInicio2 = LocalDateTime.of(2023, 05, 11, 11, 00);
+        LocalDateTime fechaFin2 = LocalDateTime.of(2023, 05, 11, 12, 00);
+        FrecuenciaDiaria frecuenciaDiaria2 = new FrecuenciaDiaria(fechaInicio2, 3, 1);
+        Evento evento2 = new Evento("evento 2", "desc 2", fechaInicio2, fechaFin2, true, frecuenciaDiaria2, TipoFrecuencia.DIARIA, true);
+        calendario.agregarEvento(evento2);
+
+        calendario.eliminarEvento(evento2);
+        ArrayList<Actividad> eventosRepetidos = calendario.obtenerActividadesDelMes(fechaInicio1);
+
+        Assert.assertEquals(2, eventosRepetidos.size());
     }
 }
