@@ -1,7 +1,8 @@
+import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 
-abstract class Actividad {
+abstract class Actividad implements Serializable {
     protected String titulo;
     protected String descripcion;
     protected LocalDateTime fechaHora;
