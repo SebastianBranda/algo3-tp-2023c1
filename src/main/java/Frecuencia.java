@@ -1,7 +1,8 @@
+import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 
-abstract class Frecuencia {
+abstract class Frecuencia implements Serializable {
     protected LocalDateTime fechaInicial;
     protected int cantidadRepeticiones;
     protected boolean esDuracionInfinita;
