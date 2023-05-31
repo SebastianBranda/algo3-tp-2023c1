@@ -33,7 +33,7 @@ public class TareaTest {
     }
 
     @Test
-    public void tareaDiaCompletoNoCompletada(){
+    public void tareaFechaHoraDiaCompletoNoCompletada(){
         LocalDateTime fecha = LocalDateTime.of(2023, 05, 01, 01, 01);
         Tarea t = new Tarea("t",
                 "d",
@@ -41,12 +41,13 @@ public class TareaTest {
                 true,
                 false
         );
+        Assert.assertEquals(1 , t.fechaHora.size())
         Assert.assertEquals(true, t.esActividadDelDia);
         Assert.assertEquals(false, t.estaCompletada)
     }
 
     @Test
-    public void tareaDiaCompletoCompletada(){
+    public void tareaFechaHoraDiaCompletoCompletada(){
         LocalDateTime fecha = LocalDateTime.of(2023, 05, 01, 01, 01);
         Tarea t = new Tarea("t",
                 "d",
@@ -54,6 +55,7 @@ public class TareaTest {
                 true,
                 true
         );
+        Assert.assertEquals(1 , t.fechaHora.size())
         Assert.assertEquals(true, t.esActividadDelDia);
         Assert.assertEquals(true, t.estaCompletada)
 
@@ -61,7 +63,7 @@ public class TareaTest {
 
 
     @Test
-    public void tareaNoDelDiaCompletada(){
+    public void tareaFechaHoraNoDelDiaCompletada(){
         LocalDateTime fecha = LocalDateTime.of(2023, 05, 01, 01, 01);
         Tarea t = new Tarea("t",
                 "d",
@@ -69,12 +71,13 @@ public class TareaTest {
                 false,
                 true
         );
+        Assert.assertEquals(1 , t.fechaHora.size())
         Assert.assertEquals(false, t.esActividadDelDia);
         Assert.assertEquals(true, t.estaCompletada);
     }
 
     @Test
-    public void tareaNoDelDiaNoCompletada(){
+    public void tareaFechaHoraNoDelDiaNoCompletada(){
         LocalDateTime fecha = LocalDateTime.of(2023, 05, 01, 01, 01);
         Tarea t = new Tarea("t",
                 "d",
@@ -82,6 +85,7 @@ public class TareaTest {
                 false,
                 false
         );
+        Assert.assertEquals(1 , t.fechaHora.size())
         Assert.assertEquals(false, t.esActividadDelDia);
         Assert.assertEquals(false, t.estaCompletada);
     }
