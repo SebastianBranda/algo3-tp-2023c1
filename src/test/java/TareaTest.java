@@ -33,7 +33,7 @@ public class TareaTest {
     }
 
     @Test
-    public void tareaDiaCompleto(){
+    public void tareaDiaCompletoNoCompletada(){
         LocalDateTime fecha = LocalDateTime.of(2023, 05, 01, 01, 01);
         Tarea t = new Tarea("t",
                 "d",
@@ -42,5 +42,48 @@ public class TareaTest {
                 false
         );
         Assert.assertEquals(true, t.esActividadDelDia);
+        Assert.assertEquals(false, t.estaCompletada)
     }
+
+    @Test
+    public void tareaDiaCompletoCompletada(){
+        LocalDateTime fecha = LocalDateTime.of(2023, 05, 01, 01, 01);
+        Tarea t = new Tarea("t",
+                "d",
+                fecha,
+                true,
+                true
+        );
+        Assert.assertEquals(true, t.esActividadDelDia);
+        Assert.assertEquals(true, t.estaCompletada)
+
+    }
+
+
+    @Test
+    public void tareaCompletada(){
+        LocalDateTime fecha = LocalDateTime.of(2023, 05, 01, 01, 01);
+        Tarea t = new Tarea("t",
+                "d",
+                fecha,
+                false,
+                true
+        );
+        Assert.assertEquals(true, t.estaCompletada);
+    }
+
+    @Test
+    public void tareaNoCompletada(){
+        LocalDateTime fecha = LocalDateTime.of(2023, 05, 01, 01, 01);
+        Tarea t = new Tarea("t",
+                "d",
+                fecha,
+                false,
+                false
+        );
+        Assert.assertEquals(false, t.estaCompletada);
+    }
+
+
+
 }
