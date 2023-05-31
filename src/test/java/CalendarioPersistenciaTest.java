@@ -99,4 +99,27 @@ public class CalendarioPersistenciaTest {
         Assert.assertEquals(tarea.esActividadDelDia, tareaCargada.esActividadDelDia);
         Assert.assertEquals(tarea.estaCompletada, tareaCargada.estaCompletada)
     }
+
+    @Test
+    public void persistenciaTestTareaDelDiaNoCompletaConAlarma() {
+        Calendario calendario = new Calendario();
+        LocalDateTime fecha = LocalDateTime.of(2023, 05, 01, 01, 01);
+        Tarea tarea = new Tarea("Test Tarea no del dia no completa", "Esto es una tarea no del dia no completa", fecha, false, false);
+        Alarma alarma= new AlarmaEmail(fecha);
+        tarea.agregarAlarma(alarma);
+        calendario.agregarTarea(tarea);
+        String nombreArchivo = "testTarearNoDelDiaNoCompletaConAlarma.txt";
+
+        calendario.guardarActividades(nombreArchivo);
+         ArrayList<Actividad> actividadesCargadas = calendario.cargarActividades(nombreArchivo);
+        Actividad tareaCargada = actividadesCargadas.get(0);
+
+        Assert.assertEquals(tarea.titulo, tareaCargada.titulo);
+        Assert.assertEquals(tarea.alarmas, tareaCargada.alarmas);
+        Assert.assertEquals(tarea.descripcion, tareaCargada.descripcion);
+        Assert.assertEquals(tarea.fechaHora, tareaCargada.fechaHora);
+        Assert.assertEquals(tarea.esActividadDelDia, tareaCargada.esActividadDelDia);
+        Assert.assertEquals(tarea.estaCompletada, tareaCargada.estaCompletada)
+    }
+
 }
