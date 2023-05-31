@@ -33,48 +33,58 @@ public class TareaTest {
     }
 
     @Test
-    public void tareaDiaCompletoNoCompletada(){
+    public void tareaFechaHoraDiaCompletoNoCompletada(){
         LocalDateTime fecha = LocalDateTime.of(2023, 05, 01, 01, 01);
+        fechaHoraList = [];
         Tarea t = new Tarea("t",
                 "d",
                 fecha,
                 true,
                 false
         );
+        fechaHoraList.append(fecha);
+        Assert.assertEquals(1 , fechaHoraList.size());
         Assert.assertEquals(true, t.esActividadDelDia);
-        Assert.assertEquals(false, t.estaCompletada)
+        Assert.assertEquals(false, t.estaCompletada);
     }
 
     @Test
-    public void tareaDiaCompletoCompletada(){
+    public void tareaFechaHoraDiaCompletoCompletada(){
         LocalDateTime fecha = LocalDateTime.of(2023, 05, 01, 01, 01);
+        fechaHoraList = [];
         Tarea t = new Tarea("t",
                 "d",
                 fecha,
                 true,
                 true
         );
+        fechaHoraList.append(fecha);
+        Assert.assertEquals(1 , fechaHoraList.size());
         Assert.assertEquals(true, t.esActividadDelDia);
-        Assert.assertEquals(true, t.estaCompletada)
+        Assert.assertEquals(true, t.estaCompletada);
 
     }
 
 
     @Test
-    public void tareaNoDelDiaCompletada(){
+    public void tareaFechaHoraNoDelDiaCompletada(){
         LocalDateTime fecha = LocalDateTime.of(2023, 05, 01, 01, 01);
+        fechaHoraList = []
         Tarea t = new Tarea("t",
                 "d",
                 fecha,
                 false,
                 true
         );
+        fechaHoraList.append(fecha);
+        Assert.assertEquals(1 , fechaHoraList.size());
         Assert.assertEquals(false, t.esActividadDelDia);
         Assert.assertEquals(true, t.estaCompletada);
     }
 
     @Test
-    public void tareaNoDelDiaNoCompletada(){
+    public void tareaFechaHoraNoDelDiaNoCompletada(){
+        fechaHoraList = [];
         LocalDateTime fecha = LocalDateTime.of(2023, 05, 01, 01, 01);
         Tarea t = new Tarea("t",
                 "d",
@@ -82,6 +92,8 @@ public class TareaTest {
                 false,
                 false
         );
+        fechaHoraList.append(fecha);
+        Assert.assertEquals(1 , fechaHoraList.size());
         Assert.assertEquals(false, t.esActividadDelDia);
         Assert.assertEquals(false, t.estaCompletada);
     }
