@@ -14,7 +14,7 @@ public class CalendarioPersistenciaTest {
         String nombreArchivo = "test.txt";
 
         calendario.guardarActividades(nombreArchivo);
-         ArrayList<Actividad> actividadesCargadas = calendario.cargarActividades(nombreArchivo);
+        ArrayList<Actividad> actividadesCargadas = calendario.cargarActividades(nombreArchivo);
         Actividad eventoCargado = actividadesCargadas.get(0);
 
         Assert.assertEquals(evento.titulo, eventoCargado.titulo);
