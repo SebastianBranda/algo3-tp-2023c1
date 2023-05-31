@@ -15,7 +15,7 @@ public class CalendarioPersistenciaTest {
         String nombreArchivo = "testEvento.txt";
 
         calendario.guardarActividades(nombreArchivo);
-         ArrayList<Actividad> actividadesCargadas = calendario.cargarActividades(nombreArchivo);
+        ArrayList<Actividad> actividadesCargadas = calendario.cargarActividades(nombreArchivo);
         Actividad eventoCargado = actividadesCargadas.get(0);
 
         Assert.assertEquals(evento.titulo, eventoCargado.titulo);
@@ -23,16 +23,117 @@ public class CalendarioPersistenciaTest {
         Assert.assertEquals(evento.fechaHora, eventoCargado.fechaHora);
         Assert.assertEquals(evento.esActividadDelDia, eventoCargado.esActividadDelDia);
     }
+
+    @Test
+    public void persistenciaTestEventoConAlarma() {
+        Calendario calendario = new Calendario();
+        LocalDateTime fecha = LocalDateTime.of(2023, 05, 01, 01, 01);
+        FrecuenciaDiaria freq = new FrecuenciaDiaria(fecha);
+        Evento evento = new Evento("Test Evento", "Esto es un evento", fecha, fecha.plusMinutes(30), false, freq, TipoFrecuencia.DIARIA, false);
+        Alarma alarma= new AlarmaEmail(fecha);
+        evento.agregarAlarma(alarma);
+        calendario.agregarEvento(evento);
+        String nombreArchivo = "testEvento.txt";
+
+        calendario.guardarActividades(nombreArchivo);
+        ArrayList<Actividad> actividadesCargadas = calendario.cargarActividades(nombreArchivo);
+        Actividad eventoCargado = actividadesCargadas.get(0);
+
+        Assert.assertEquals(evento.titulo, eventoCargado.titulo);
+        Assert.assertEquals(evento.descripcion, eventoCargado.descripcion);
+        Assert.assertEquals(evento.fechaHora, eventoCargado.fechaHora);
+        Assert.assertEquals(evento.esActividadDelDia, eventoCargado.esActividadDelDia);
+        Assert.assertEquals(evento.alarmas, eventoCargado.alarmas);
+    }
+
+    @Test
+    public void persistenciaTestEventoDeDiaCompletoFrecDiaria() {
+        Calendario calendario = new Calendario();
+        LocalDateTime fecha = LocalDateTime.of(2023, 05, 01, 01, 01);
+        FrecuenciaDiaria freq = new FrecuenciaDiaria(fecha);
+        Evento evento = new Evento("Test Evento", "Esto es un evento de dia completo frecuencia diaria", fecha, fecha.plusMinutes(30), true, freq, TipoFrecuencia.DIARIA, false);
+        calendario.agregarEvento(evento);
+        String nombreArchivo = "testEventoDDCFD.txt";
+
+        calendario.guardarActividades(nombreArchivo);
+        ArrayList<Actividad> actividadesCargadas = calendario.cargarActividades(nombreArchivo);
+        Actividad eventoCargado = actividadesCargadas.get(0);
+
+        Assert.assertEquals(evento.titulo, eventoCargado.titulo);
+        Assert.assertEquals(evento.descripcion, eventoCargado.descripcion);
+        Assert.assertEquals(evento.fechaHora, eventoCargado.fechaHora);
+        Assert.assertEquals(evento.esActividadDelDia, eventoCargado.esActividadDelDia);
+    }
+
+    @Test
+    public void persistenciaTestEventoDeDiaCompletoFrecSemanal() {
+        Calendario calendario = new Calendario();
+        LocalDateTime fecha = LocalDateTime.of(2023, 05, 01, 01, 01);
+        FrecuenciaSemanal freq = new FrecuenciaSemanal(fecha);
+        Evento evento = new Evento("Test Evento ", "Esto es un evento de dia completo frecuencia semanal", fecha, fecha.plusMinutes(30), true, freq, TipoFrecuencia.SEMANAL, false);
+        calendario.agregarEvento(evento);
+        String nombreArchivo = "testEventoDDCFS.txt";
+
+        calendario.guardarActividades(nombreArchivo);
+        ArrayList<Actividad> actividadesCargadas = calendario.cargarActividades(nombreArchivo);
+        Actividad eventoCargado = actividadesCargadas.get(0);
+
+        Assert.assertEquals(evento.titulo, eventoCargado.titulo);
+        Assert.assertEquals(evento.descripcion, eventoCargado.descripcion);
+        Assert.assertEquals(evento.fechaHora, eventoCargado.fechaHora);
+        Assert.assertEquals(evento.esActividadDelDia, eventoCargado.esActividadDelDia);
+    }
+
+    @Test
+    public void persistenciaTestEventoDeDiaCompletoFrecMensual() {
+        Calendario calendario = new Calendario();
+        LocalDateTime fecha = LocalDateTime.of(2023, 05, 01, 01, 01);
+        FrecuenciaMensual freq = new FrecuenciaMensual(fecha);
+        Evento evento = new Evento("Test Evento ", "Esto es un evento de dia completo frecuencia mensual", fecha, fecha.plusMinutes(30), true, freq, TipoFrecuencia.MENSUAL, false);
+        calendario.agregarEvento(evento);
+        String nombreArchivo = "testEventoDDCFM.txt";
+
+        calendario.guardarActividades(nombreArchivo);
+        ArrayList<Actividad> actividadesCargadas = calendario.cargarActividades(nombreArchivo);
+        Actividad eventoCargado = actividadesCargadas.get(0);
+
+        Assert.assertEquals(evento.titulo, eventoCargado.titulo);
+        Assert.assertEquals(evento.descripcion, eventoCargado.descripcion);
+        Assert.assertEquals(evento.fechaHora, eventoCargado.fechaHora);
+        Assert.assertEquals(evento.esActividadDelDia, eventoCargado.esActividadDelDia);
+    }
+
+
+    @Test
+    public void persistenciaTestEventoDeDiaCompletoFrecAnual() {
+        Calendario calendario = new Calendario();
+        LocalDateTime fecha = LocalDateTime.of(2023, 05, 01, 01, 01);
+        FrecuenciaAnual freq = new FrecuenciaAnual(fecha);
+        Evento evento = new Evento("Test Evento ", "Esto es un evento de dia completo frecuencia anual", fecha, fecha.plusMinutes(30), true, freq, TipoFrecuencia.A, false);
+        calendario.agregarEvento(evento);
+        String nombreArchivo = "testEventoDDCFA.txt";
+
+        calendario.guardarActividades(nombreArchivo);
+        ArrayList<Actividad> actividadesCargadas = calendario.cargarActividades(nombreArchivo);
+        Actividad eventoCargado = actividadesCargadas.get(0);
+
+        Assert.assertEquals(evento.titulo, eventoCargado.titulo);
+        Assert.assertEquals(evento.descripcion, eventoCargado.descripcion);
+        Assert.assertEquals(evento.fechaHora, eventoCargado.fechaHora);
+        Assert.assertEquals(evento.esActividadDelDia, eventoCargado.esActividadDelDia);
+    }
+
+
     @Test
     public void persistenciaTestTareaDelDiaCompleta() {
         Calendario calendario = new Calendario();
         LocalDateTime fecha = LocalDateTime.of(2023, 05, 01, 01, 01);
-        Tarea tarea = new Tarea("Test Tarea del dia completa", "Esto es una tarea del dia completa", fecha, true, true);
+        Tarea tarea = new Tarea("Test Tarea", "Esto es una tarea del dia completa", fecha, true, true);
         calendario.agregarTarea(tarea);
-        String nombreArchivo = "testTarearDelDiaCompleta.txt";
+        String nombreArchivo = "testTareaDDC.txt";
 
         calendario.guardarActividades(nombreArchivo);
-         ArrayList<Actividad> actividadesCargadas = calendario.cargarActividades(nombreArchivo);
+        ArrayList<Actividad> actividadesCargadas = calendario.cargarActividades(nombreArchivo);
         Actividad tareaCargada = actividadesCargadas.get(0);
 
         Assert.assertEquals(tarea.titulo, tareaCargada.titulo);
@@ -46,12 +147,12 @@ public class CalendarioPersistenciaTest {
     public void persistenciaTestTareaDelDiaNoCompleta() {
         Calendario calendario = new Calendario();
         LocalDateTime fecha = LocalDateTime.of(2023, 05, 01, 01, 01);
-        Tarea tarea = new Tarea("Test Tarea del dia no completa", "Esto es una tarea del dia no completa", fecha, true, false);
+        Tarea tarea = new Tarea("Test Tarea", "Esto es una tarea del dia no completa", fecha, true, false);
         calendario.agregarTarea(tarea);
-        String nombreArchivo = "testTarearDelDiaNoCompleta.txt";
+        String nombreArchivo = "testTareaDDNC.txt";
 
         calendario.guardarActividades(nombreArchivo);
-         ArrayList<Actividad> actividadesCargadas = calendario.cargarActividades(nombreArchivo);
+        ArrayList<Actividad> actividadesCargadas = calendario.cargarActividades(nombreArchivo);
         Actividad tareaCargada = actividadesCargadas.get(0);
 
         Assert.assertEquals(tarea.titulo, tareaCargada.titulo);
@@ -66,12 +167,12 @@ public class CalendarioPersistenciaTest {
     public void persistenciaTestTareaNoDelDiaCompleta() {
         Calendario calendario = new Calendario();
         LocalDateTime fecha = LocalDateTime.of(2023, 05, 01, 01, 01);
-        Tarea tarea = new Tarea("Test Tarea no del dia completa", "Esto es una tarea no del dia completa", fecha, false, true);
+        Tarea tarea = new Tarea("Test Tarea", "Esto es una tarea no del dia completa", fecha, false, true);
         calendario.agregarTarea(tarea);
-        String nombreArchivo = "testTarearNoDelDiaCompleta.txt";
+        String nombreArchivo = "testTareaNDDC.txt";
 
         calendario.guardarActividades(nombreArchivo);
-         ArrayList<Actividad> actividadesCargadas = calendario.cargarActividades(nombreArchivo);
+        ArrayList<Actividad> actividadesCargadas = calendario.cargarActividades(nombreArchivo);
         Actividad tareaCargada = actividadesCargadas.get(0);
 
         Assert.assertEquals(tarea.titulo, tareaCargada.titulo);
@@ -85,12 +186,12 @@ public class CalendarioPersistenciaTest {
     public void persistenciaTestTareaNoDelDiaNoCompleta() {
         Calendario calendario = new Calendario();
         LocalDateTime fecha = LocalDateTime.of(2023, 05, 01, 01, 01);
-        Tarea tarea = new Tarea("Test Tarea no del dia no completa", "Esto es una tarea no del dia no completa", fecha, false, false);
+        Tarea tarea = new Tarea("Test Tarea", "Esto es una tarea no del dia no completa", fecha, false, false);
         calendario.agregarTarea(tarea);
-        String nombreArchivo = "testTarearNoDelDiaNoCompleta.txt";
+        String nombreArchivo = "testTareaNDLNC.txt";
 
         calendario.guardarActividades(nombreArchivo);
-         ArrayList<Actividad> actividadesCargadas = calendario.cargarActividades(nombreArchivo);
+        ArrayList<Actividad> actividadesCargadas = calendario.cargarActividades(nombreArchivo);
         Actividad tareaCargada = actividadesCargadas.get(0);
 
         Assert.assertEquals(tarea.titulo, tareaCargada.titulo);
@@ -104,14 +205,14 @@ public class CalendarioPersistenciaTest {
     public void persistenciaTestTareaDelDiaNoCompletaConAlarma() {
         Calendario calendario = new Calendario();
         LocalDateTime fecha = LocalDateTime.of(2023, 05, 01, 01, 01);
-        Tarea tarea = new Tarea("Test Tarea no del dia no completa", "Esto es una tarea no del dia no completa", fecha, false, false);
+        Tarea tarea = new Tarea("Test Tarea", "Esto es una tarea no del dia no completa", fecha, false, false);
         Alarma alarma= new AlarmaEmail(fecha);
         tarea.agregarAlarma(alarma);
         calendario.agregarTarea(tarea);
-        String nombreArchivo = "testTarearNoDelDiaNoCompletaConAlarma.txt";
+        String nombreArchivo = "testTarearNDLNCCA.txt";
 
         calendario.guardarActividades(nombreArchivo);
-         ArrayList<Actividad> actividadesCargadas = calendario.cargarActividades(nombreArchivo);
+        ArrayList<Actividad> actividadesCargadas = calendario.cargarActividades(nombreArchivo);
         Actividad tareaCargada = actividadesCargadas.get(0);
 
         Assert.assertEquals(tarea.titulo, tareaCargada.titulo);
