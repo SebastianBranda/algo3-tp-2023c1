@@ -12,7 +12,6 @@ public class TareaTest {
         Tarea t = new Tarea("t",
                 "d",
                 fecha,
-                LocalDateTime.of(2050, 01, 01, 01, 01),
                 false,
                 false
                 );
@@ -25,7 +24,6 @@ public class TareaTest {
         Tarea t = new Tarea("t",
                 "d",
                 fecha,
-                LocalDateTime.of(2050, 01, 01, 01, 01),
                 false,
                 false
         );
@@ -34,6 +32,15 @@ public class TareaTest {
         Assert.assertEquals(1, t.alarmas.size());
     }
 
-    
-
+    @Test
+    public void tareaDiaCompleto(){
+        LocalDateTime fecha = LocalDateTime.of(2023, 05, 01, 01, 01);
+        Tarea t = new Tarea("t",
+                "d",
+                fecha,
+                true,
+                false
+        );
+        Assert.assertEquals(true, t.esActividadDelDia);
+    }
 }
