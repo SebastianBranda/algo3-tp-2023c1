@@ -1,6 +1,5 @@
 import org.junit.Assert;
 import org.junit.Test;
-import java.time.DayOfWeek;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 public class TareaTest {
