@@ -109,7 +109,7 @@ public class CalendarioPersistenciaTest {
         Calendario calendario = new Calendario();
         LocalDateTime fecha = LocalDateTime.of(2023, 05, 01, 01, 01);
         FrecuenciaAnual freq = new FrecuenciaAnual(fecha);
-        Evento evento = new Evento("Test Evento ", "Esto es un evento de dia completo frecuencia anual", fecha, fecha.plusMinutes(30), true, freq, TipoFrecuencia.A, false);
+        Evento evento = new Evento("Test Evento ", "Esto es un evento de dia completo frecuencia anual", fecha, fecha.plusMinutes(30), true, freq, TipoFrecuencia.ANUAL, false);
         calendario.agregarEvento(evento);
         String nombreArchivo = "testEventoDDCFA.txt";
 
