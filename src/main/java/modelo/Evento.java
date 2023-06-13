@@ -1,8 +1,9 @@
+package modelo;
+
 import java.time.LocalDateTime;
 import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
 
-enum TipoFrecuencia{DIARIA, SEMANAL, MENSUAL, ANUAL}
 public class Evento extends Actividad {
     private LocalDateTime fechaHoraFin;
     private Frecuencia frecuencia;

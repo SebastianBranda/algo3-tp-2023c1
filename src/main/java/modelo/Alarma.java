@@ -1,7 +1,9 @@
-import java.time.LocalDateTime;
-enum TipoAlarma{ EMAIL, SONIDO, VISUAL}
+package modelo;
 
-public abstract class Alarma {
+import java.io.Serializable;
+import java.time.LocalDateTime;
+
+public abstract class Alarma implements Serializable {
     protected LocalDateTime horarioAlarma;
     protected TipoAlarma tipoAlarma;
     public void setHorarioAlarma(LocalDateTime d){

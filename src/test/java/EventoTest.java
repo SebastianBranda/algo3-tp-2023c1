@@ -1,3 +1,4 @@
+import modelo.*;
 import org.junit.Assert;
 import org.junit.Test;
 
@@ -18,7 +19,7 @@ public class EventoTest {
                 TipoFrecuencia.ANUAL,
                 false
                 );
-        Assert.assertEquals(0, e.alarmas.size());
+        Assert.assertEquals(0, e.obtenerAlarmas().size());
     }
 
     @Test
@@ -35,7 +36,7 @@ public class EventoTest {
         );
         Alarma alarma= new AlarmaEmail(fecha);
         e.agregarAlarma(alarma);
-        Assert.assertEquals(1, e.alarmas.size());
+        Assert.assertEquals(1, e.obtenerAlarmas().size());
     }
     @Test
     public void testEventoConRepeticionesDiariasInfinitas() {

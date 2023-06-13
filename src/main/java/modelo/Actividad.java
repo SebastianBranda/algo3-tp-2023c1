@@ -1,18 +1,20 @@
+package modelo;
+
 import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 
-abstract class Actividad implements Serializable {
+public abstract class Actividad implements Serializable {
     protected String titulo;
     protected String descripcion;
     protected LocalDateTime fechaHora;
     protected ArrayList<Alarma> alarmas;
     protected Boolean esActividadDelDia;
 
-    protected void agregarAlarma(Alarma a){
+    public void agregarAlarma(Alarma a){
         this.alarmas.add(a);
     }
-    protected void agregarAlarmaDiferida(Alarma a, long minutosAntes){
+    public void agregarAlarmaDiferida(Alarma a, long minutosAntes){
         a.setHorarioAlarmaDiferida(minutosAntes);
         this.agregarAlarma(a);
     }
@@ -28,4 +30,18 @@ abstract class Actividad implements Serializable {
         this.alarmas.remove(a);
     }
 
+    public String obtenerTitulo(){
+        return this.titulo;
+    }
+
+    public String obtenerDescripcion(){
+        return this.descripcion;
+    }
+    public LocalDateTime obtenerFecha(){
+        return this.fechaHora;
+    }
+
+    public ArrayList<Alarma> obtenerAlarmas(){
+        return this.alarmas;
+    }
 }
