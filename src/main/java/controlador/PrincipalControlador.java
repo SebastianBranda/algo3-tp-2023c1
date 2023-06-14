@@ -3,6 +3,7 @@ package controlador;
 import modelo.Actividad;
 import modelo.Calendario;
 import modelo.Evento;
+import modelo.Tarea;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -17,6 +18,9 @@ public class PrincipalControlador{
     }
     public void agregarEvento(Evento evento){
         this.calendario.agregarEvento(evento);
+    }
+    public void agregarTarea(Tarea tarea){
+        this.calendario.agregarTarea(tarea);
     }
     public ArrayList<Actividad> obtenerActividadesDelDia(LocalDateTime fecha){
         return this.calendario.obtenerActividadesDelDia(fecha);

@@ -5,6 +5,7 @@ import javafx.application.Application;
 import javafx.stage.Stage;
 
 import java.io.IOException;
+import java.time.LocalDateTime;
 
 public class App extends Application {
     private PrincipalControlador controlador;
@@ -13,7 +14,7 @@ public class App extends Application {
     public void start(Stage stage) throws IOException {
         this.controlador = new PrincipalControlador("archivoCalendario");
         Ventana ventana = new Ventana(this.controlador);
-        ventana.mostrarVentanaDiaria();
+        ventana.mostrarVentanaDiaria(LocalDateTime.now());
     }
 
     @Override

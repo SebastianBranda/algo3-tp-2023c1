@@ -10,12 +10,10 @@ import modelo.*;
 import vista.Ventana;
 
 import java.net.URL;
-import java.time.DayOfWeek;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
-import java.util.TreeSet;
 
 public class VistaAgregarEventoControlador extends BaseControlador implements Initializable {
     @FXML
@@ -165,10 +163,6 @@ public class VistaAgregarEventoControlador extends BaseControlador implements In
             ventana.cerrarEscenarioActual();
             ventana.mostrarVentanaDiaria(LocalDateTime.now());
         }
-    }
-    @FXML
-    void seleccionTipoAlarma(ActionEvent event) {
-        // TODO: es necesario?
     }
     @FXML
     void buttonAgregarNuevaAlarmaAction(){

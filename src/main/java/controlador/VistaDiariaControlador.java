@@ -3,6 +3,7 @@ package controlador;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
@@ -22,6 +23,8 @@ public class VistaDiariaControlador extends BaseControlador implements Initializ
     private LocalDateTime fechaVistaDiaria;
     @FXML
     private Label labelDiaAMostrarVentanaDiaria;
+    @FXML
+    private ComboBox<String> seleccionTipoDeVistaComboBox;
 
     public VistaDiariaControlador(PrincipalControlador principalControlador, Ventana ventana, String archivoFXML, LocalDateTime fecha){
         super(principalControlador, ventana, archivoFXML);
@@ -48,6 +51,20 @@ public class VistaDiariaControlador extends BaseControlador implements Initializ
         ventana.mostrarVentanaAgregarEvento();
     }
     public void crearTareaAccion() {
+        ventana.cerrarEscenarioActual();
+        ventana.mostrarVentanaAgregarTarea();
+    }
+    @FXML
+    void seleccionTipoDeVistaAction(ActionEvent event) {
+        /*
+        String eleccionVista = this.seleccionTipoDeVistaComboBox.getValue();
+        ventana.cerrarEscenarioActual();
+        switch (eleccionVista) {
+            case "Semanal" -> ventana.mostrarVentanaSemanal(fechaVistaDiaria);
+            case "Anual" -> ventana.mostrarVentanaAnual(fechaVistaDiaria);
+            default -> throw new IllegalStateException("Valor inesperado en la eleccion de tipo de Vista: " + eleccionVista);
+        }
+         */
     }
     public void agregarActividadAHorario(Actividad actividad){
         int numeroHora = actividad.obtenerFecha().getHour();
@@ -71,5 +88,8 @@ public class VistaDiariaControlador extends BaseControlador implements Initializ
         this.agregarActividadesAVistaDiaria();
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
         this.labelDiaAMostrarVentanaDiaria.setText(this.fechaVistaDiaria.format(formatter));
+
+        this.seleccionTipoDeVistaComboBox.getItems().add("Semanal");
+        this.seleccionTipoDeVistaComboBox.getItems().add("Anual");
     }
 }
