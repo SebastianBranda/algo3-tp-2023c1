@@ -32,39 +32,31 @@ public class VistaDiariaControlador extends BaseControlador implements Initializ
     }
     @FXML
     void botonVerDiaPrevioAccion(ActionEvent event) {
-        ventana.cerrarEscenarioActual();
-        ventana.mostrarVentanaDiaria(this.fechaVistaDiaria.minusDays(1));
+        this.cambiarEscenarioAVentanaDiaria(this.fechaVistaDiaria.minusDays(1));
     }
     @FXML
     void botonVerDiaActualAccion(ActionEvent event) {
-        ventana.cerrarEscenarioActual();
-        ventana.mostrarVentanaDiaria(LocalDateTime.now());
+        this.cambiarEscenarioAVentanaDiaria(LocalDateTime.now());
     }
     @FXML
     void botonVerDiaPosteriorAccion(ActionEvent event) {
-        ventana.cerrarEscenarioActual();
-        ventana.mostrarVentanaDiaria(this.fechaVistaDiaria.plusDays(1));
+        this.cambiarEscenarioAVentanaDiaria(this.fechaVistaDiaria.plusDays(1));
     }
     @FXML
     public void crearEventoAccion() {
-        ventana.cerrarEscenarioActual();
-        ventana.mostrarVentanaAgregarEvento();
+        this.cambiarEscenarioAVentanaCrearEvento();
     }
     public void crearTareaAccion() {
-        ventana.cerrarEscenarioActual();
-        ventana.mostrarVentanaAgregarTarea();
+        this.cambiarEscenarioAVentanaCrearTarea();
     }
     @FXML
     void seleccionTipoDeVistaAction(ActionEvent event) {
-        /*
         String eleccionVista = this.seleccionTipoDeVistaComboBox.getValue();
-        ventana.cerrarEscenarioActual();
         switch (eleccionVista) {
-            case "Semanal" -> ventana.mostrarVentanaSemanal(fechaVistaDiaria);
-            case "Anual" -> ventana.mostrarVentanaAnual(fechaVistaDiaria);
+            case "Semanal" -> this.cambiarEscenarioAVentanaSemanal(fechaVistaDiaria);
+            case "Mensual" -> this.cambiarEscenarioAVentanaMensual(fechaVistaDiaria);
             default -> throw new IllegalStateException("Valor inesperado en la eleccion de tipo de Vista: " + eleccionVista);
         }
-         */
     }
     public void agregarActividadAHorario(Actividad actividad){
         int numeroHora = actividad.obtenerFecha().getHour();
@@ -90,6 +82,6 @@ public class VistaDiariaControlador extends BaseControlador implements Initializ
         this.labelDiaAMostrarVentanaDiaria.setText(this.fechaVistaDiaria.format(formatter));
 
         this.seleccionTipoDeVistaComboBox.getItems().add("Semanal");
-        this.seleccionTipoDeVistaComboBox.getItems().add("Anual");
+        this.seleccionTipoDeVistaComboBox.getItems().add("Mensual");
     }
 }

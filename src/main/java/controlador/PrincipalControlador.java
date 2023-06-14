@@ -25,6 +25,12 @@ public class PrincipalControlador{
     public ArrayList<Actividad> obtenerActividadesDelDia(LocalDateTime fecha){
         return this.calendario.obtenerActividadesDelDia(fecha);
     }
+    public ArrayList<Actividad> obtenerActividadesDeLaSemana(LocalDateTime fecha){
+        return this.calendario.obtenerActividadesDeLaSemana(fecha);
+    }
+    public ArrayList<Actividad> obtenerActividadesDelMes(LocalDateTime fecha){
+        return this.calendario.obtenerActividadesDelMes(fecha);
+    }
 
     public void guardarEstadoCalendario(){
         this.calendario.guardarActividades(this.archivoCalendario);

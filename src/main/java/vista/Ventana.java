@@ -40,7 +40,6 @@ public class Ventana {
             throw new RuntimeException(e);
         }
     }
-    /*
     public void mostrarVentanaSemanal(LocalDateTime fecha) {
         BaseControlador controlador = new VistaSemanalControlador(this.controladorPrincipal, this, "/ventanaSemanal.fxml", fecha);
         try {
@@ -49,15 +48,14 @@ public class Ventana {
             throw new RuntimeException(e);
         }
     }
-    public void mostrarVentanaAnual(LocalDateTime fecha) {
-        BaseControlador controlador = new VistaAnualControlador(this.controladorPrincipal, this, "/ventanaAnual.fxml", fecha);
+    public void mostrarVentanaMensual(LocalDateTime fecha) {
+        BaseControlador controlador = new VistaMensualControlador(this.controladorPrincipal, this, "/ventanaAnual.fxml", fecha);
         try {
             presentarEscenario(controlador);
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
     }
-     */
     public void mostrarVentanaAgregarEvento(){
         BaseControlador controlador = new VistaAgregarEventoControlador(this.controladorPrincipal, this, "/ventanaAgregarEvento.fxml");
         try {
