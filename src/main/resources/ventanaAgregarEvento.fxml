@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.CheckBox?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.DatePicker?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+
+<VBox prefHeight="600.0" prefWidth="900.0" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1">
+   <children>
+      <Label fx:id="labelTituloVentana" text="Agrega una actividad" />
+      <HBox fx:id="hBoxTitulo" prefHeight="100.0" prefWidth="200.0">
+         <children>
+            <Label text="Titulo" />
+            <TextField fx:id="textFieldTitulo" />
+         </children>
+      </HBox>
+      <HBox fx:id="hBoxDescripcion" prefHeight="100.0" prefWidth="200.0">
+         <children>
+            <Label text="Descripcion" />
+            <TextField fx:id="textFieldDescripcion" />
+         </children>
+      </HBox>
+      <HBox fx:id="hBoxFechaInicio" prefHeight="100.0" prefWidth="200.0">
+         <children>
+            <Label text="Fecha inicio" />
+            <DatePicker fx:id="datePickerInicio" />
+            <Label text="Hora" />
+            <TextField fx:id="textFieldHoraInicio" />
+            <Label text="Minutos" />
+            <TextField fx:id="textFieldMinutos" />
+         </children>
+      </HBox>
+      <HBox fx:id="hBoxFechaFin" prefHeight="100.0" prefWidth="200.0">
+         <children>
+            <Label text="Fecha fin" />
+            <DatePicker fx:id="datePickerFin" />
+            <Label text="Hora" />
+            <TextField fx:id="textFieldHoraFin" />
+            <Label text="Minutos" />
+            <TextField fx:id="textFieldMinutosFin" />
+         </children>
+      </HBox>
+      <CheckBox fx:id="checkboxEsActividadDelDia" mnemonicParsing="false" text="Todo el dia" />
+      <HBox fx:id="hBoxManejoRepeticionesYFrecuencia" prefHeight="100.0" prefWidth="200.0">
+         <children>
+            <VBox fx:id="vBoxFrecuencia" prefHeight="61.0" prefWidth="448.0">
+               <children>
+                  <HBox prefHeight="61.0" prefWidth="305.0">
+                     <children>
+                        <Label text="Tipo de repeticion" />
+                        <ComboBox fx:id="comboBoxFrecuencia" onAction="#seleccionFrecuenciaAction" prefWidth="150.0" />
+                     </children>
+                  </HBox>
+                  <HBox fx:id="hBoxFrecuenciasSegunSeleccion" prefHeight="100.0" prefWidth="200.0" />
+               </children>
+            </VBox>
+            <VBox fx:id="vBoxRepeticion" prefHeight="61.0" prefWidth="419.0">
+               <children>
+                  <HBox prefHeight="100.0" prefWidth="200.0">
+                     <children>
+                        <Label text="Frecuencia" />
+                        <ComboBox fx:id="comboBoxRepeticion" onAction="#seleccionRepeticionAction" prefWidth="150.0" />
+                     </children>
+                  </HBox>
+                  <HBox fx:id="hBoxRepeticionesSegunSeleccion" prefHeight="100.0" prefWidth="200.0" />
+               </children>
+            </VBox>
+         </children>
+      </HBox>
+      <Label text="Alarmas:" />
+      <VBox fx:id="vBoxListadoAlarmas" prefHeight="200.0" prefWidth="100.0" />
+      <Label text="Nueva alarma" />
+      <HBox prefHeight="100.0" prefWidth="200.0">
+         <children>
+            <Label text="Tipo de alarma" />
+            <ComboBox fx:id="comboBoxTipoAlarma" onAction="#seleccionTipoAlarma" prefWidth="150.0" />
+            <Label text="Tiempo previo (en minutos) para la notificacion" />
+            <TextField fx:id="textFieldTiempoAntesAlarma" text="0" />
+            <Button fx:id="buttonAgregarNuevaAlarma" mnemonicParsing="false" onAction="#buttonAgregarNuevaAlarmaAction" text="Agregar alarma" />
+         </children>
+      </HBox>
+      <HBox prefHeight="100.0" prefWidth="200.0">
+         <children>
+            <Button fx:id="buttonAgregarNuevaActividad" mnemonicParsing="false" onAction="#agregarNuevaActividadAccion" text="Agregar evento" />
+            <Button fx:id="buttonCancelar" mnemonicParsing="false" onAction="#cancelarAction" text="Cancelar" />
+         </children>
+      </HBox>
+   </children>
+</VBox>
