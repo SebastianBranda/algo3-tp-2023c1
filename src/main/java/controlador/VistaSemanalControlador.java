@@ -74,7 +74,7 @@ public class VistaSemanalControlador extends BaseControlador implements Initiali
         }
     }
     private void agregarActividadesAVistaSemanal(){
-        this.agregarVBoxAGridpane(this.gridpane, 24, 8);
+        this.ventana.agregarVBoxAGridpane(this.gridpane, 24, 8);
         ArrayList<Actividad> listaActividades = this.principalControlador.obtenerActividadesDeLaSemana(this.fechaSemanalAMostrar);
         for(var actividad: listaActividades){
             this.agregarActividadAHorario(actividad);
@@ -87,7 +87,7 @@ public class VistaSemanalControlador extends BaseControlador implements Initiali
         int hora = fecha.getHour();
 
         CuadroInformativoActividadControlador cuadro = new CuadroInformativoActividadControlador(actividad);
-        VBox vbox = (VBox) this.obtenerElementoDeCeldaEnGridpane(this.gridpane, hora, dia);
+        VBox vbox = (VBox) this.ventana.obtenerElementoDeCeldaEnGridpane(this.gridpane, hora, dia);
         vbox.getChildren().add(cuadro.obtenerCuadroInformativoVista());
     }
 

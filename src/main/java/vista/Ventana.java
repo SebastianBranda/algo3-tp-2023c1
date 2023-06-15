@@ -1,9 +1,13 @@
 package vista;
 
 import controlador.*;
+import javafx.collections.ObservableList;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.layout.GridPane;
+import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
 import java.io.IOException;
@@ -71,5 +75,26 @@ public class Ventana {
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
+    }
+    public void agregarVBoxAGridpane(GridPane pane, int filas, int columnas){
+        for(int i=0; i<columnas;i++){
+            for(int j=0; j<filas;j++){
+                VBox vBox = new VBox();
+                pane.add(vBox, i, j);
+            }
+        }
+    }
+    public Node obtenerElementoDeCeldaEnGridpane(GridPane pane, int fila, int columna){
+        Node nodoCelda = null;
+        ObservableList<Node> children = pane.getChildren();
+        for(Node nodo: children){
+            var row =GridPane.getRowIndex(nodo);
+            var col = GridPane.getColumnIndex(nodo);
+            if(row != null && col != null && row == fila && col == columna){
+                nodoCelda = nodo;
+                break;
+            }
+        }
+        return nodoCelda;
     }
 }
