@@ -77,9 +77,9 @@
             <ComboBox fx:id="comboBoxSeleccionTipoVista" onAction="#comboBoxSeleccionTipoVistaAction" prefWidth="150.0" />
          </children>
       </HBox>
-      <HBox prefHeight="100.0" scaleShape="false">
+      <HBox maxWidth="1.7976931348623157E308" prefHeight="100.0" scaleShape="false">
          <children>
-            <Label text="Label">
+            <Label text="Dias de semana: ">
                <HBox.margin>
                   <Insets left="5.0" right="5.0" />
                </HBox.margin>

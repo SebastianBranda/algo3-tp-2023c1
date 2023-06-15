@@ -53,7 +53,7 @@ public class Ventana {
         }
     }
     public void mostrarVentanaMensual(LocalDateTime fecha) {
-        BaseControlador controlador = new VistaMensualControlador(this.controladorPrincipal, this, "/ventanaAnual.fxml", fecha);
+        BaseControlador controlador = new VistaMensualControlador(this.controladorPrincipal, this, "/ventanaMensual.fxml", fecha);
         try {
             presentarEscenario(controlador);
         } catch (IOException e) {
