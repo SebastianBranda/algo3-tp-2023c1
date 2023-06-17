@@ -74,7 +74,7 @@
                </HBox.margin>
             </Button>
             <Label fx:id="labelTipoDeVista" text="Vista:" />
-            <ComboBox fx:id="comboBoxSeleccionTipoVista" onAction="#comboBoxSeleccionTipoVistaAction" prefWidth="150.0" />
+            <ComboBox fx:id="comboBoxSeleccionTipoVista" onAction="#comboBoxSeleccionTipoVistaAction" prefWidth="150.0" promptText="Semanal" />
          </children>
       </HBox>
       <HBox prefHeight="100.0" scaleShape="false">

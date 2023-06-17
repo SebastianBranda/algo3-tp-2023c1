@@ -9,6 +9,9 @@ import javafx.scene.Scene;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
+import modelo.Evento;
+import modelo.EventoRepetido;
+import modelo.Tarea;
 
 import java.io.IOException;
 import java.time.LocalDateTime;
@@ -68,8 +71,32 @@ public class Ventana {
             throw new RuntimeException(e);
         }
     }
+    public void mostrarVentanaModificarEvento(Evento evento){
+        BaseControlador controlador = new VistaAgregarEventoControlador(this.controladorPrincipal, this, "/ventanaAgregarEvento.fxml", evento);
+        try {
+            presentarEscenario(controlador);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+    public void mostrarVentanaModificarEvento(EventoRepetido evento){
+        BaseControlador controlador = new VistaAgregarEventoControlador(this.controladorPrincipal, this, "/ventanaAgregarEvento.fxml", evento);
+        try {
+            presentarEscenario(controlador);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
     public void mostrarVentanaAgregarTarea(){
         BaseControlador controlador = new VistaAgregarTareaControlador(this.controladorPrincipal, this, "/ventanaAgregarTarea.fxml");
+        try {
+            presentarEscenario(controlador);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+    public void mostrarVentanaModificarTarea(Tarea tarea){
+        BaseControlador controlador = new VistaAgregarTareaControlador(this.controladorPrincipal, this, "/ventanaAgregarTarea.fxml", tarea);
         try {
             presentarEscenario(controlador);
         } catch (IOException e) {

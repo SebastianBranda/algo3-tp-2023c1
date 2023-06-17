@@ -83,7 +83,7 @@
             <Button fx:id="buttonAgregarNuevaAlarma" mnemonicParsing="false" onAction="#buttonAgregarNuevaAlarmaAction" text="Agregar alarma" />
          </children>
       </HBox>
-      <HBox prefHeight="100.0" prefWidth="200.0">
+      <HBox fx:id="hBoxBotones" prefHeight="100.0" prefWidth="200.0">
          <children>
             <Button fx:id="buttonAgregarNuevaActividad" mnemonicParsing="false" onAction="#agregarNuevaActividadAccion" text="Agregar evento" />
             <Button fx:id="buttonCancelar" mnemonicParsing="false" onAction="#cancelarAction" text="Cancelar" />

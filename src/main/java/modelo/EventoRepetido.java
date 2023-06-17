@@ -37,6 +37,10 @@ public class EventoRepetido extends Actividad{
         original.modificar(titulo, descripcion, fechaHora, fechaHoraFin, esActividadDelDia);
     }
 
+    public Evento obtenerEventoOriginal(){
+        return this.eventoOriginal;
+    }
+
     @Override
     public void aceptarVisitante(VisitanteActividad visitante) {
         visitante.visitarEventoRepetido(this);

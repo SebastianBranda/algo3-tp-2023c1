@@ -99,7 +99,6 @@ public class VistaMensualControlador extends BaseControlador implements Initiali
     }
     private void agregarLabelDiasACalendario(){
         LocalDateTime ultimoDiaDelMes = this.fechaMensual.with(TemporalAdjusters.lastDayOfMonth());
-        System.out.println("ultimoDiaDelMes = " + ultimoDiaDelMes);
         int cantidadDiasDelMes = ultimoDiaDelMes.getDayOfMonth();
         for(int i=0; i<cantidadDiasDelMes + 1; i++){
             int filaCalendarioMensual = (this.posicionPrimerDiaDelMes + i) / 7;

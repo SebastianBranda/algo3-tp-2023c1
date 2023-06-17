@@ -1,7 +1,7 @@
 package controlador;
 
 import javafx.animation.AnimationTimer;
-import modelo.Alarma;
+import modelo.*;
 import vista.Ventana;
 
 import java.time.LocalDateTime;
@@ -40,6 +40,23 @@ public abstract class BaseControlador {
     protected void cambiarEscenarioAVentanaCrearTarea(){
         ventana.cerrarEscenarioActual();
         ventana.mostrarVentanaAgregarTarea();
+    }
+    protected void cambiarEscenarioAVentanaModificarActividad(Actividad actividad){
+        ventana.cerrarEscenarioActual();
+        actividad.aceptarVisitante(new VisitanteActividad() {
+            @Override
+            public void visitarEvento(Evento evento) {
+                ventana.mostrarVentanaModificarEvento(evento);
+            }
+            @Override
+            public void visitarTarea(Tarea tarea) {
+                 ventana.mostrarVentanaModificarTarea(tarea);
+            }
+            @Override
+            public void visitarEventoRepetido(EventoRepetido eventoRepetido) {
+                 ventana.mostrarVentanaModificarEvento(eventoRepetido);
+            }
+        });
     }
     private void inicializarNotificadorDeAlarmas(){
         ArrayList<Alarma> alarmas =this.principalControlador.obtenerProximasAlarmas();

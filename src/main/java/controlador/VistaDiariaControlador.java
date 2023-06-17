@@ -1,10 +1,12 @@
 package controlador;
 
 import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import modelo.Actividad;
@@ -65,6 +67,7 @@ public class VistaDiariaControlador extends BaseControlador implements Initializ
 
         CuadroInformativoActividadControlador cuadroInformativo = new CuadroInformativoActividadControlador(actividad);
         VBox cuadro = cuadroInformativo.obtenerCuadroInformativoVista();
+        cuadro.setOnMouseClicked(e->this.cambiarEscenarioAVentanaModificarActividad(actividad));
 
         hBoxHoraEspecifica.getChildren().add(cuadro);
     }

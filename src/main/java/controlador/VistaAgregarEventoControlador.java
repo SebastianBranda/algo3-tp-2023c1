@@ -1,6 +1,7 @@
 package controlador;
 
 import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
@@ -17,6 +18,8 @@ import java.util.ResourceBundle;
 
 public class VistaAgregarEventoControlador extends BaseControlador implements Initializable {
     @FXML
+    private Button buttonAgregarNuevaActividad;
+    @FXML
     private CheckBox checkboxEsActividadDelDia;
     @FXML
     private ComboBox<String> comboBoxFrecuencia;
@@ -28,6 +31,8 @@ public class VistaAgregarEventoControlador extends BaseControlador implements In
     private DatePicker datePickerFin;
     @FXML
     private DatePicker datePickerInicio;
+    @FXML
+    private Label labelTituloVentana;
     @FXML
     private TextField textFieldDescripcion;
     @FXML
@@ -45,6 +50,8 @@ public class VistaAgregarEventoControlador extends BaseControlador implements In
     @FXML
     private VBox vBoxListadoAlarmas;
     @FXML
+    private HBox hBoxBotones;
+    @FXML
     private HBox hBoxFrecuenciasSegunSeleccion;
     @FXML
     private HBox hBoxRepeticionesSegunSeleccion;
@@ -55,10 +62,33 @@ public class VistaAgregarEventoControlador extends BaseControlador implements In
     private DatePicker datePickerEleccionFechaLimite;
     private TextField textFieldEleccionCantidadRepeticiones;
     private ArrayList<CuadroInformativoAlarmaControlador> listaAlarmas;
+    private String titulo;
+    private String descripcion;
+    private LocalDateTime fechaInicio;
+    private LocalDateTime fechaFin;
+    private Boolean esActividadDelDia;
+    private Evento evento;
+    private EventoRepetido eventoRepetido;
+    private final Boolean esModificable;
+    private Button buttonModificarEvento;
+    private Button buttonEliminarEvento;
 
     public VistaAgregarEventoControlador(PrincipalControlador controlador, Ventana ventana, String archivoFXML){
         super(controlador, ventana, archivoFXML);
         listaAlarmas = new ArrayList<>();
+        this.esModificable = false;
+    }
+    public VistaAgregarEventoControlador(PrincipalControlador controlador, Ventana ventana, String archivoFXML, Evento evento){
+        super(controlador, ventana, archivoFXML);
+        listaAlarmas = new ArrayList<>();
+        this.evento = evento;
+        this.esModificable = true;
+    }
+    public VistaAgregarEventoControlador(PrincipalControlador controlador, Ventana ventana, String archivoFXML, EventoRepetido evento){
+        super(controlador, ventana, archivoFXML);
+        listaAlarmas = new ArrayList<>();
+        this.eventoRepetido = evento;
+        this.esModificable = true;
     }
     @FXML
     void seleccionFrecuenciaAction(ActionEvent event) {
@@ -125,35 +155,10 @@ public class VistaAgregarEventoControlador extends BaseControlador implements In
     @FXML
     void agregarNuevaActividadAccion() {
         try {
-            String titulo = textFieldTitulo.getText();
-            String descripcion = textFieldDescripcion.getText();
-
-            LocalDate fechaInicioPicker = datePickerInicio.getValue();
-            int horaInicio = Integer.parseInt(textFieldHoraInicio.getText());
-            int minutosInicio = Integer.parseInt(textFieldMinutos.getText());
-            LocalDateTime fechaInicio = fechaInicioPicker.atTime(horaInicio, minutosInicio);
-
-            LocalDate fechaFinPicker = datePickerFin.getValue();
-            int horaFin = Integer.parseInt(textFieldHoraFin.getText());
-            int minutosFin = Integer.parseInt(textFieldMinutosFin.getText());
-            LocalDateTime fechaFin = fechaFinPicker.atTime(horaFin, minutosFin);
-
+            this.obtenerInformacionDelFormulario();
             Frecuencia frecuencia = this.determinarFrecuenciaElegida(fechaInicio);
-
-            Boolean esActividadDelDia = checkboxEsActividadDelDia.isSelected();
-
             Evento nuevoEvento = new Evento(titulo, descripcion, fechaInicio, fechaFin, esActividadDelDia, frecuencia, this.tipoFrecuenciaElegida, true);
-
-            for(var alarmaInfo: listaAlarmas){
-                Alarma alarma;
-                switch (alarmaInfo.getTipoAlarma()){
-                    case EMAIL -> alarma = new AlarmaEmail(fechaInicio.minusMinutes(alarmaInfo.getMinutosAntes()));
-                    case SONIDO -> alarma = new AlarmaSonido(fechaInicio.minusMinutes(alarmaInfo.getMinutosAntes()));
-                    case VISUAL -> alarma = new AlarmaVisual(fechaInicio.minusMinutes(alarmaInfo.getMinutosAntes()));
-                    default -> alarma = new AlarmaEmail(fechaInicio);
-                }
-                nuevoEvento.agregarAlarma(alarma);
-            }
+            this.agregarAlarmasAActividad(nuevoEvento);
             this.principalControlador.agregarEvento(nuevoEvento);
         }catch(Exception e){
             // TODO: tratar de agregar interaccion con el usuario (si es que el tiempo alcanza)
@@ -221,6 +226,82 @@ public class VistaAgregarEventoControlador extends BaseControlador implements In
         ventana.cerrarEscenarioActual();
         ventana.mostrarVentanaDiaria(LocalDateTime.now());
     }
+    private void agregarAlarmasAActividad(Actividad actividad){
+        for(var alarmaInfo: listaAlarmas){
+            Alarma alarma;
+            switch (alarmaInfo.getTipoAlarma()){
+                case EMAIL -> alarma = new AlarmaEmail(fechaInicio.minusMinutes(alarmaInfo.getMinutosAntes()));
+                case SONIDO -> alarma = new AlarmaSonido(fechaInicio.minusMinutes(alarmaInfo.getMinutosAntes()));
+                case VISUAL -> alarma = new AlarmaVisual(fechaInicio.minusMinutes(alarmaInfo.getMinutosAntes()));
+                default -> alarma = new AlarmaEmail(fechaInicio);
+            }
+            actividad.agregarAlarma(alarma);
+        }
+    }
+    private void obtenerInformacionDelFormulario(){
+        this.titulo = textFieldTitulo.getText();
+        this.descripcion = textFieldDescripcion.getText();
+
+        LocalDate fechaInicioPicker = datePickerInicio.getValue();
+        int horaInicio = Integer.parseInt(textFieldHoraInicio.getText());
+        int minutosInicio = Integer.parseInt(textFieldMinutos.getText());
+        this.fechaInicio = fechaInicioPicker.atTime(horaInicio, minutosInicio);
+
+        LocalDate fechaFinPicker = datePickerFin.getValue();
+        int horaFin = Integer.parseInt(textFieldHoraFin.getText());
+        int minutosFin = Integer.parseInt(textFieldMinutosFin.getText());
+        this.fechaFin = fechaFinPicker.atTime(horaFin, minutosFin);
+
+        Boolean esActividadDelDia = checkboxEsActividadDelDia.isSelected();
+    }
+    private void rellenarInformacionDelEvento(){
+    }
+    private void rellenarInformacionDelEventoRepetido(){
+        this.labelTituloVentana.setText("Modifica el evento");
+        this.textFieldTitulo.setText(this.eventoRepetido.obtenerTitulo());
+        this.textFieldDescripcion.setText(this.eventoRepetido.obtenerDescripcion());
+        this.datePickerInicio.setValue(this.eventoRepetido.obtenerFecha().toLocalDate());
+        this.buttonAgregarNuevaActividad.setVisible(false);
+
+        this.buttonModificarEvento = new Button("Modificar Evento");
+        this.buttonModificarEvento.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent actionEvent) {
+                modificarEventoOriginalAccion();
+            }
+        });
+        this.buttonEliminarEvento = new Button("Eliminar Evento");
+        this.buttonEliminarEvento.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent actionEvent) {
+                eliminarEventoOriginalAccion();
+            }
+        });
+        this.hBoxBotones.getChildren().add(0, buttonEliminarEvento);
+        this.hBoxBotones.getChildren().add(0, buttonModificarEvento);
+    }
+    private void modificarEventoOriginalAccion(){
+        try {
+            this.obtenerInformacionDelFormulario();
+            Frecuencia frecuencia = this.determinarFrecuenciaElegida(this.fechaInicio);
+            Evento eventoOriginal = this.eventoRepetido.obtenerEventoOriginal();
+            Evento eventoNuevo = new Evento(titulo, descripcion, fechaInicio, fechaFin, esActividadDelDia, frecuencia, this.tipoFrecuenciaElegida, true);
+            this.agregarAlarmasAActividad(eventoNuevo);
+            this.principalControlador.modificarEvento(eventoOriginal, eventoNuevo);
+        }catch(Exception e){
+            // TODO: tratar de agregar interaccion con el usuario (si es que el tiempo alcanza)
+            System.err.println(e);
+            System.err.println("El ingreso de datos ha sido invalido");
+        }finally {
+            ventana.cerrarEscenarioActual();
+            ventana.mostrarVentanaDiaria(LocalDateTime.now());
+        }
+    }
+    private void eliminarEventoOriginalAccion(){
+        this.principalControlador.eliminarEvento(this.eventoRepetido.obtenerEventoOriginal());
+        ventana.cerrarEscenarioActual();
+        ventana.mostrarVentanaDiaria(LocalDateTime.now());
+    }
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         this.comboBoxFrecuencia.getItems().add("Diaria");
@@ -235,5 +316,8 @@ public class VistaAgregarEventoControlador extends BaseControlador implements In
         this.comboBoxTipoAlarma.getItems().add("Email");
         this.comboBoxTipoAlarma.getItems().add("Sonido");
         this.comboBoxTipoAlarma.getItems().add("Visual");
+        if(esModificable){
+            this.rellenarInformacionDelEventoRepetido();
+        }
     }
 }

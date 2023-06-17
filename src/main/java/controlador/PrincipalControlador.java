@@ -19,6 +19,18 @@ public class PrincipalControlador{
     public void agregarTarea(Tarea tarea){
         this.calendario.agregarTarea(tarea);
     }
+    public void modificarEvento(Evento eventoViejo, Evento eventoNuevo){
+        this.calendario.modificarEvento(eventoViejo, eventoNuevo);
+    }
+    public void eliminarEvento(Evento evento){
+        this.calendario.eliminarEvento(evento);
+    }
+    public void modificarTarea(Tarea tareaVieja, Tarea tareaNueva){
+        this.calendario.modificarTarea(tareaVieja, tareaNueva);
+    }
+    public void eliminarTarea(Tarea tarea){
+        this.calendario.eliminarTarea(tarea);
+    }
     public ArrayList<Actividad> obtenerActividadesDelDia(LocalDateTime fecha){
         return this.calendario.obtenerActividadesDelDia(fecha);
     }
