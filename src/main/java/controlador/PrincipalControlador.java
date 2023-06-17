@@ -1,9 +1,6 @@
 package controlador;
 
-import modelo.Actividad;
-import modelo.Calendario;
-import modelo.Evento;
-import modelo.Tarea;
+import modelo.*;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -31,7 +28,9 @@ public class PrincipalControlador{
     public ArrayList<Actividad> obtenerActividadesDelMes(LocalDateTime fecha){
         return this.calendario.obtenerActividadesDelMes(fecha);
     }
-
+    public ArrayList<Alarma> obtenerProximasAlarmas(){
+        return this.calendario.proximasAlarmas(LocalDateTime.now().plusMinutes(1));
+    }
     public void guardarEstadoCalendario(){
         this.calendario.guardarActividades(this.archivoCalendario);
     }
