@@ -86,9 +86,11 @@ public class VistaSemanalControlador extends BaseControlador implements Initiali
         int dia = diaDeSemana.getValue();
         int hora = fecha.getHour();
 
-        CuadroInformativoActividadControlador cuadro = new CuadroInformativoActividadControlador(actividad);
+        CuadroInformativoActividadControlador cuadroInformativo = new CuadroInformativoActividadControlador(actividad);
         VBox vbox = (VBox) this.ventana.obtenerElementoDeCeldaEnGridpane(this.gridpane, hora, dia);
-        vbox.getChildren().add(cuadro.obtenerCuadroInformativoVista());
+        VBox cuadro = cuadroInformativo.obtenerCuadroInformativoVista();
+        cuadro.setOnMouseClicked(e->this.cambiarEscenarioAVentanaModificarActividad(actividad));
+        vbox.getChildren().add(cuadro);
     }
 
     public void inicializarEtiquetas(){

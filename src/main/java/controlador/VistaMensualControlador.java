@@ -93,9 +93,11 @@ public class VistaMensualControlador extends BaseControlador implements Initiali
         int filaEnCalendario = (this.posicionPrimerDiaDelMes + diaDelMes-1 ) / 7;;
         int columnaEnCalendario = (this.posicionPrimerDiaDelMes + diaDelMes-1 ) % 7;
 
-        CuadroInformativoActividadControlador cuadro = new CuadroInformativoActividadControlador(actividad);
+        CuadroInformativoActividadControlador cuadroInformativo = new CuadroInformativoActividadControlador(actividad);
         VBox vbox = (VBox) this.ventana.obtenerElementoDeCeldaEnGridpane(this.gridpaneMensual, filaEnCalendario, columnaEnCalendario);
-        vbox.getChildren().add(cuadro.obtenerCuadroInformativoVista());
+        VBox cuadro = cuadroInformativo.obtenerCuadroInformativoVista();
+        cuadro.setOnMouseClicked(e->this.cambiarEscenarioAVentanaModificarActividad(actividad));
+        vbox.getChildren().add(cuadro);
     }
     private void agregarLabelDiasACalendario(){
         LocalDateTime ultimoDiaDelMes = this.fechaMensual.with(TemporalAdjusters.lastDayOfMonth());
