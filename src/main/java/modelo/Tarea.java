@@ -33,4 +33,9 @@ public class Tarea extends Actividad {
         }
         return tarea;
     }
+
+    @Override
+    public void aceptarVisitante(VisitanteActividad visitante) {
+        visitante.visitarTarea(this);
+    }
 }

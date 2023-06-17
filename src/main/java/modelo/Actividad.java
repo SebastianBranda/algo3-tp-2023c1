@@ -44,4 +44,5 @@ public abstract class Actividad implements Serializable {
     public ArrayList<Alarma> obtenerAlarmas(){
         return this.alarmas;
     }
+    public abstract void aceptarVisitante(VisitanteActividad visitante);
 }

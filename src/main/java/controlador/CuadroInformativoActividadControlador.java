@@ -1,22 +1,33 @@
 package controlador;
 
 import javafx.scene.layout.VBox;
-import modelo.Actividad;
-import modelo.Evento;
-import vista.CuadroInformativoActividad;
+import modelo.*;
+import vista.CuadroInformativoEvento;
+import vista.CuadroInformativoTarea;
 
 public class CuadroInformativoActividadControlador {
-    private Evento evento;
     private Actividad actividad;
-    public CuadroInformativoActividadControlador(Evento evento){
-        this.evento = evento;
-    }
+    private VBox cuadroInformativo;
     public CuadroInformativoActividadControlador(Actividad actividad){
         this.actividad = actividad;
     }
     public VBox obtenerCuadroInformativoVista(){
-        CuadroInformativoActividad cuadro = new CuadroInformativoActividad();
-        VBox cuadroInformativo = cuadro.obtenerVistaEvento(actividad.obtenerTitulo(), actividad.obtenerDescripcion());
+        this.actividad.aceptarVisitante(new VisitanteActividad() {
+            @Override
+            public void visitarEvento(Evento evento) {
+                cuadroInformativo = CuadroInformativoEvento.obtenerVista(evento);
+            }
+
+            @Override
+            public void visitarTarea(Tarea tarea) {
+                cuadroInformativo = CuadroInformativoTarea.obtenerVista(tarea);
+            }
+
+            @Override
+            public void visitarEventoRepetido(EventoRepetido eventoRepetido) {
+                cuadroInformativo = CuadroInformativoEvento.obtenerVista(eventoRepetido);
+            }
+        });
         return cuadroInformativo;
     }
 }

@@ -187,5 +187,10 @@ public class Evento extends Actividad {
         }
         return cantReps;
     }
+
+    @Override
+    public void aceptarVisitante(VisitanteActividad visitante) {
+        visitante.visitarEvento(this);
+    }
 }
 
