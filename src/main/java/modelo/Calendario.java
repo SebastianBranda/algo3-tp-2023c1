@@ -1,6 +1,7 @@
 package modelo;
 
 import java.io.*;
+import java.time.DayOfWeek;
 import java.time.LocalDateTime;
 import java.time.temporal.ChronoUnit;
 import java.time.temporal.TemporalAdjusters;
@@ -86,10 +87,10 @@ public class Calendario {
 
     public ArrayList<Actividad> obtenerActividadesDeLaSemana(LocalDateTime fecha){
         ArrayList<Actividad> actividadesDeLaSemana = new ArrayList<>();
-        int diaDelMesInicioSemana = fecha.getDayOfMonth() - fecha.getDayOfWeek().getValue() + 1;
-        int diaDelMesFinSemana = fecha.getDayOfMonth() + (7 - fecha.getDayOfWeek().getValue());
-        LocalDateTime inicio = LocalDateTime.of(fecha.getYear(), fecha.getMonth(), diaDelMesInicioSemana, 0, 0);
-        LocalDateTime fin = LocalDateTime.of(fecha.getYear(), fecha.getMonth(), diaDelMesFinSemana, 23, 59);
+        LocalDateTime inicio = fecha.with(DayOfWeek.MONDAY);
+        inicio = LocalDateTime.of(inicio.getYear(), inicio.getMonth(), inicio.getDayOfMonth(), 0, 0 );
+        LocalDateTime fin = fecha.with(TemporalAdjusters.next(DayOfWeek.SUNDAY));
+        fin = LocalDateTime.of(fin.getYear(), fin.getMonth(), fin.getDayOfMonth(), 23, 59);
         for(var evento: eventos){
             actividadesDeLaSemana.addAll(evento.eventosRepetidosEntreFechas(inicio, fin));
         }
