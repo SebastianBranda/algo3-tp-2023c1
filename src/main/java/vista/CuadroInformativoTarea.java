@@ -34,6 +34,17 @@ public class CuadroInformativoTarea {
             cuadroInformativo.getChildren().add(labelfechaInicio);
             cuadroInformativo.getStyleClass().add("cuadro-tarea");
         }
+
+        Label labelEstaCompletada = new Label();
+        if(tarea.obtenerEstaCompletada()){
+            labelEstaCompletada.setText("Tarea completada!");
+            labelEstaCompletada.getStyleClass().add("label-tarea-completa");
+        }else{
+            labelEstaCompletada.setText("Tarea incompleta!");
+            labelEstaCompletada.getStyleClass().add("label-tarea-incompleta");
+        }
+        cuadroInformativo.getChildren().add(labelEstaCompletada);
+
         return cuadroInformativo;
     }
 }

@@ -33,6 +33,9 @@ public class Tarea extends Actividad {
         }
         return tarea;
     }
+    public Boolean obtenerEstaCompletada(){
+        return this.estaCompletada;
+    }
 
     @Override
     public void aceptarVisitante(VisitanteActividad visitante) {
