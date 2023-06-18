@@ -40,6 +40,9 @@ public abstract class Actividad implements Serializable {
     public LocalDateTime obtenerFecha(){
         return this.fechaHora;
     }
+    public boolean obtenerEsActividadDelDia(){
+        return this.esActividadDelDia;
+    }
 
     public ArrayList<Alarma> obtenerAlarmas(){
         return this.alarmas;

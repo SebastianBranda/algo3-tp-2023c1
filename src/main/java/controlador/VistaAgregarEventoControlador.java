@@ -252,7 +252,7 @@ public class VistaAgregarEventoControlador extends BaseControlador implements In
         int minutosFin = Integer.parseInt(textFieldMinutosFin.getText());
         this.fechaFin = fechaFinPicker.atTime(horaFin, minutosFin);
 
-        Boolean esActividadDelDia = checkboxEsActividadDelDia.isSelected();
+        this.esActividadDelDia = checkboxEsActividadDelDia.isSelected();
     }
     private void rellenarInformacionDelEvento(){
     }

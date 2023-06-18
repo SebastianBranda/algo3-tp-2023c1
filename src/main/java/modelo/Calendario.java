@@ -89,7 +89,7 @@ public class Calendario {
         ArrayList<Actividad> actividadesDeLaSemana = new ArrayList<>();
         LocalDateTime inicio = fecha.with(DayOfWeek.MONDAY);
         inicio = LocalDateTime.of(inicio.getYear(), inicio.getMonth(), inicio.getDayOfMonth(), 0, 0 );
-        LocalDateTime fin = fecha.with(TemporalAdjusters.next(DayOfWeek.SUNDAY));
+        LocalDateTime fin = fecha.with(TemporalAdjusters.nextOrSame(DayOfWeek.SUNDAY));
         fin = LocalDateTime.of(fin.getYear(), fin.getMonth(), fin.getDayOfMonth(), 23, 59);
         for(var evento: eventos){
             actividadesDeLaSemana.addAll(evento.eventosRepetidosEntreFechas(inicio, fin));

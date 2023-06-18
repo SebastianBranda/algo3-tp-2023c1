@@ -15,14 +15,12 @@ public class CuadroInformativoActividadControlador {
         this.actividad.aceptarVisitante(new VisitanteActividad() {
             @Override
             public void visitarEvento(Evento evento) {
-                cuadroInformativo = CuadroInformativoEvento.obtenerVista(evento);
+                // cuadroInformativo = CuadroInformativoEvento.obtenerVista(evento);
             }
-
             @Override
             public void visitarTarea(Tarea tarea) {
                 cuadroInformativo = CuadroInformativoTarea.obtenerVista(tarea);
             }
-
             @Override
             public void visitarEventoRepetido(EventoRepetido eventoRepetido) {
                 cuadroInformativo = CuadroInformativoEvento.obtenerVista(eventoRepetido);

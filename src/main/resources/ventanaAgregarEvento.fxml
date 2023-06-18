@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.CheckBox?>
 <?import javafx.scene.control.ComboBox?>
@@ -8,50 +9,87 @@
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
 
 <VBox prefHeight="600.0" prefWidth="900.0" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1">
    <children>
-      <Label fx:id="labelTituloVentana" text="Agrega un evento" />
-      <HBox fx:id="hBoxTitulo" prefHeight="100.0" prefWidth="200.0">
+      <Label fx:id="labelTituloVentana" text="Agrega un evento">
+         <font>
+            <Font name="System Bold" size="13.0" />
+         </font>
+         <VBox.margin>
+            <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+         </VBox.margin></Label>
+      <HBox fx:id="hBoxTitulo" alignment="CENTER_LEFT" prefHeight="100.0" prefWidth="200.0">
          <children>
-            <Label text="Titulo" />
+            <Label minWidth="120.0" text="Titulo">
+               <HBox.margin>
+                  <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+               </HBox.margin></Label>
             <TextField fx:id="textFieldTitulo" />
          </children>
       </HBox>
-      <HBox fx:id="hBoxDescripcion" prefHeight="100.0" prefWidth="200.0">
+      <HBox fx:id="hBoxDescripcion" alignment="CENTER_LEFT" prefHeight="100.0" prefWidth="200.0">
          <children>
-            <Label text="Descripcion" />
+            <Label minWidth="120.0" text="Descripcion">
+               <HBox.margin>
+                  <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+               </HBox.margin></Label>
             <TextField fx:id="textFieldDescripcion" />
          </children>
       </HBox>
-      <HBox fx:id="hBoxFechaInicio" prefHeight="100.0" prefWidth="200.0">
+      <HBox fx:id="hBoxFechaInicio" alignment="CENTER_LEFT" prefHeight="100.0" prefWidth="200.0">
          <children>
-            <Label text="Fecha inicio" />
+            <Label minWidth="120.0" text="Fecha inicio">
+               <HBox.margin>
+                  <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+               </HBox.margin></Label>
             <DatePicker fx:id="datePickerInicio" />
-            <Label text="Hora" />
+            <Label text="Hora">
+               <HBox.margin>
+                  <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+               </HBox.margin></Label>
             <TextField fx:id="textFieldHoraInicio" />
-            <Label text="Minutos" />
+            <Label text="Minutos">
+               <HBox.margin>
+                  <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+               </HBox.margin></Label>
             <TextField fx:id="textFieldMinutos" />
          </children>
       </HBox>
-      <HBox fx:id="hBoxFechaFin" prefHeight="100.0" prefWidth="200.0">
+      <HBox fx:id="hBoxFechaFin" alignment="CENTER_LEFT" prefHeight="100.0" prefWidth="200.0">
          <children>
-            <Label text="Fecha fin" />
+            <Label minWidth="120.0" text="Fecha fin">
+               <HBox.margin>
+                  <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+               </HBox.margin></Label>
             <DatePicker fx:id="datePickerFin" />
-            <Label text="Hora" />
+            <Label text="Hora">
+               <HBox.margin>
+                  <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+               </HBox.margin></Label>
             <TextField fx:id="textFieldHoraFin" />
-            <Label text="Minutos" />
+            <Label text="Minutos">
+               <HBox.margin>
+                  <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+               </HBox.margin></Label>
             <TextField fx:id="textFieldMinutosFin" />
          </children>
       </HBox>
-      <CheckBox fx:id="checkboxEsActividadDelDia" mnemonicParsing="false" text="Todo el dia" />
-      <HBox fx:id="hBoxManejoRepeticionesYFrecuencia" prefHeight="100.0" prefWidth="200.0">
+      <CheckBox fx:id="checkboxEsActividadDelDia" mnemonicParsing="false" text="Todo el dia">
+         <VBox.margin>
+            <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+         </VBox.margin></CheckBox>
+      <HBox fx:id="hBoxManejoRepeticionesYFrecuencia" alignment="CENTER_LEFT" prefHeight="100.0" prefWidth="200.0">
          <children>
             <VBox fx:id="vBoxFrecuencia" prefHeight="61.0" prefWidth="448.0">
                <children>
                   <HBox prefHeight="61.0" prefWidth="305.0">
                      <children>
-                        <Label text="Tipo de repeticion" />
+                        <Label text="Tipo de repeticion">
+                           <HBox.margin>
+                              <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                           </HBox.margin></Label>
                         <ComboBox fx:id="comboBoxFrecuencia" onAction="#seleccionFrecuenciaAction" prefWidth="150.0" />
                      </children>
                   </HBox>
@@ -62,7 +100,10 @@
                <children>
                   <HBox prefHeight="100.0" prefWidth="200.0">
                      <children>
-                        <Label text="Frecuencia" />
+                        <Label text="Frecuencia">
+                           <HBox.margin>
+                              <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                           </HBox.margin></Label>
                         <ComboBox fx:id="comboBoxRepeticion" onAction="#seleccionRepeticionAction" prefWidth="150.0" />
                      </children>
                   </HBox>
@@ -71,22 +112,46 @@
             </VBox>
          </children>
       </HBox>
-      <Label text="Alarmas:" />
+      <Label text="Alarmas:">
+         <font>
+            <Font name="System Bold" size="13.0" />
+         </font>
+         <VBox.margin>
+            <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+         </VBox.margin></Label>
       <VBox fx:id="vBoxListadoAlarmas" prefHeight="200.0" prefWidth="100.0" />
-      <Label text="Nueva alarma" />
-      <HBox prefHeight="100.0" prefWidth="200.0">
+      <Label text="Nueva alarma">
+         <VBox.margin>
+            <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+         </VBox.margin></Label>
+      <HBox alignment="CENTER_LEFT" prefHeight="100.0" prefWidth="200.0">
          <children>
-            <Label text="Tipo de alarma" />
-            <ComboBox fx:id="comboBoxTipoAlarma" prefWidth="150.0" />
+            <Label text="Tipo de alarma">
+               <HBox.margin>
+                  <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+               </HBox.margin></Label>
+            <ComboBox fx:id="comboBoxTipoAlarma" prefWidth="150.0">
+               <HBox.margin>
+                  <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+               </HBox.margin></ComboBox>
             <Label text="Tiempo previo (en minutos) para la notificacion" />
-            <TextField fx:id="textFieldTiempoAntesAlarma" text="0" />
+            <TextField fx:id="textFieldTiempoAntesAlarma" text="0">
+               <HBox.margin>
+                  <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+               </HBox.margin></TextField>
             <Button fx:id="buttonAgregarNuevaAlarma" mnemonicParsing="false" onAction="#buttonAgregarNuevaAlarmaAction" text="Agregar alarma" />
          </children>
       </HBox>
-      <HBox fx:id="hBoxBotones" prefHeight="100.0" prefWidth="200.0">
+      <HBox fx:id="hBoxBotones" alignment="CENTER_LEFT" prefHeight="100.0" prefWidth="200.0">
          <children>
-            <Button fx:id="buttonAgregarNuevaActividad" mnemonicParsing="false" onAction="#agregarNuevaActividadAccion" text="Agregar evento" />
-            <Button fx:id="buttonCancelar" mnemonicParsing="false" onAction="#cancelarAction" text="Cancelar" />
+            <Button fx:id="buttonAgregarNuevaActividad" mnemonicParsing="false" onAction="#agregarNuevaActividadAccion" text="Agregar evento">
+               <HBox.margin>
+                  <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+               </HBox.margin></Button>
+            <Button fx:id="buttonCancelar" mnemonicParsing="false" onAction="#cancelarAction" text="Cancelar">
+               <HBox.margin>
+                  <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+               </HBox.margin></Button>
          </children>
       </HBox>
    </children>

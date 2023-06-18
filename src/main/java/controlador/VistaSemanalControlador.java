@@ -96,7 +96,7 @@ public class VistaSemanalControlador extends BaseControlador implements Initiali
     public void inicializarEtiquetas(){
         String mes = this.fechaSemanalAMostrar.getMonth().name();
         String anio = String.valueOf(this.fechaSemanalAMostrar.getYear());
-        this.labelSemanaAMostrarVentana.setText(mes + " - " + anio);
+        this.labelSemanaAMostrarVentana.setText(mes + " / " + anio);
 
         this.comboBoxSeleccionTipoVista.getItems().add("Diaria");
         this.comboBoxSeleccionTipoVista.getItems().add("Mensual");

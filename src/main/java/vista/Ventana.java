@@ -28,6 +28,8 @@ public class Ventana {
         loader.setController(controlador);
         Parent view = loader.load();
         var escena = new Scene(view);
+        var style = getClass().getResource("/styles.css").toExternalForm();
+        escena.getStylesheets().add(style);
         this.escenarioActual = new Stage();
         this.escenarioActual.setScene(escena);
         this.escenarioActual.show();

@@ -75,6 +75,12 @@ public class VistaMensualControlador extends BaseControlador implements Initiali
         }
     }
     private void inicializarCalendarioMensual(){
+        this.seleccionTipoDeVistaComboBox.getItems().add("Diaria");
+        this.seleccionTipoDeVistaComboBox.getItems().add("Semanal");
+        String mes = this.fechaMensual.getMonth().name();
+        String anio = String.valueOf(this.fechaMensual.getYear());
+        this.labelMesAMostrar.setText(mes + " / " + anio);
+
         LocalDateTime primerDiaDelMes = this.fechaMensual.withDayOfMonth(1);
         DayOfWeek dowPrimerDayDelMes = primerDiaDelMes.getDayOfWeek();
         this.posicionPrimerDiaDelMes = dowPrimerDayDelMes.getValue() - 1;
@@ -113,9 +119,5 @@ public class VistaMensualControlador extends BaseControlador implements Initiali
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         this.inicializarCalendarioMensual();
-
-        this.seleccionTipoDeVistaComboBox.getItems().add("Diaria");
-        this.seleccionTipoDeVistaComboBox.getItems().add("Semanal");
-        this.labelMesAMostrar.setText(this.fechaMensual.getMonth().name());
     }
 }
