@@ -15,5 +15,8 @@ public abstract class Alarma implements Serializable {
     public LocalDateTime getHorarioAlarma(){
         return this.horarioAlarma;
     }
+    public TipoAlarma getTipoAlarma(){
+        return this.tipoAlarma;
+    }
     public abstract void notificar();
 }

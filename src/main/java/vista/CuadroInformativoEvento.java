@@ -36,7 +36,7 @@ public class CuadroInformativoEvento {
             labelfechaInicio.getStyleClass().add("label-fecha-inicio");
 
             Label labelfechaFin = new Label();
-            labelfechaFin.setText("Fin: " + evento.obtenerFecha().toString());
+            labelfechaFin.setText("Fin: " + evento.obtenerFechaFin().toString());
             labelfechaFin.getStyleClass().add("label-fecha-fin");
 
             cuadroInformativo.getChildren().add(labelfechaInicio);

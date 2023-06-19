@@ -13,6 +13,7 @@ import vista.Ventana;
 import java.net.URL;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
 
@@ -31,6 +32,8 @@ public class VistaAgregarEventoControlador extends BaseControlador implements In
     private DatePicker datePickerFin;
     @FXML
     private DatePicker datePickerInicio;
+    @FXML
+    private VBox vBoxFrecuencia;
     @FXML
     private Label labelTituloVentana;
     @FXML
@@ -188,6 +191,9 @@ public class VistaAgregarEventoControlador extends BaseControlador implements In
                 tipoAlarma = TipoAlarma.EMAIL;
         }
         int minutosAntes = Integer.parseInt(this.textFieldTiempoAntesAlarma.getText());
+        this.agregarAlarmaAListaDeAlarmas(minutosAntes, tipoAlarma);
+    }
+    private void agregarAlarmaAListaDeAlarmas(int minutosAntes, TipoAlarma tipoAlarma){
         CuadroInformativoAlarmaControlador cuadroAlarma = new CuadroInformativoAlarmaControlador(minutosAntes, tipoAlarma);
         VBox vBoxAlarma = cuadroAlarma.obtenerCuadroInformativoAlarma();
         vBoxListadoAlarmas.getChildren().add(vBoxAlarma);
@@ -261,6 +267,22 @@ public class VistaAgregarEventoControlador extends BaseControlador implements In
         this.textFieldTitulo.setText(this.eventoRepetido.obtenerTitulo());
         this.textFieldDescripcion.setText(this.eventoRepetido.obtenerDescripcion());
         this.datePickerInicio.setValue(this.eventoRepetido.obtenerFecha().toLocalDate());
+        this.textFieldHoraInicio.setText(String.valueOf(this.eventoRepetido.obtenerFecha().getHour()));
+        this.textFieldMinutos.setText(String.valueOf(this.eventoRepetido.obtenerFecha().getMinute()));
+        this.datePickerFin.setValue(this.eventoRepetido.obtenerFechaFin().toLocalDate());
+        this.textFieldHoraFin.setText(String.valueOf(this.eventoRepetido.obtenerFechaFin().getHour()));
+        this.textFieldMinutosFin.setText(String.valueOf(this.eventoRepetido.obtenerFechaFin().getMinute()));
+        this.checkboxEsActividadDelDia.setSelected(this.eventoRepetido.obtenerEsActividadDelDia());
+        Label labelRepeticionOriginal = new Label();
+        labelRepeticionOriginal.setText("Repeticion original: " + String.valueOf(this.eventoRepetido.obtenerTipoFrecuencia()));
+        vBoxFrecuencia.getChildren().add(0, labelRepeticionOriginal);
+        ArrayList<Alarma> listaDeAlarmasDelEvento = this.eventoRepetido.obtenerAlarmas();
+        for(Alarma alarma: listaDeAlarmasDelEvento){
+            int minutosAntes = (int) alarma.getHorarioAlarma().until(this.eventoRepetido.obtenerFecha(), ChronoUnit.MINUTES);
+            TipoAlarma tipoAlarma = alarma.getTipoAlarma();
+            agregarAlarmaAListaDeAlarmas(minutosAntes, tipoAlarma);
+        }
+
         this.buttonAgregarNuevaActividad.setVisible(false);
 
         this.buttonModificarEvento = new Button("Modificar Evento");
@@ -287,6 +309,7 @@ public class VistaAgregarEventoControlador extends BaseControlador implements In
             Evento eventoOriginal = this.eventoRepetido.obtenerEventoOriginal();
             Evento eventoNuevo = new Evento(titulo, descripcion, fechaInicio, fechaFin, esActividadDelDia, frecuencia, this.tipoFrecuenciaElegida, true);
             this.agregarAlarmasAActividad(eventoNuevo);
+
             this.principalControlador.modificarEvento(eventoOriginal, eventoNuevo);
         }catch(Exception e){
             // TODO: tratar de agregar interaccion con el usuario (si es que el tiempo alcanza)

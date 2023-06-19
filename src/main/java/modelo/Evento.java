@@ -63,6 +63,9 @@ public class Evento extends Actividad {
                     CalculadorDeEventosRepetidos.repeticionesEntreFechasCasoAnual(this, this.fechaHoraFin, this.frecuencia, inicio, fin);
         };
     }
+    public TipoFrecuencia obtenerTipoFrecuencia(){
+        return this.tipoFrecuencia;
+    }
     @Override
     public void aceptarVisitante(VisitanteActividad visitante) {
         visitante.visitarEvento(this);

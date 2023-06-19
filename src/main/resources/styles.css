@@ -57,3 +57,12 @@
     -fx-font-weight: 800;
 }
 
+.label-tarea-incompleta{
+    -fx-font-weight: 800;
+    -fx-text-fill: red;
+}
+
+.label-tarea-completa{
+    -fx-font-weight: 800;
+    -fx-text-fill: green;
+}

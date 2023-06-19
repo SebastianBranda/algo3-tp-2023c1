@@ -40,6 +40,12 @@ public class EventoRepetido extends Actividad{
     public Evento obtenerEventoOriginal(){
         return this.eventoOriginal;
     }
+    public LocalDateTime obtenerFechaFin(){
+        return this.fechaHoraFin;
+    }
+    public TipoFrecuencia obtenerTipoFrecuencia(){
+        return this.obtenerEventoOriginal().obtenerTipoFrecuencia();
+    }
 
     @Override
     public void aceptarVisitante(VisitanteActividad visitante) {
