@@ -74,7 +74,7 @@ public class VistaSemanalControlador extends BaseControlador implements Initiali
         }
     }
     private void agregarActividadesAVistaSemanal(){
-        this.ventana.agregarVBoxAGridpane(this.gridpane, 24, 8);
+        this.ventana.agregarVBoxAGridpane(this.gridpane, 0,24, 1, 8);
         ArrayList<Actividad> listaActividades = this.principalControlador.obtenerActividadesDeLaSemana(this.fechaSemanalAMostrar);
         for(var actividad: listaActividades){
             this.agregarActividadAHorario(actividad);

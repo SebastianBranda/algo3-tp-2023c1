@@ -85,7 +85,7 @@ public class VistaMensualControlador extends BaseControlador implements Initiali
         DayOfWeek dowPrimerDayDelMes = primerDiaDelMes.getDayOfWeek();
         this.posicionPrimerDiaDelMes = dowPrimerDayDelMes.getValue() - 1;
 
-        ventana.agregarVBoxAGridpane(this.gridpaneMensual, 6, 7);
+        ventana.agregarVBoxAGridpane(this.gridpaneMensual, 0, 6, 0, 7);
         this.agregarLabelDiasACalendario();
 
         ArrayList<Actividad> listaActividades = this.principalControlador.obtenerActividadesDelMes(this.fechaMensual);
@@ -112,7 +112,10 @@ public class VistaMensualControlador extends BaseControlador implements Initiali
             int filaCalendarioMensual = (this.posicionPrimerDiaDelMes + i) / 7;
             int columnaCalendarioMensual = (this.posicionPrimerDiaDelMes + i) % 7;
             VBox vbox = (VBox) this.ventana.obtenerElementoDeCeldaEnGridpane(this.gridpaneMensual, filaCalendarioMensual, columnaCalendarioMensual);
-            vbox.getChildren().add(new Label(Integer.toString(i+1)));
+            Label labelDiaDelMes = new Label(Integer.toString(i+1));
+            labelDiaDelMes.setStyle("-fx-padding: 5px");
+            labelDiaDelMes.getStyleClass().add("labelMesAMostrar");
+            vbox.getChildren().add(labelDiaDelMes);
         }
     }
 

@@ -19,8 +19,12 @@ import java.time.LocalDateTime;
 public class Ventana {
     private PrincipalControlador controladorPrincipal;
     private Stage escenarioActual;
+    private double anchoEscenario;
+    private double altoEscenario;
     public Ventana(PrincipalControlador controlador){
         this.controladorPrincipal = controlador;
+        this.anchoEscenario = 900;
+        this.altoEscenario = 700;
     }
     private void presentarEscenario(BaseControlador controlador) throws IOException {
         var fxmlRes = getClass().getResource(controlador.obtenerNombreArchivoFXML());
@@ -31,6 +35,8 @@ public class Ventana {
         var style = getClass().getResource("/styles.css").toExternalForm();
         escena.getStylesheets().add(style);
         this.escenarioActual = new Stage();
+        this.escenarioActual.setWidth(this.anchoEscenario);
+        this.escenarioActual.setHeight(this.altoEscenario);
         this.escenarioActual.setScene(escena);
         this.escenarioActual.show();
     }
@@ -38,6 +44,8 @@ public class Ventana {
         escenario.close();
     }
     public void cerrarEscenarioActual(){
+        this.anchoEscenario = this.escenarioActual.getWidth();
+        this.altoEscenario = this.escenarioActual.getHeight();
         this.escenarioActual.close();
         this.escenarioActual = null;
     }
@@ -105,12 +113,18 @@ public class Ventana {
             throw new RuntimeException(e);
         }
     }
-    public void agregarVBoxAGridpane(GridPane pane, int filas, int columnas){
-        for(int i=0; i<columnas;i++){
-            for(int j=0; j<filas;j++){
+    public void agregarVBoxAGridpane(GridPane pane, int inicioFilas, int filas, int inicioColumnas, int columnas){
+        int contador = 0;
+        for(int i=inicioColumnas; i<columnas;i++){
+            for(int j=inicioFilas; j<filas;j++){
                 VBox vBox = new VBox();
                 pane.add(vBox, i, j);
+                if((contador % 2) == 0){
+                    vBox.getStyleClass().add("myHBox");
+                }
+                contador++;
             }
+            contador++;
         }
     }
     public Node obtenerElementoDeCeldaEnGridpane(GridPane pane, int fila, int columna){
