@@ -1,21 +1,55 @@
 package controlador;
 
+import javafx.animation.AnimationTimer;
 import javafx.scene.control.Alert;
 import modelo.Alarma;
 
+import java.time.LocalDateTime;
+import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
-import java.util.stream.Collectors;
 
 public class NotificadorDeAlarmas  {
     private ArrayList<Alarma> alarmas;
-    public String mensaje;
+    private AnimationTimer animationTimer;
+    private PrincipalControlador controladorObservador;
+    private LocalDateTime horaDeAlarma;
+    private String mensaje;
 
-    public NotificadorDeAlarmas(ArrayList<Alarma> alarmas) {
+    public NotificadorDeAlarmas(ArrayList<Alarma> alarmas, PrincipalControlador controlador) {
         this.alarmas = alarmas;
+        this.controladorObservador = controlador;
+        this.iniciar();
+        this.setAlarmas(alarmas);
     }
-    public void notificar(){
-        this.mensaje = alarmas.stream().map(alarma -> alarma.getHorarioAlarma().toString()).collect(Collectors.joining("\n"));
-        Alert alerta = new Alert(Alert.AlertType.INFORMATION, this.mensaje);
+    public void setAlarmas(ArrayList<Alarma> alarmas){
+        this.alarmas = alarmas;
+        this.horaDeAlarma = alarmas.get(0).getHorarioAlarma();
+        String nuevoMensaje = "";
+        for(Alarma alarma: alarmas){
+            nuevoMensaje = "Tipo: " + alarma.getTipoAlarma();
+            nuevoMensaje += ". Horario: " + alarma.getHorarioAlarma().toString() + "\n";
+        }
+        this.mensaje = nuevoMensaje;
+    }
+    public void iniciar(){
+        this.animationTimer = new AnimationTimer() {
+            @Override
+            public void handle(long now) {
+                if(horaDeAlarma.isEqual(LocalDateTime.now().truncatedTo(ChronoUnit.MINUTES))){
+                    System.out.println("horaDeAlarma = " + horaDeAlarma);
+                    System.out.println("LocalDateTime.now().truncatedTo(ChronoUnit.MINUTES) = " + LocalDateTime.now().truncatedTo(ChronoUnit.MINUTES));
+                    notificar(mensaje);
+                    notificarObservador();
+                }
+            }
+        };
+        animationTimer.start();
+    }
+    public void notificar(String mensaje){
+        Alert alerta = new Alert(Alert.AlertType.INFORMATION, mensaje);
         alerta.show();
+    }
+    public void notificarObservador(){
+        this.controladorObservador.reiniciarNotificador();
     }
 }
