@@ -13,6 +13,7 @@ public class NotificadorDeAlarmas  {
     private AnimationTimer animationTimer;
     private PrincipalControlador controladorObservador;
     private LocalDateTime horaDeAlarma;
+    private Boolean hayAlarmas;
     private String mensaje;
 
     public NotificadorDeAlarmas(ArrayList<Alarma> alarmas, PrincipalControlador controlador) {
@@ -23,6 +24,10 @@ public class NotificadorDeAlarmas  {
     }
     public void setAlarmas(ArrayList<Alarma> alarmas){
         this.alarmas = alarmas;
+        if(this.alarmas.size()==0){
+            this.hayAlarmas = false;
+            return;
+        }
         this.horaDeAlarma = alarmas.get(0).getHorarioAlarma();
         String nuevoMensaje = "";
         for(Alarma alarma: alarmas){
@@ -35,7 +40,7 @@ public class NotificadorDeAlarmas  {
         this.animationTimer = new AnimationTimer() {
             @Override
             public void handle(long now) {
-                if(horaDeAlarma.isEqual(LocalDateTime.now().truncatedTo(ChronoUnit.MINUTES))){
+                if(hayAlarmas && horaDeAlarma.isEqual(LocalDateTime.now().truncatedTo(ChronoUnit.MINUTES))){
                     System.out.println("horaDeAlarma = " + horaDeAlarma);
                     System.out.println("LocalDateTime.now().truncatedTo(ChronoUnit.MINUTES) = " + LocalDateTime.now().truncatedTo(ChronoUnit.MINUTES));
                     notificar(mensaje);
