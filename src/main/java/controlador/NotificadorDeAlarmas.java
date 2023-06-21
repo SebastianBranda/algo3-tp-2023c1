@@ -29,6 +29,7 @@ public class NotificadorDeAlarmas  {
             return;
         }
         this.horaDeAlarma = alarmas.get(0).getHorarioAlarma();
+        this.hayAlarmas = true;
         String nuevoMensaje = "";
         for(Alarma alarma: alarmas){
             nuevoMensaje = "Tipo: " + alarma.getTipoAlarma();
@@ -41,8 +42,6 @@ public class NotificadorDeAlarmas  {
             @Override
             public void handle(long now) {
                 if(hayAlarmas && horaDeAlarma.isEqual(LocalDateTime.now().truncatedTo(ChronoUnit.MINUTES))){
-                    System.out.println("horaDeAlarma = " + horaDeAlarma);
-                    System.out.println("LocalDateTime.now().truncatedTo(ChronoUnit.MINUTES) = " + LocalDateTime.now().truncatedTo(ChronoUnit.MINUTES));
                     notificar(mensaje);
                     notificarObservador();
                 }
