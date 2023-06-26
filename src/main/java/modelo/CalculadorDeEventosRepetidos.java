@@ -86,7 +86,8 @@ public class CalculadorDeEventosRepetidos {
         LocalDateTime fechaPosibleRepeticion = inicioEvento;
         int cantReps = calcularCantidadDeRepeticionesCasoMensual(evento, inicio, frecuencia);
         if(inicioEvento.isBefore(inicio) || frecuencia.getEsDuracionInfinita()){
-            fechaPosibleRepeticion = inicio;
+            fechaPosibleRepeticion = inicioEvento.withMonth(inicio.getMonthValue());
+            fechaPosibleRepeticion = fechaPosibleRepeticion.withYear(inicio.getYear());
         }
         while(fechaPosibleRepeticion.isBefore(fin) && cantReps > 0){
             agregarEventoRepetidoAListaSiEstaEntreFechas(evento, listaEventosRepetidos, fechaPosibleRepeticion, inicio, fin, duracionMinutos);
@@ -114,7 +115,7 @@ public class CalculadorDeEventosRepetidos {
         LocalDateTime fechaPosibleRepeticion = inicioEvento;
         int cantReps = calcularCantidadDeRepeticionesCasoAnual(evento, inicio, frecuencia);
         if(inicioEvento.isBefore(inicio) || frecuencia.getEsDuracionInfinita()){
-            fechaPosibleRepeticion = inicio;
+            fechaPosibleRepeticion = inicioEvento.withYear(inicio.getYear());
         }
         while(fechaPosibleRepeticion.isBefore(fin) && cantReps > 0){
             agregarEventoRepetidoAListaSiEstaEntreFechas(evento, listaEventosRepetidos,fechaPosibleRepeticion, inicio, fin, duracionMinutos);

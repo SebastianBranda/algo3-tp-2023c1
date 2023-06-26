@@ -16,6 +16,7 @@ import java.time.LocalDateTime;
 import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
+import java.util.concurrent.ExecutionException;
 
 public class VistaAgregarTareaControlador extends BaseControlador implements Initializable {
     @FXML
@@ -32,6 +33,8 @@ public class VistaAgregarTareaControlador extends BaseControlador implements Ini
     private HBox hBoxBotones;
     @FXML
     private Label labelTituloVentana;
+    @FXML
+    private Label labelFaltaInformacion;
     @FXML
     private TextField textFieldDescripcion;
     @FXML
@@ -74,12 +77,10 @@ public class VistaAgregarTareaControlador extends BaseControlador implements Ini
 
             this.agregarAlarmasAActividad(nuevaTarea);
             this.principalControlador.agregarTarea(nuevaTarea);
-        }catch(Exception e){
-            System.err.println(e);
-            System.err.println("El ingreso de datos ha sido invalido");
-        }finally {
             ventana.cerrarEscenarioActual();
             ventana.mostrarVentanaDiaria(LocalDateTime.now());
+        }catch(Exception e){
+            this.labelFaltaInformacion.setVisible(true);
         }
     }
     @FXML
@@ -155,13 +156,10 @@ public class VistaAgregarTareaControlador extends BaseControlador implements Ini
             Tarea nuevaTarea = new Tarea(titulo, descripcion, fechaVencimiento, esActividadDelDia, estaCompletada);
             this.agregarAlarmasAActividad(nuevaTarea);
             this.principalControlador.modificarTarea(this.tarea, nuevaTarea);
-        }catch(Exception e){
-            // TODO: tratar de agregar interaccion con el usuario (si es que el tiempo alcanza)
-            System.err.println(e);
-            System.err.println("El ingreso de datos ha sido invalido");
-        }finally {
             ventana.cerrarEscenarioActual();
             ventana.mostrarVentanaDiaria(LocalDateTime.now());
+        }catch(Exception e){
+            this.labelFaltaInformacion.setVisible(true);
         }
     }
     private void eliminarTareaAccion(){
@@ -169,17 +167,30 @@ public class VistaAgregarTareaControlador extends BaseControlador implements Ini
         ventana.cerrarEscenarioActual();
         ventana.mostrarVentanaDiaria(LocalDateTime.now());
     }
-    private void obtenerInformacionDelFormulario(){
-        this.titulo = textFieldTitulo.getText();
-        this.descripcion = textFieldDescripcion.getText();
+    private void obtenerInformacionDelFormulario() throws Exception {
+        try {
+            this.esActividadDelDia = checkboxEsActividadDelDia.isSelected();
+            this.estaCompletada = checkboxEstaCompletada.isSelected();
 
-        LocalDate fechaVencimientoPicker = datePickerInicio.getValue();
-        int horaVencimiento = Integer.parseInt(textFieldHora.getText());
-        int minutosVencimiento = Integer.parseInt(textFieldMinutos.getText());
-        this.fechaVencimiento = fechaVencimientoPicker.atTime(horaVencimiento, minutosVencimiento);
+            this.titulo = textFieldTitulo.getText();
+            this.descripcion = textFieldDescripcion.getText();
 
-        this.esActividadDelDia = checkboxEsActividadDelDia.isSelected();
-        this.estaCompletada = checkboxEstaCompletada.isSelected();
+            LocalDate fechaVencimientoPicker = datePickerInicio.getValue();
+            int horaVencimiento = Integer.parseInt(textFieldHora.getText());
+            int minutosVencimiento = Integer.parseInt(textFieldMinutos.getText());
+            this.fechaVencimiento = fechaVencimientoPicker.atTime(horaVencimiento, minutosVencimiento);
+        }catch (Exception e){
+            if(this.esActividadDelDia){
+                LocalDate fechaVencimientoPicker = datePickerInicio.getValue();
+                if(fechaVencimientoPicker!=null){
+                    this.fechaVencimiento = fechaVencimientoPicker.atTime(0,1);
+                }else{
+                    this.fechaVencimiento = LocalDateTime.now().withHour(0).withMinute(1);
+                }
+            }else{
+                throw new Exception("Faltan datos");
+            }
+        }
     }
     private void agregarAlarmasAActividad(Actividad actividad){
         for(var alarmaInfo: listaAlarmas){
@@ -198,8 +209,13 @@ public class VistaAgregarTareaControlador extends BaseControlador implements Ini
         this.comboBoxTipoAlarma.getItems().add("Email");
         this.comboBoxTipoAlarma.getItems().add("Sonido");
         this.comboBoxTipoAlarma.getItems().add("Visual");
+
+        this.labelFaltaInformacion.setVisible(false);
+
         if(esModificable){
             this.rellenarInformacionDeLaTarea();
+        }else{
+            this.datePickerInicio.setValue(LocalDateTime.now().toLocalDate());
         }
     }
 }

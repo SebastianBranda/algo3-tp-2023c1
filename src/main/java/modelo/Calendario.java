@@ -75,7 +75,7 @@ public class Calendario {
     public ArrayList<Actividad> obtenerActividadesDelDia(LocalDateTime fecha){
         ArrayList<Actividad> actividadesDelDia = new ArrayList<>();
         LocalDateTime inicio = LocalDateTime.of(fecha.getYear(), fecha.getMonth(), fecha.getDayOfMonth(), 0, 0);
-        LocalDateTime fin = LocalDateTime.of(fecha.getYear(), fecha.getMonth(), fecha.getDayOfMonth(), 23, 59);
+        LocalDateTime fin = LocalDateTime.of(fecha.getYear(), fecha.getMonth(), fecha.getDayOfMonth(), 23, 59, 59);
         for(var evento: eventos){
             actividadesDelDia.addAll(evento.eventosRepetidosEntreFechas(inicio, fin));
         }
@@ -90,7 +90,7 @@ public class Calendario {
         LocalDateTime inicio = fecha.with(DayOfWeek.MONDAY);
         inicio = LocalDateTime.of(inicio.getYear(), inicio.getMonth(), inicio.getDayOfMonth(), 0, 0 );
         LocalDateTime fin = fecha.with(TemporalAdjusters.nextOrSame(DayOfWeek.SUNDAY));
-        fin = LocalDateTime.of(fin.getYear(), fin.getMonth(), fin.getDayOfMonth(), 23, 59);
+        fin = LocalDateTime.of(fin.getYear(), fin.getMonth(), fin.getDayOfMonth(), 23, 59, 59);
         for(var evento: eventos){
             actividadesDeLaSemana.addAll(evento.eventosRepetidosEntreFechas(inicio, fin));
         }
@@ -104,7 +104,7 @@ public class Calendario {
         ArrayList<Actividad> actividadesDelMes = new ArrayList<>();
         int ultimoDiaDelMes = fecha.with(TemporalAdjusters.lastDayOfMonth()).getDayOfMonth();
         LocalDateTime inicio = LocalDateTime.of(fecha.getYear(), fecha.getMonth(), 1, 0, 0);
-        LocalDateTime fin = LocalDateTime.of(fecha.getYear(), fecha.getMonth(), ultimoDiaDelMes, 23, 59);
+        LocalDateTime fin = LocalDateTime.of(fecha.getYear(), fecha.getMonth(), ultimoDiaDelMes, 23, 59, 59);
         for(var evento: eventos){
             ArrayList<EventoRepetido> eventosRepetidos = evento.eventosRepetidosEntreFechas(inicio, fin);
             if(eventosRepetidos != null) {

@@ -108,13 +108,13 @@ public class VistaMensualControlador extends BaseControlador implements Initiali
     private void agregarLabelDiasACalendario(){
         LocalDateTime ultimoDiaDelMes = this.fechaMensual.with(TemporalAdjusters.lastDayOfMonth());
         int cantidadDiasDelMes = ultimoDiaDelMes.getDayOfMonth();
-        for(int i=0; i<cantidadDiasDelMes + 1; i++){
+        for(int i=0; i<cantidadDiasDelMes; i++){
             int filaCalendarioMensual = (this.posicionPrimerDiaDelMes + i) / 7;
             int columnaCalendarioMensual = (this.posicionPrimerDiaDelMes + i) % 7;
             VBox vbox = (VBox) this.ventana.obtenerElementoDeCeldaEnGridpane(this.gridpaneMensual, filaCalendarioMensual, columnaCalendarioMensual);
             Label labelDiaDelMes = new Label(Integer.toString(i+1));
             labelDiaDelMes.setStyle("-fx-padding: 5px");
-            labelDiaDelMes.getStyleClass().add("labelMesAMostrar");
+            labelDiaDelMes.setStyle("-fx-font-weight: 800");
             vbox.getChildren().add(labelDiaDelMes);
         }
     }

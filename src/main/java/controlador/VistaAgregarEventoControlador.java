@@ -37,6 +37,8 @@ public class VistaAgregarEventoControlador extends BaseControlador implements In
     @FXML
     private Label labelTituloVentana;
     @FXML
+    private Label labelFaltaInformacion;
+    @FXML
     private TextField textFieldDescripcion;
     @FXML
     private TextField textFieldHoraFin;
@@ -160,16 +162,13 @@ public class VistaAgregarEventoControlador extends BaseControlador implements In
         try {
             this.obtenerInformacionDelFormulario();
             Frecuencia frecuencia = this.determinarFrecuenciaElegida(fechaInicio);
-            Evento nuevoEvento = new Evento(titulo, descripcion, fechaInicio, fechaFin, esActividadDelDia, frecuencia, this.tipoFrecuenciaElegida, true);
+            Evento nuevoEvento = new Evento(titulo, descripcion, fechaInicio, fechaFin, esActividadDelDia, frecuencia, tipoFrecuenciaElegida, true);
             this.agregarAlarmasAActividad(nuevoEvento);
             this.principalControlador.agregarEvento(nuevoEvento);
-        }catch(Exception e){
-            // TODO: tratar de agregar interaccion con el usuario (si es que el tiempo alcanza)
-            System.err.println(e);
-            System.err.println("El ingreso de datos ha sido invalido");
-        }finally {
             ventana.cerrarEscenarioActual();
             ventana.mostrarVentanaDiaria(LocalDateTime.now());
+        }catch(Exception e) {
+            this.labelFaltaInformacion.setVisible(true);
         }
     }
     @FXML
@@ -244,21 +243,36 @@ public class VistaAgregarEventoControlador extends BaseControlador implements In
             actividad.agregarAlarma(alarma);
         }
     }
-    private void obtenerInformacionDelFormulario(){
-        this.titulo = textFieldTitulo.getText();
-        this.descripcion = textFieldDescripcion.getText();
+    private void obtenerInformacionDelFormulario() throws Exception {
+        try {
+            this.esActividadDelDia = checkboxEsActividadDelDia.isSelected();
+            this.titulo = textFieldTitulo.getText();
+            this.descripcion = textFieldDescripcion.getText();
 
-        LocalDate fechaInicioPicker = datePickerInicio.getValue();
-        int horaInicio = Integer.parseInt(textFieldHoraInicio.getText());
-        int minutosInicio = Integer.parseInt(textFieldMinutos.getText());
-        this.fechaInicio = fechaInicioPicker.atTime(horaInicio, minutosInicio);
+            LocalDate fechaInicioPicker = datePickerInicio.getValue();
 
-        LocalDate fechaFinPicker = datePickerFin.getValue();
-        int horaFin = Integer.parseInt(textFieldHoraFin.getText());
-        int minutosFin = Integer.parseInt(textFieldMinutosFin.getText());
-        this.fechaFin = fechaFinPicker.atTime(horaFin, minutosFin);
+            int horaInicio = Integer.parseInt(textFieldHoraInicio.getText());
+            int minutosInicio = Integer.parseInt(textFieldMinutos.getText());
+            this.fechaInicio = fechaInicioPicker.atTime(horaInicio, minutosInicio);
 
-        this.esActividadDelDia = checkboxEsActividadDelDia.isSelected();
+            LocalDate fechaFinPicker = datePickerFin.getValue();
+            int horaFin = Integer.parseInt(textFieldHoraFin.getText());
+            int minutosFin = Integer.parseInt(textFieldMinutosFin.getText());
+            this.fechaFin = fechaFinPicker.atTime(horaFin, minutosFin);
+        }catch(Exception e){
+            if(this.esActividadDelDia){
+                LocalDate fechaInicioPicker = datePickerInicio.getValue();
+                if(fechaInicioPicker != null){
+                    this.fechaInicio = fechaInicioPicker.atTime(0, 1);
+                    this.fechaFin = fechaInicioPicker.atTime(23, 59);
+                }else{
+                    this.fechaInicio = LocalDateTime.now().withHour(0).withMinute(1);
+                    this.fechaFin = LocalDateTime.now().withHour(23).withMinute(59);
+                }
+            }else{
+                throw new Exception("Falta ingresar datos");
+            }
+        }
     }
     private void rellenarInformacionDelEvento(){
     }
@@ -311,13 +325,10 @@ public class VistaAgregarEventoControlador extends BaseControlador implements In
             this.agregarAlarmasAActividad(eventoNuevo);
 
             this.principalControlador.modificarEvento(eventoOriginal, eventoNuevo);
-        }catch(Exception e){
-            // TODO: tratar de agregar interaccion con el usuario (si es que el tiempo alcanza)
-            System.err.println(e);
-            System.err.println("El ingreso de datos ha sido invalido");
-        }finally {
             ventana.cerrarEscenarioActual();
             ventana.mostrarVentanaDiaria(LocalDateTime.now());
+        }catch(Exception e){
+            this.labelFaltaInformacion.setVisible(true);
         }
     }
     private void eliminarEventoOriginalAccion(){
@@ -339,8 +350,18 @@ public class VistaAgregarEventoControlador extends BaseControlador implements In
         this.comboBoxTipoAlarma.getItems().add("Email");
         this.comboBoxTipoAlarma.getItems().add("Sonido");
         this.comboBoxTipoAlarma.getItems().add("Visual");
+
+        this.labelFaltaInformacion.setVisible(false);
+
         if(esModificable){
             this.rellenarInformacionDelEventoRepetido();
+        }else{
+            this.datePickerInicio.setValue(LocalDateTime.now().toLocalDate());
+
+            this.tipoFrecuenciaElegida = TipoFrecuencia.DIARIA;
+            this.textFieldIntervaloDias = new TextField("1");
+            this.tipoRepeticionElegida = TipoRepeticion.CANT_DETERMINADA;
+            this.textFieldEleccionCantidadRepeticiones = new TextField("1");
         }
     }
 }

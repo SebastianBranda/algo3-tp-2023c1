@@ -155,6 +155,14 @@
                <HBox.margin>
                   <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
                </HBox.margin></Button>
+            <Label fx:id="labelFaltaInformacion" text="¡Completar correctamente los datos!" textFill="#c90000">
+               <font>
+                  <Font name="System Bold" size="14.0" />
+               </font>
+               <HBox.margin>
+                  <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+               </HBox.margin>
+            </Label>
          </children>
       </HBox>
    </children>

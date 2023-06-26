@@ -24,6 +24,8 @@ public class VistaDiariaControlador extends BaseControlador implements Initializ
     @FXML
     private Label labelDiaAMostrarVentanaDiaria;
     @FXML
+    private HBox hBoxActividadesDelDia;
+    @FXML
     private ComboBox<String> seleccionTipoDeVistaComboBox;
 
     public VistaDiariaControlador(PrincipalControlador principalControlador, Ventana ventana, String archivoFXML, LocalDateTime fecha){
@@ -61,12 +63,16 @@ public class VistaDiariaControlador extends BaseControlador implements Initializ
     public void agregarActividadAHorario(Actividad actividad){
         int numeroHora = actividad.obtenerFecha().getHour();
         var listadoHoras = vboxHoras.getChildren();
-        HBox hBoxHoraEspecifica = (HBox) listadoHoras.get(numeroHora);
 
         CuadroInformativoActividadControlador cuadroInformativo = new CuadroInformativoActividadControlador(actividad);
         VBox cuadro = cuadroInformativo.obtenerCuadroInformativoVista();
         cuadro.setOnMouseClicked(e->this.cambiarEscenarioAVentanaModificarActividad(actividad));
 
+        if(actividad.obtenerEsActividadDelDia()){
+            this.hBoxActividadesDelDia.getChildren().add(cuadro);
+            return;
+        }
+        HBox hBoxHoraEspecifica = (HBox) listadoHoras.get(numeroHora);
         hBoxHoraEspecifica.getChildren().add(cuadro);
     }
     public void agregarActividadesAVistaDiaria(){

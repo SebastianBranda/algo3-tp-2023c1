@@ -16,7 +16,6 @@ public class EventoRepetido extends Actividad{
         this.fechaHoraFin = fechaHoraFin;
         this.esActividadDelDia = original.esActividadDelDia;
         this.eventoOriginal = original;
-        // TODO: añadir alarmas del evento original, con las fechas modificadas a las del evento repetido para que posea sus propias alarmas
         for(var alarmaOriginal: this.eventoOriginal.alarmas){
             long minutosDiferencia = alarmaOriginal.getHorarioAlarma().until(this.eventoOriginal.fechaHora, ChronoUnit.MINUTES);
             switch (alarmaOriginal.tipoAlarma){
