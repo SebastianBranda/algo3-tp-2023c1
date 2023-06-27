@@ -49,7 +49,9 @@ public class CalculadorDeEventosRepetidos {
         long duracionMinutos = inicioEvento.until(finEvento, ChronoUnit.MINUTES);
         LocalDateTime fechaPosibleRepeticion = inicioEvento;
         if(frecuencia.getEsDuracionInfinita()){
-            fechaPosibleRepeticion = inicio;
+            int horas = fechaPosibleRepeticion.getHour();
+            int minutos = fechaPosibleRepeticion.getMinute();
+            fechaPosibleRepeticion = inicio.withHour(horas).withMinute(minutos);
         }
         int cantReps = calcularCantidadDeRepeticionesCasoSemanal(evento, inicio, frecuencia);
         int diferenciaDias;
@@ -137,7 +139,7 @@ public class CalculadorDeEventosRepetidos {
     }
 
     private static void agregarEventoRepetidoAListaSiEstaEntreFechas(Evento eventoOriginal, ArrayList<EventoRepetido> lista, LocalDateTime fechaPosibleRepeticion, LocalDateTime inicio, LocalDateTime fin, long duracionEventoOriginal){
-        if( (fechaPosibleRepeticion.isAfter(inicio) || fechaPosibleRepeticion.isEqual(inicio)) && fechaPosibleRepeticion.isBefore(fin)){
+        if( fechaPosibleRepeticion.isBefore(fin) && fechaPosibleRepeticion.plusMinutes(duracionEventoOriginal).isAfter(inicio)){
             lista.add(new EventoRepetido(eventoOriginal, fechaPosibleRepeticion, fechaPosibleRepeticion.plusMinutes(duracionEventoOriginal)));
         }
     }
