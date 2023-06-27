@@ -7,7 +7,7 @@ import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
-import modelo.Actividad;
+import modelo.*;
 import vista.Ventana;
 
 import java.net.URL;
@@ -27,6 +27,7 @@ public class VistaDiariaControlador extends BaseControlador implements Initializ
     private HBox hBoxActividadesDelDia;
     @FXML
     private ComboBox<String> seleccionTipoDeVistaComboBox;
+    private LocalDateTime fechaFinActividad;
 
     public VistaDiariaControlador(PrincipalControlador principalControlador, Ventana ventana, String archivoFXML, LocalDateTime fecha){
         super(principalControlador, ventana, archivoFXML);
@@ -60,20 +61,61 @@ public class VistaDiariaControlador extends BaseControlador implements Initializ
             default -> throw new IllegalStateException("Valor inesperado en la eleccion de tipo de Vista: " + eleccionVista);
         }
     }
-    public void agregarActividadAHorario(Actividad actividad){
-        int numeroHora = actividad.obtenerFecha().getHour();
+    private void agregarActividadAHoraEspecifica(Actividad actividad, int inicioHora, VBox cuadro){
         var listadoHoras = vboxHoras.getChildren();
-
+        cuadro.setOnMouseClicked(e->this.cambiarEscenarioAVentanaModificarActividad(actividad));
+        HBox hBoxHoraEspecifica = (HBox) listadoHoras.get(inicioHora);
+        hBoxHoraEspecifica.getChildren().add(cuadro);
+    }
+    public void agregarActividadAHorario(Actividad actividad){
+        LocalDateTime fechaInicioActividad = actividad.obtenerFecha();
+        int inicioHora = fechaInicioActividad.getHour();
+        actividad.aceptarVisitante(new VisitanteActividad() {
+            @Override
+            public void visitarEvento(Evento evento) {
+            }
+            @Override
+            public void visitarTarea(Tarea tarea) {
+                fechaFinActividad = tarea.obtenerFecha();
+            }
+            @Override
+            public void visitarEventoRepetido(EventoRepetido eventoRepetido) {
+                fechaFinActividad = eventoRepetido.obtenerFechaFin();
+            }
+        });
         CuadroInformativoActividadControlador cuadroInformativo = new CuadroInformativoActividadControlador(actividad);
         VBox cuadro = cuadroInformativo.obtenerCuadroInformativoVista();
-        cuadro.setOnMouseClicked(e->this.cambiarEscenarioAVentanaModificarActividad(actividad));
 
         if(actividad.obtenerEsActividadDelDia()){
+            cuadro.setOnMouseClicked(e->this.cambiarEscenarioAVentanaModificarActividad(actividad));
             this.hBoxActividadesDelDia.getChildren().add(cuadro);
             return;
         }
-        HBox hBoxHoraEspecifica = (HBox) listadoHoras.get(numeroHora);
-        hBoxHoraEspecifica.getChildren().add(cuadro);
+        if(perteneceActividadAVista(fechaInicioActividad)){
+            agregarActividadAHoraEspecifica(actividad, inicioHora, cuadro);
+        }
+        while(fechaFinActividad.isAfter(fechaInicioActividad.withMinute(0).plusHours(1))){
+            fechaInicioActividad = fechaInicioActividad.withMinute(0).plusHours(1);
+            if(!perteneceActividadAVista(fechaInicioActividad)){
+                continue;
+            }
+            cuadroInformativo = new CuadroInformativoActividadControlador(actividad);
+            cuadro = cuadroInformativo.obtenerCuadroInformativoVista();
+            inicioHora = fechaInicioActividad.getHour();
+            agregarActividadAHoraEspecifica(actividad, inicioHora, cuadro);
+        }
+    }
+    private Boolean perteneceActividadAVista(LocalDateTime fecha){
+        if(fecha.getYear() != this.fechaVistaDiaria.getYear()){
+            return false;
+        }
+        if(fecha.getMonth() != this.fechaVistaDiaria.getMonth()){
+            return false;
+        }
+        if(fecha.getDayOfMonth() != this.fechaVistaDiaria.getDayOfMonth()){
+            return false;
+        }
+        return true;
     }
     public void agregarActividadesAVistaDiaria(){
         ArrayList<Actividad> listaActividades = this.principalControlador.obtenerActividadesDelDia(this.fechaVistaDiaria);
@@ -81,7 +123,6 @@ public class VistaDiariaControlador extends BaseControlador implements Initializ
             this.agregarActividadAHorario(actividad);
         }
     }
-
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         this.agregarActividadesAVistaDiaria();

@@ -19,7 +19,6 @@ public class App extends Application {
 
     @Override
     public void stop() throws Exception{
-        //System.out.println("Cerrando escenario");
         this.controlador.guardarEstadoCalendario();
     }
 

@@ -36,6 +36,10 @@ public class VistaAgregarTareaControlador extends BaseControlador implements Ini
     @FXML
     private Label labelFaltaInformacion;
     @FXML
+    private Label labelHora;
+    @FXML
+    private Label labelMinutos;
+    @FXML
     private TextField textFieldDescripcion;
     @FXML
     private TextField textFieldHora;
@@ -108,6 +112,20 @@ public class VistaAgregarTareaControlador extends BaseControlador implements Ini
     void cancelarAction() {
         ventana.cerrarEscenarioActual();
         ventana.mostrarVentanaDiaria(LocalDateTime.now());
+    }
+    @FXML
+    void checkboxEsActividadDelDiaAction(ActionEvent event){
+        if(checkboxEsActividadDelDia.isSelected()){
+            setVisibilidadHorasInicioYFin(false);
+        }else{
+            setVisibilidadHorasInicioYFin(true);
+        }
+    }
+    private void setVisibilidadHorasInicioYFin(Boolean b){
+        this.labelHora.setVisible(b);
+        this.textFieldHora.setVisible(b);
+        this.labelMinutos.setVisible(b);
+        this.textFieldMinutos.setVisible(b);
     }
     private void agregarAlarmaAListaDeAlarmas(int minutosAntes, TipoAlarma tipoAlarma){
         CuadroInformativoAlarmaControlador cuadroAlarma = new CuadroInformativoAlarmaControlador(minutosAntes, tipoAlarma);

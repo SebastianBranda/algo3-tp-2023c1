@@ -2,7 +2,6 @@ package vista;
 
 import javafx.scene.control.Label;
 import javafx.scene.layout.VBox;
-import modelo.Evento;
 import modelo.EventoRepetido;
 
 public class CuadroInformativoEvento {

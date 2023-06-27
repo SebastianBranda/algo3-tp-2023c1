@@ -26,11 +26,11 @@
 }
 
 .myHBox{
-    -fx-background-color: #ebebeb;
+    -fx-background-color: #e6e6e6;
 }
 
 .cuadro-evento{
-    -fx-background-color: #4285f4;
+    -fx-background-color: #3a86ee;
     -fx-background-radius: 7px;
     -fx-padding: 15px;
     -fx-border-insets: 3px;
@@ -46,7 +46,7 @@
 }
 
 .cuadro-tarea{
-    -fx-background-color: #f6bf26;
+    -fx-background-color: #f6be23;
     -fx-background-radius: 7px;
     -fx-padding: 15px;
     -fx-border-insets: 3px;

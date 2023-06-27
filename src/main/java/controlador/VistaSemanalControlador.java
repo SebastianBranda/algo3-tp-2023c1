@@ -7,7 +7,7 @@ import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.VBox;
-import modelo.Actividad;
+import modelo.*;
 import vista.Ventana;
 
 import java.net.URL;
@@ -40,6 +40,7 @@ public class VistaSemanalControlador extends BaseControlador implements Initiali
     private Label labelViernes;
     @FXML
     private Label labelTipoDeVista;
+    private LocalDateTime fechaFinActividad;
     public VistaSemanalControlador(PrincipalControlador principalControlador, Ventana ventana, String archivoFXML, LocalDateTime fecha) {
         super(principalControlador, ventana, archivoFXML);
         this.fechaSemanalAMostrar = fecha;
@@ -81,21 +82,71 @@ public class VistaSemanalControlador extends BaseControlador implements Initiali
         }
     }
     private void agregarActividadAHorario(Actividad actividad){
-        LocalDateTime fecha = actividad.obtenerFecha();
-        DayOfWeek diaDeSemana = fecha.getDayOfWeek();
+        LocalDateTime fechaInicioActividad = actividad.obtenerFecha();
+        DayOfWeek diaDeSemana = fechaInicioActividad.getDayOfWeek();
         int dia = diaDeSemana.getValue();
-        int hora = fecha.getHour()+1;
+        int hora = fechaInicioActividad.getHour()+1;
+        actividad.aceptarVisitante(new VisitanteActividad() {
+            @Override
+            public void visitarEvento(Evento evento) {
+            }
+            @Override
+            public void visitarTarea(Tarea tarea) {
+                fechaFinActividad = tarea.obtenerFecha();
+            }
+            @Override
+            public void visitarEventoRepetido(EventoRepetido eventoRepetido) {
+                fechaFinActividad = eventoRepetido.obtenerFechaFin();
+            }
+        });
+        CuadroInformativoActividadControlador cuadroInformativo = new CuadroInformativoActividadControlador(actividad);
         if(actividad.obtenerEsActividadDelDia()){
             hora = 0;
+            if(perteneceActividadAVista(fechaInicioActividad)){
+                agregarActividadADiaYHoraEspecifica(actividad, hora, dia, cuadroInformativo);
+            }
+            while(fechaFinActividad.isAfter(fechaInicioActividad.withHour(0).withMinute(1).plusDays(1))){
+                fechaInicioActividad = fechaInicioActividad.withHour(0).withMinute(1).plusDays(1);
+                cuadroInformativo = new CuadroInformativoActividadControlador(actividad);
+                diaDeSemana = fechaInicioActividad.getDayOfWeek();
+                dia = diaDeSemana.getValue();
+                if(perteneceActividadAVista(fechaInicioActividad)){
+                    agregarActividadADiaYHoraEspecifica(actividad, hora, dia, cuadroInformativo);
+                }
+            }
+            return;
         }
 
-        CuadroInformativoActividadControlador cuadroInformativo = new CuadroInformativoActividadControlador(actividad);
+        if(perteneceActividadAVista(fechaInicioActividad)){
+            agregarActividadADiaYHoraEspecifica(actividad, hora, dia, cuadroInformativo);
+        }
+
+        while(fechaFinActividad.isAfter(fechaInicioActividad.withMinute(0).plusHours(1))){
+            fechaInicioActividad = fechaInicioActividad.withMinute(0).plusHours(1);
+            cuadroInformativo = new CuadroInformativoActividadControlador(actividad);
+
+            hora = fechaInicioActividad.getHour()+1;
+            diaDeSemana = fechaInicioActividad.getDayOfWeek();
+            dia = diaDeSemana.getValue();
+
+            if(perteneceActividadAVista(fechaInicioActividad)){
+                agregarActividadADiaYHoraEspecifica(actividad, hora, dia, cuadroInformativo);
+            }
+        }
+    }
+    private void agregarActividadADiaYHoraEspecifica(Actividad actividad, int hora, int dia, CuadroInformativoActividadControlador cuadroInformativo){
         VBox cuadro = cuadroInformativo.obtenerCuadroInformativoVista();
         cuadro.setOnMouseClicked(e->this.cambiarEscenarioAVentanaModificarActividad(actividad));
         VBox vbox = (VBox) this.ventana.obtenerElementoDeCeldaEnGridpane(this.gridpane, hora, dia);
         vbox.getChildren().add(cuadro);
     }
-
+    private Boolean perteneceActividadAVista(LocalDateTime fecha){
+        if((fecha.getDayOfYear() < this.fechaSemanalAMostrar.with(DayOfWeek.MONDAY).getDayOfYear())
+            || (fecha.getDayOfYear() > this.fechaSemanalAMostrar.with(DayOfWeek.SUNDAY).getDayOfYear())){
+            return false;
+        }
+        return true;
+    }
     public void inicializarEtiquetas(){
         String mes = this.fechaSemanalAMostrar.getMonth().name();
         String anio = String.valueOf(this.fechaSemanalAMostrar.getYear());

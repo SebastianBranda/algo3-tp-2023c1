@@ -39,6 +39,14 @@ public class VistaAgregarEventoControlador extends BaseControlador implements In
     @FXML
     private Label labelFaltaInformacion;
     @FXML
+    private Label labelHoraInicio;
+    @FXML
+    private Label labelMinutosInicio;
+    @FXML
+    private Label labelHoraFin;
+    @FXML
+    private Label labelMinutosFin;
+    @FXML
     private TextField textFieldDescripcion;
     @FXML
     private TextField textFieldHoraFin;
@@ -231,6 +239,24 @@ public class VistaAgregarEventoControlador extends BaseControlador implements In
         ventana.cerrarEscenarioActual();
         ventana.mostrarVentanaDiaria(LocalDateTime.now());
     }
+    @FXML
+    void checkboxEsActividadDelDiaAction(ActionEvent event){
+        if(checkboxEsActividadDelDia.isSelected()){
+            setVisibilidadHorasInicioYFin(false);
+        }else{
+            setVisibilidadHorasInicioYFin(true);
+        }
+    }
+    private void setVisibilidadHorasInicioYFin(Boolean b){
+        this.labelHoraInicio.setVisible(b);
+        this.textFieldHoraInicio.setVisible(b);
+        this.labelMinutosInicio.setVisible(b);
+        this.textFieldMinutos.setVisible(b);
+        this.labelHoraFin.setVisible(b);
+        this.textFieldHoraFin.setVisible(b);
+        this.labelMinutosFin.setVisible(b);
+        this.textFieldMinutosFin.setVisible(b);
+    }
     private void agregarAlarmasAActividad(Actividad actividad){
         for(var alarmaInfo: listaAlarmas){
             Alarma alarma;
@@ -262,19 +288,21 @@ public class VistaAgregarEventoControlador extends BaseControlador implements In
         }catch(Exception e){
             if(this.esActividadDelDia){
                 LocalDate fechaInicioPicker = datePickerInicio.getValue();
-                if(fechaInicioPicker != null){
-                    this.fechaInicio = fechaInicioPicker.atTime(0, 1);
-                    this.fechaFin = fechaInicioPicker.atTime(23, 59);
-                }else{
+                if(fechaInicioPicker == null){
                     this.fechaInicio = LocalDateTime.now().withHour(0).withMinute(1);
+                }else{
+                    this.fechaInicio = fechaInicioPicker.atTime(0, 1);
+                }
+                LocalDate fechaFinPicker = datePickerFin.getValue();
+                if(fechaFinPicker == null){
                     this.fechaFin = LocalDateTime.now().withHour(23).withMinute(59);
+                }else{
+                    this.fechaFin = fechaFinPicker.atTime(23, 59);
                 }
             }else{
                 throw new Exception("Falta ingresar datos");
             }
         }
-    }
-    private void rellenarInformacionDelEvento(){
     }
     private void rellenarInformacionDelEventoRepetido(){
         this.labelTituloVentana.setText("Modifica el evento");
@@ -336,6 +364,7 @@ public class VistaAgregarEventoControlador extends BaseControlador implements In
         ventana.cerrarEscenarioActual();
         ventana.mostrarVentanaDiaria(LocalDateTime.now());
     }
+
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         this.comboBoxFrecuencia.getItems().add("Diaria");

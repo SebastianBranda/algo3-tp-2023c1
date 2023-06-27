@@ -45,12 +45,12 @@
                   <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
                </HBox.margin></Label>
             <DatePicker fx:id="datePickerInicio" />
-            <Label text="Hora">
+            <Label fx:id="labelHoraInicio" text="Hora">
                <HBox.margin>
                   <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
                </HBox.margin></Label>
             <TextField fx:id="textFieldHoraInicio" />
-            <Label text="Minutos">
+            <Label fx:id="labelMinutosInicio" text="Minutos">
                <HBox.margin>
                   <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
                </HBox.margin></Label>
@@ -64,19 +64,19 @@
                   <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
                </HBox.margin></Label>
             <DatePicker fx:id="datePickerFin" />
-            <Label text="Hora">
+            <Label fx:id="labelHoraFin" text="Hora">
                <HBox.margin>
                   <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
                </HBox.margin></Label>
             <TextField fx:id="textFieldHoraFin" />
-            <Label text="Minutos">
+            <Label fx:id="labelMinutosFin" text="Minutos">
                <HBox.margin>
                   <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
                </HBox.margin></Label>
             <TextField fx:id="textFieldMinutosFin" />
          </children>
       </HBox>
-      <CheckBox fx:id="checkboxEsActividadDelDia" mnemonicParsing="false" text="Todo el dia">
+      <CheckBox fx:id="checkboxEsActividadDelDia" mnemonicParsing="false" onAction="#checkboxEsActividadDelDiaAction" text="Todo el dia">
          <VBox.margin>
             <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
          </VBox.margin></CheckBox>

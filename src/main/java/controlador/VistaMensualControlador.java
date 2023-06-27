@@ -7,7 +7,7 @@ import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.VBox;
-import modelo.Actividad;
+import modelo.*;
 import vista.Ventana;
 
 import java.net.URL;
@@ -38,6 +38,7 @@ public class VistaMensualControlador extends BaseControlador implements Initiali
     private ComboBox<String> seleccionTipoDeVistaComboBox;
     private LocalDateTime fechaMensual;
     private int posicionPrimerDiaDelMes;
+    private LocalDateTime fechaFinActividad;
     public VistaMensualControlador(PrincipalControlador principalControlador, Ventana ventana, String archivoFXML, LocalDateTime fecha) {
         super(principalControlador, ventana, archivoFXML);
         this.fechaMensual = fecha;
@@ -98,12 +99,48 @@ public class VistaMensualControlador extends BaseControlador implements Initiali
         int diaDelMes = fecha.getDayOfMonth();
         int filaEnCalendario = (this.posicionPrimerDiaDelMes + diaDelMes-1 ) / 7;;
         int columnaEnCalendario = (this.posicionPrimerDiaDelMes + diaDelMes-1 ) % 7;
-
+        actividad.aceptarVisitante(new VisitanteActividad() {
+            @Override
+            public void visitarEvento(Evento evento) {
+            }
+            @Override
+            public void visitarTarea(Tarea tarea) {
+                fechaFinActividad = tarea.obtenerFecha();
+            }
+            @Override
+            public void visitarEventoRepetido(EventoRepetido eventoRepetido) {
+                fechaFinActividad = eventoRepetido.obtenerFechaFin();
+            }
+        });
         CuadroInformativoActividadControlador cuadroInformativo = new CuadroInformativoActividadControlador(actividad);
+        if(perteneceActividadAVistaMensual(fecha)){
+            agregarActividadADiaDeVistaMensual(actividad, filaEnCalendario, columnaEnCalendario, cuadroInformativo);
+        }
+        while(fechaFinActividad.isAfter(fecha.withHour(0).withMinute(0).plusDays(1))){
+            fecha = fecha.withHour(0).withMinute(0).plusDays(1);
+            diaDelMes = fecha.getDayOfMonth();
+            filaEnCalendario = (this.posicionPrimerDiaDelMes + diaDelMes-1 ) / 7;;
+            columnaEnCalendario = (this.posicionPrimerDiaDelMes + diaDelMes-1 ) % 7;
+            cuadroInformativo = new CuadroInformativoActividadControlador(actividad);
+            if(perteneceActividadAVistaMensual(fecha)){
+                agregarActividadADiaDeVistaMensual(actividad, filaEnCalendario, columnaEnCalendario, cuadroInformativo);
+            }
+        }
+
+    }
+    private void agregarActividadADiaDeVistaMensual(Actividad actividad, int filaEnCalendario, int columnaEnCalendario, CuadroInformativoActividadControlador cuadroInformativo){
         VBox vbox = (VBox) this.ventana.obtenerElementoDeCeldaEnGridpane(this.gridpaneMensual, filaEnCalendario, columnaEnCalendario);
         VBox cuadro = cuadroInformativo.obtenerCuadroInformativoVista();
         cuadro.setOnMouseClicked(e->this.cambiarEscenarioAVentanaModificarActividad(actividad));
         vbox.getChildren().add(cuadro);
+    }
+
+    private Boolean perteneceActividadAVistaMensual(LocalDateTime fecha){
+        if( (fecha.getDayOfYear() < this.fechaMensual.withDayOfMonth(1).getDayOfYear())
+                || (fecha.getDayOfYear() > this.fechaMensual.with(TemporalAdjusters.lastDayOfMonth()).getDayOfYear()) ){
+            return false;
+        }
+        return true;
     }
     private void agregarLabelDiasACalendario(){
         LocalDateTime ultimoDiaDelMes = this.fechaMensual.with(TemporalAdjusters.lastDayOfMonth());
@@ -118,6 +155,7 @@ public class VistaMensualControlador extends BaseControlador implements Initiali
             vbox.getChildren().add(labelDiaDelMes);
         }
     }
+
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
