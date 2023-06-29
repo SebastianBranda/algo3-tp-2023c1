@@ -1,3 +1,4 @@
+import modelo.*;
 import org.junit.Assert;
 import org.junit.Test;
 import java.time.DayOfWeek;
@@ -16,7 +17,7 @@ public class CalendarioTest {
         Calendario cal = new Calendario();
         LocalDateTime fecha = LocalDateTime.of(2023, 05, 01, 01, 01);
         FrecuenciaDiaria freq = new FrecuenciaDiaria(fecha);
-        Evento ev = new Evento("Test Evento", "Esto es un evento", fecha, fecha.plusMinutes(30), false, freq, TipoFrecuencia.DIARIA, false);
+        Evento ev = new Evento("Test modelo.Evento", "Esto es un evento", fecha, fecha.plusMinutes(30), false, freq, TipoFrecuencia.DIARIA, false);
 
         cal.agregarEvento(ev);
 
@@ -26,7 +27,7 @@ public class CalendarioTest {
     public void listaNoVaciaAlAgregarTarea() {
         Calendario cal = new Calendario();
         LocalDateTime fecha = LocalDateTime.of(2023, 05, 01, 01, 01);
-        Tarea tarea = new Tarea("Test Tarea", "Esto es una tarea", fecha, false, false);
+        Tarea tarea = new Tarea("Test modelo.Tarea", "Esto es una tarea", fecha, false, false);
 
         cal.agregarTarea(tarea);
 
@@ -38,32 +39,32 @@ public class CalendarioTest {
         LocalDateTime fecha = LocalDateTime.of(2023, 05, 01, 01, 01);
         LocalDateTime fechaDeReemplazo = LocalDateTime.of(2023, 05, 02, 01, 01);
         FrecuenciaDiaria freq = new FrecuenciaDiaria(fecha);
-        Evento ev = new Evento("Test Evento", "Esto es un evento", fecha, fecha.plusMinutes(30), false, freq, TipoFrecuencia.DIARIA, false);
+        Evento ev = new Evento("Test modelo.Evento", "Esto es un evento", fecha, fecha.plusMinutes(30), false, freq, TipoFrecuencia.DIARIA, false);
         cal.agregarEvento(ev);
-        Evento evNuevo = new Evento("Test Evento Nuevo", "El evento fue reemplazado", fechaDeReemplazo, fechaDeReemplazo.plusMinutes(30), false, freq, TipoFrecuencia.DIARIA, false);
+        Evento evNuevo = new Evento("Test modelo.Evento Nuevo", "El evento fue reemplazado", fechaDeReemplazo, fechaDeReemplazo.plusMinutes(30), false, freq, TipoFrecuencia.DIARIA, false);
 
         cal.modificarEvento(ev, evNuevo);
 
-        Assert.assertEquals("Test Evento Nuevo", cal.obtenerTodasActividades().get(0).titulo);
+        Assert.assertEquals("Test modelo.Evento Nuevo", cal.obtenerTodasActividades().get(0).obtenerTitulo());
     }
     @Test
     public void tareaEsReemplazada() {
         Calendario cal = new Calendario();
         LocalDateTime fecha = LocalDateTime.of(2023, 05, 01, 01, 01);
-        Tarea tarea = new Tarea("Test Tarea", "Esto es una tarea", fecha, false, false);
+        Tarea tarea = new Tarea("Test modelo.Tarea", "Esto es una tarea", fecha, false, false);
         cal.agregarTarea(tarea);
-        Tarea tareaNueva = new Tarea("Test Tarea Nueva", "La tarea fue reemplazada", fecha, false, false);
+        Tarea tareaNueva = new Tarea("Test modelo.Tarea Nueva", "La tarea fue reemplazada", fecha, false, false);
 
         cal.modificarTarea(tarea, tareaNueva);
 
-        Assert.assertEquals("La tarea fue reemplazada", cal.obtenerTodasActividades().get(0).descripcion);
+        Assert.assertEquals("La tarea fue reemplazada", cal.obtenerTodasActividades().get(0).obtenerDescripcion());
     }
     @Test
     public void testEliminarEvento() {
         Calendario cal = new Calendario();
         LocalDateTime fecha = LocalDateTime.of(2023, 05, 01, 01, 01);
         FrecuenciaDiaria freq = new FrecuenciaDiaria(fecha);
-        Evento ev = new Evento("Test Evento", "Esto es un evento", fecha, fecha.plusMinutes(30), false, freq, TipoFrecuencia.DIARIA, false);
+        Evento ev = new Evento("Test modelo.Evento", "Esto es un evento", fecha, fecha.plusMinutes(30), false, freq, TipoFrecuencia.DIARIA, false);
         cal.agregarEvento(ev);
 
         cal.eliminarEvento(ev);
@@ -74,7 +75,7 @@ public class CalendarioTest {
     public void testEliminarTarea() {
         Calendario cal = new Calendario();
         LocalDateTime fecha = LocalDateTime.of(2023, 05, 01, 01, 01);
-        Tarea tarea = new Tarea("Test Tarea", "Esto es una tarea", fecha, false, false);
+        Tarea tarea = new Tarea("Test modelo.Tarea", "Esto es una tarea", fecha, false, false);
         cal.agregarTarea(tarea);
 
         cal.eliminarTarea(tarea);
@@ -91,7 +92,7 @@ public class CalendarioTest {
     public void agregarTareaConAlarmaGeneraProximasAlarmas() {
         Calendario cal = new Calendario();
         LocalDateTime fecha = LocalDateTime.of(2023, 05, 01, 01, 01);
-        Tarea tarea = new Tarea("Test Tarea", "Esto es una tarea", fecha, false, false);
+        Tarea tarea = new Tarea("Test modelo.Tarea", "Esto es una tarea", fecha, false, false);
         AlarmaEmail a = new AlarmaEmail(fecha);
 
         tarea.agregarAlarma(a);
@@ -104,7 +105,7 @@ public class CalendarioTest {
         // se agregan 3 alarmas a una tarea
         Calendario cal = new Calendario();
         LocalDateTime fecha = LocalDateTime.of(2023, 05, 01, 01, 01);
-        Tarea tarea = new Tarea("Test Tarea", "Esto es una tarea", fecha, false, false);
+        Tarea tarea = new Tarea("Test modelo.Tarea", "Esto es una tarea", fecha, false, false);
         AlarmaEmail a = new AlarmaEmail(fecha);
         AlarmaSonido b = new AlarmaSonido(fecha);
         AlarmaVisual c = new AlarmaVisual(fecha);
@@ -126,8 +127,8 @@ public class CalendarioTest {
         LocalDateTime fechaMasProxima = LocalDateTime.of(2023, 05, 01, 01, 01);
         LocalDateTime fecha = LocalDateTime.of(2023, 05, 02, 02, 02);
         FrecuenciaDiaria freq = new FrecuenciaDiaria(fecha);
-        Evento ev = new Evento("Test Evento", "Un evento", fechaMasProxima, fecha.plusMinutes(30), false, freq, TipoFrecuencia.DIARIA, false);
-        Tarea tarea = new Tarea("Test Tarea", "Esto es una tarea", fecha, false, false);
+        Evento ev = new Evento("Test modelo.Evento", "Un evento", fechaMasProxima, fecha.plusMinutes(30), false, freq, TipoFrecuencia.DIARIA, false);
+        Tarea tarea = new Tarea("Test modelo.Tarea", "Esto es una tarea", fecha, false, false);
 
         ev.agregarAlarma(new AlarmaEmail(fechaMasProxima));
         tarea.agregarAlarma(new AlarmaEmail(fecha));
@@ -163,7 +164,7 @@ public class CalendarioTest {
         Calendario cal = new Calendario();
         LocalDateTime fecha = LocalDateTime.of(2023, 05, 01, 01, 01);
         FrecuenciaDiaria freq = new FrecuenciaDiaria(fecha);
-        Evento ev = new Evento("Test Evento", "Esto es un evento", fecha, fecha.plusMinutes(30), false, freq, TipoFrecuencia.DIARIA, false);
+        Evento ev = new Evento("Test modelo.Evento", "Esto es un evento", fecha, fecha.plusMinutes(30), false, freq, TipoFrecuencia.DIARIA, false);
         cal.agregarEvento(ev);
 
         Assert.assertEquals(1, cal.obtenerActividadesDelDia(fecha).size());
@@ -211,7 +212,7 @@ public class CalendarioTest {
         LocalDateTime fechaFin = LocalDateTime.of(2023,04, 20, 1, 1);
         Calendario cal = new Calendario();
         FrecuenciaDiaria freq = new FrecuenciaDiaria(fechaInicio, fechaFin, 2);
-        Evento ev = new Evento("Evento", "evento test", fechaInicio, fechaInicio.plusMinutes(30), false, freq, TipoFrecuencia.DIARIA, true);
+        Evento ev = new Evento("modelo.Evento", "evento test", fechaInicio, fechaInicio.plusMinutes(30), false, freq, TipoFrecuencia.DIARIA, true);
 
         cal.agregarEvento(ev);
         ArrayList<Actividad> acts = cal.obtenerActividadesDelMes(fechaInicio);
@@ -225,7 +226,7 @@ public class CalendarioTest {
         int cantidadReps = 20;
         Calendario cal = new Calendario();
         FrecuenciaDiaria freq = new FrecuenciaDiaria(fechaInicio, cantidadReps, 1);
-        Evento ev = new Evento("Evento", "evento test", fechaInicio, fechaInicio.plusMinutes(30), false, freq, TipoFrecuencia.DIARIA, true);
+        Evento ev = new Evento("modelo.Evento", "evento test", fechaInicio, fechaInicio.plusMinutes(30), false, freq, TipoFrecuencia.DIARIA, true);
 
         cal.agregarEvento(ev);
         ArrayList<Actividad> acts = cal.obtenerActividadesDelMes(fechaInicio);
@@ -239,14 +240,14 @@ public class CalendarioTest {
         LocalDateTime fechaFin = LocalDateTime.of(2023, 05, 11, 12, 00);
         FrecuenciaDiaria frecuenciaDiaria = new FrecuenciaDiaria(fechaInicio, 3, 2);
         FrecuenciaDiaria frecuenciaModificada =new FrecuenciaDiaria(fechaInicio, 2, 3);
-        Evento evento = new Evento("Evento", "Descripcion original", fechaInicio, fechaFin, false, frecuenciaDiaria, TipoFrecuencia.DIARIA, true);
+        Evento evento = new Evento("modelo.Evento", "Descripcion original", fechaInicio, fechaFin, false, frecuenciaDiaria, TipoFrecuencia.DIARIA, true);
 
         calendario.agregarEvento(evento);
         evento.modificar("cambio evento", "cambio descripcion", fechaInicio.plusDays(1), fechaFin.plusDays(1), true, frecuenciaModificada, false );
         ArrayList<Actividad> listaDeEventosRepetidos = calendario.obtenerActividadesDelMes(fechaInicio);
 
         for(var eventoRepetido: listaDeEventosRepetidos){
-            Assert.assertEquals("cambio descripcion", eventoRepetido.descripcion);
+            Assert.assertEquals("cambio descripcion", eventoRepetido.obtenerDescripcion());
         }
     }
     @Test

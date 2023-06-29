@@ -1,0 +1,169 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.CheckBox?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.DatePicker?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<VBox prefHeight="600.0" prefWidth="900.0" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1">
+   <children>
+      <Label fx:id="labelTituloVentana" text="Agrega un evento">
+         <font>
+            <Font name="System Bold" size="13.0" />
+         </font>
+         <VBox.margin>
+            <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+         </VBox.margin></Label>
+      <HBox fx:id="hBoxTitulo" alignment="CENTER_LEFT" prefHeight="100.0" prefWidth="200.0">
+         <children>
+            <Label minWidth="120.0" text="Titulo">
+               <HBox.margin>
+                  <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+               </HBox.margin></Label>
+            <TextField fx:id="textFieldTitulo" />
+         </children>
+      </HBox>
+      <HBox fx:id="hBoxDescripcion" alignment="CENTER_LEFT" prefHeight="100.0" prefWidth="200.0">
+         <children>
+            <Label minWidth="120.0" text="Descripcion">
+               <HBox.margin>
+                  <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+               </HBox.margin></Label>
+            <TextField fx:id="textFieldDescripcion" />
+         </children>
+      </HBox>
+      <HBox fx:id="hBoxFechaInicio" alignment="CENTER_LEFT" prefHeight="100.0" prefWidth="200.0">
+         <children>
+            <Label minWidth="120.0" text="Fecha inicio">
+               <HBox.margin>
+                  <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+               </HBox.margin></Label>
+            <DatePicker fx:id="datePickerInicio" />
+            <Label fx:id="labelHoraInicio" text="Hora">
+               <HBox.margin>
+                  <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+               </HBox.margin></Label>
+            <TextField fx:id="textFieldHoraInicio" />
+            <Label fx:id="labelMinutosInicio" text="Minutos">
+               <HBox.margin>
+                  <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+               </HBox.margin></Label>
+            <TextField fx:id="textFieldMinutos" />
+         </children>
+      </HBox>
+      <HBox fx:id="hBoxFechaFin" alignment="CENTER_LEFT" prefHeight="100.0" prefWidth="200.0">
+         <children>
+            <Label minWidth="120.0" text="Fecha fin">
+               <HBox.margin>
+                  <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+               </HBox.margin></Label>
+            <DatePicker fx:id="datePickerFin" />
+            <Label fx:id="labelHoraFin" text="Hora">
+               <HBox.margin>
+                  <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+               </HBox.margin></Label>
+            <TextField fx:id="textFieldHoraFin" />
+            <Label fx:id="labelMinutosFin" text="Minutos">
+               <HBox.margin>
+                  <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+               </HBox.margin></Label>
+            <TextField fx:id="textFieldMinutosFin" />
+         </children>
+      </HBox>
+      <CheckBox fx:id="checkboxEsActividadDelDia" mnemonicParsing="false" onAction="#checkboxEsActividadDelDiaAction" text="Todo el dia">
+         <VBox.margin>
+            <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+         </VBox.margin></CheckBox>
+      <HBox fx:id="hBoxManejoRepeticionesYFrecuencia" alignment="CENTER_LEFT" prefHeight="100.0" prefWidth="200.0">
+         <children>
+            <VBox fx:id="vBoxFrecuencia" prefHeight="61.0" prefWidth="448.0">
+               <children>
+                  <HBox prefHeight="61.0" prefWidth="305.0">
+                     <children>
+                        <Label text="Tipo de repeticion">
+                           <HBox.margin>
+                              <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                           </HBox.margin></Label>
+                        <ComboBox fx:id="comboBoxFrecuencia" onAction="#seleccionFrecuenciaAction" prefWidth="150.0" />
+                     </children>
+                  </HBox>
+                  <HBox fx:id="hBoxFrecuenciasSegunSeleccion" prefHeight="100.0" prefWidth="200.0" />
+               </children>
+            </VBox>
+            <VBox fx:id="vBoxRepeticion" prefHeight="61.0" prefWidth="419.0">
+               <children>
+                  <HBox prefHeight="100.0" prefWidth="200.0">
+                     <children>
+                        <Label text="Frecuencia">
+                           <HBox.margin>
+                              <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                           </HBox.margin></Label>
+                        <ComboBox fx:id="comboBoxRepeticion" onAction="#seleccionRepeticionAction" prefWidth="150.0" />
+                     </children>
+                  </HBox>
+                  <HBox fx:id="hBoxRepeticionesSegunSeleccion" prefHeight="100.0" prefWidth="200.0" />
+               </children>
+            </VBox>
+         </children>
+      </HBox>
+      <Label text="Alarmas:">
+         <font>
+            <Font name="System Bold" size="13.0" />
+         </font>
+         <VBox.margin>
+            <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+         </VBox.margin></Label>
+      <VBox fx:id="vBoxListadoAlarmas" prefHeight="200.0" prefWidth="100.0" />
+      <Label text="Nueva alarma">
+         <VBox.margin>
+            <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+         </VBox.margin>
+         <font>
+            <Font name="System Bold Italic" size="13.0" />
+         </font></Label>
+      <HBox alignment="CENTER_LEFT" prefHeight="100.0" prefWidth="200.0">
+         <children>
+            <Label text="Tipo de alarma">
+               <HBox.margin>
+                  <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+               </HBox.margin></Label>
+            <ComboBox fx:id="comboBoxTipoAlarma" prefWidth="150.0">
+               <HBox.margin>
+                  <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+               </HBox.margin></ComboBox>
+            <Label text="Tiempo previo (en minutos) para la notificacion" />
+            <TextField fx:id="textFieldTiempoAntesAlarma" text="0">
+               <HBox.margin>
+                  <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+               </HBox.margin></TextField>
+            <Button fx:id="buttonAgregarNuevaAlarma" mnemonicParsing="false" onAction="#buttonAgregarNuevaAlarmaAction" text="Agregar alarma" />
+         </children>
+      </HBox>
+      <HBox fx:id="hBoxBotones" alignment="CENTER_LEFT" prefHeight="100.0" prefWidth="200.0">
+         <children>
+            <Button fx:id="buttonAgregarNuevaActividad" mnemonicParsing="false" onAction="#agregarNuevaActividadAccion" text="Agregar evento">
+               <HBox.margin>
+                  <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+               </HBox.margin></Button>
+            <Button fx:id="buttonCancelar" mnemonicParsing="false" onAction="#cancelarAction" text="Cancelar">
+               <HBox.margin>
+                  <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+               </HBox.margin></Button>
+            <Label fx:id="labelFaltaInformacion" text="¡Completar correctamente los datos!" textFill="#c90000">
+               <font>
+                  <Font name="System Bold" size="14.0" />
+               </font>
+               <HBox.margin>
+                  <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+               </HBox.margin>
+            </Label>
+         </children>
+      </HBox>
+   </children>
+</VBox>

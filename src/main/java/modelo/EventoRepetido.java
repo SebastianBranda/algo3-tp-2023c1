@@ -1,3 +1,5 @@
+package modelo;
+
 import java.time.LocalDateTime;
 import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
@@ -14,7 +16,6 @@ public class EventoRepetido extends Actividad{
         this.fechaHoraFin = fechaHoraFin;
         this.esActividadDelDia = original.esActividadDelDia;
         this.eventoOriginal = original;
-        // TODO: añadir alarmas del evento original, con las fechas modificadas a las del evento repetido para que posea sus propias alarmas
         for(var alarmaOriginal: this.eventoOriginal.alarmas){
             long minutosDiferencia = alarmaOriginal.getHorarioAlarma().until(this.eventoOriginal.fechaHora, ChronoUnit.MINUTES);
             switch (alarmaOriginal.tipoAlarma){
@@ -33,5 +34,20 @@ public class EventoRepetido extends Actividad{
 
     public void modificar(String titulo, String descripcion, LocalDateTime fechaHora, LocalDateTime fechaHoraFin, Boolean esActividadDelDia, Evento original){
         original.modificar(titulo, descripcion, fechaHora, fechaHoraFin, esActividadDelDia);
+    }
+
+    public Evento obtenerEventoOriginal(){
+        return this.eventoOriginal;
+    }
+    public LocalDateTime obtenerFechaFin(){
+        return this.fechaHoraFin;
+    }
+    public TipoFrecuencia obtenerTipoFrecuencia(){
+        return this.obtenerEventoOriginal().obtenerTipoFrecuencia();
+    }
+
+    @Override
+    public void aceptarVisitante(VisitanteActividad visitante) {
+        visitante.visitarEventoRepetido(this);
     }
 }

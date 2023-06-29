@@ -1,3 +1,5 @@
+package modelo;
+
 import java.time.LocalDateTime;
 
 public class AlarmaVisual extends Alarma{

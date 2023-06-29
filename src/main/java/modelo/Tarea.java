@@ -1,7 +1,9 @@
+package modelo;
+
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 
-public class Tarea extends Actividad{
+public class Tarea extends Actividad {
     private Boolean estaCompletada;
 
     public Tarea(String titulo, String descripcion, LocalDateTime fechaHora, Boolean esActividadDelDia, Boolean estaCompletada){
@@ -30,5 +32,13 @@ public class Tarea extends Actividad{
             tarea.add(this);
         }
         return tarea;
+    }
+    public Boolean obtenerEstaCompletada(){
+        return this.estaCompletada;
+    }
+
+    @Override
+    public void aceptarVisitante(VisitanteActividad visitante) {
+        visitante.visitarTarea(this);
     }
 }

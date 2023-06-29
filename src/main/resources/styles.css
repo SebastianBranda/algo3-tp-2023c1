@@ -1,0 +1,76 @@
+.button{
+    -fx-font-weight: 800;
+    -fx-background-color: #1a73e8;
+    -fx-border-style: none;
+    -fx-text-fill: white;
+    -fx-padding: 0.5em 1.25em 0.5em 1.25em;
+    -fx-background-radius: 15px;
+    -fx-border-radius: 15px;
+}
+
+.button:hover{
+    -fx-background-color: #3a86ee;
+}
+
+#labelDiaAMostrarVentanaDiaria,
+#labelSemanaAMostrarVentana,
+#labelMesAMostrar,
+#labelLunes,
+#labelMartes,
+#labelMiercoles,
+#labelJueves,
+#labelViernes,
+#labelSabado,
+#labelDomingo{
+    -fx-font-weight: 800;
+}
+
+.myHBox{
+    -fx-background-color: #e6e6e6;
+}
+
+.cuadro-evento{
+    -fx-background-color: #3a86ee;
+    -fx-background-radius: 7px;
+    -fx-padding: 15px;
+    -fx-border-insets: 3px;
+    -fx-background-insets: 3px;
+}
+
+.cuadro-evento-del-dia{
+    -fx-background-color: #70acfa;
+    -fx-background-radius: 7px;
+    -fx-padding: 15px;
+    -fx-border-insets: 3px;
+    -fx-background-insets: 3px;
+}
+
+.cuadro-tarea{
+    -fx-background-color: #f6be23;
+    -fx-background-radius: 7px;
+    -fx-padding: 15px;
+    -fx-border-insets: 3px;
+    -fx-background-insets: 3px;
+}
+
+.cuadro-tarea-del-dia{
+    -fx-background-color: #ffd970;
+    -fx-background-radius: 7px;
+    -fx-padding: 15px;
+    -fx-border-insets: 3px;
+    -fx-background-insets: 3px;
+}
+
+.label-titulo{
+    -fx-font-weight: 800;
+}
+
+.label-tarea-incompleta{
+    -fx-font-weight: 800;
+    -fx-text-fill: red;
+}
+
+.label-tarea-completa{
+    -fx-font-weight: 800;
+    -fx-text-fill: green;
+}
